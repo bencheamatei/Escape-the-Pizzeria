@@ -1,4 +1,6 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+# Escape the Pizzeria
+
+Escape the Pizzeria is a FNAF inspired 2D survival-explorer game in which you play as Billy, a curious kid that tries to discover the secrets of the abandoned Freddy Fazbear's Pizzeria. Unfortunately, he is not alone in this endeavour, the animatronics linger in the dark and will try to take him out. Your only defence is throwing some old slices of pizza at the animatronics or just running away - _"He who fights and runs away, gets to live another day"_.
 
 ### Folosiți template-ul corespunzător grupei voastre!
 
