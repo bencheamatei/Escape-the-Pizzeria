@@ -5,6 +5,7 @@
 #include "inventorySlot.h"
 #include <iostream>
 #include <string>
+#include <climits>
 
 inventorySlot::inventorySlot() {
     cntItem=0;
