@@ -9,13 +9,15 @@
 item::item() {
     this->nume="item";
 }
-item::item(const std::string &nume) : nume(nume) {}
+item::item(const std::string &denumire) {
+    this->nume=denumire;
+}
 item::~item() = default;
 std::string item::get_nume() const {
     return nume;
 }
-void item::set_nume(const std::string &nume) {
-    this->nume = nume;
+void item::set_nume(const std::string &denumire) {
+    this->nume = denumire;
 }
 
 std::ostream &operator<<(std::ostream &os, const item &ob) {
