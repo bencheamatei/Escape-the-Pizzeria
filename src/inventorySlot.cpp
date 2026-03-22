@@ -21,11 +21,7 @@ inventorySlot::inventorySlot(const inventorySlot &other) {
     this->cntItem=other.cntItem;
 }
 
-inventorySlot &inventorySlot::operator=(const inventorySlot &other) {
-    this->Item=other.Item;
-    this->cntItem=other.cntItem;
-    return *this;
-}
+inventorySlot &inventorySlot::operator=(const inventorySlot &other) =default;
 
 inventorySlot::~inventorySlot() = default;
 

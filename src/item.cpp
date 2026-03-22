@@ -20,4 +20,5 @@ void item::set_nume(const std::string &nume) {
 
 std::ostream &operator<<(std::ostream &os, const item &ob) {
     os << "Nume: " << ob.get_nume();
+    return os;
 }

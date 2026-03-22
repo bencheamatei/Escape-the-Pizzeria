@@ -21,7 +21,7 @@ public:
     ~inventorySlot();
     friend std::ostream &operator<<(std::ostream &os, const inventorySlot &x);
 
-    void setItem(const item &x,int cnt);
+    void setItem(const item &x, int cnt);
     bool isEmpty() const;
     void changeCntItem(const int cnt);
 };

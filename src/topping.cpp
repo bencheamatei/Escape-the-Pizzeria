@@ -21,6 +21,8 @@ topping::topping(const std::string &nume, int damage, float timp) {
     this->damage=damage;
 }
 
+topping::~topping() =default;
+
 std::string topping::get_nume() const {
     return this->nume;
 }
@@ -33,16 +35,16 @@ float topping::get_timp() const {
     return this->timp;
 }
 
-void topping::set_damage(int damage) {
-    this->damage=damage;
+void topping::set_damage(int dmg) {
+    this->damage=dmg;
 }
 
-void topping::set_timp(float timp) {
-    this->timp=timp;
+void topping::set_timp(float timpi) {
+    this->timp=timpi;
 }
 
-void topping::set_nume(const std::string &nume) {
-    this->nume=nume;
+void topping::set_nume(const std::string &x) {
+    this->nume=x;
 }
 
 int topping::calculate_damage(float time) {

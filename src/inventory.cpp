@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include "inventory.h"
-#include <string>
 #include <queue>
 
 inventory::inventory() {
@@ -20,10 +19,8 @@ inventory::inventory(const int capacity) {
 }
 
 inventory::inventory(const inventory &other) {
-    delete[] this->items;
     this->maxCapacity = other.maxCapacity;
     this->cntItems = other.cntItems;
-
     this->items = new inventorySlot[maxCapacity];
     for (int i=0; i<maxCapacity; i++) {
         this->items[i] = other.items[i];
