@@ -17,9 +17,9 @@ protected:
 public:
     item();
     item(const std::string &nume);
-    ~item();
-    std::string get_nume() const;
-    void set_nume(const std::string &nume);
+    virtual ~item();
+    virtual std::string get_nume() const;
+    virtual void set_nume(const std::string &nume);
     friend std::ostream &operator<<(std::ostream &os, const item &item);
 };
 

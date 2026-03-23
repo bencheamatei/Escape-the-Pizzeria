@@ -20,6 +20,8 @@ player::player(const int hp, const int maxHp, const int maxInventoryCapacity) {
 }
 
 player &player::operator=(const player &other) {
+    if (this==&other)
+        return *this;
     this->hp=other.hp;
     this->maxHp=other.maxHp;
     this->a=other.a;

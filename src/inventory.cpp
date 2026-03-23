@@ -28,6 +28,10 @@ inventory::inventory(const inventory &other) {
 }
 
 inventory &inventory::operator=(const inventory &other) {
+    if (this==&other) {
+        return *this;
+    }
+
     delete[] this->items;
     this->maxCapacity = other.maxCapacity;
     this->cntItems = other.cntItems;
@@ -95,13 +99,6 @@ inventorySlot inventory::get_item_at_index(int index) const {
     return this->items[index];
 }
 
-std::ostream &operator<<(std::ostream &os, const inventory &x) {
-    for (int i=0; i<x.get_capacity(); i++) {
-        os << x.get_item_at_index(i) << " ";
-    }
-    return os;
-}
-
 void inventory::putItem_at_pos(const inventorySlot &x, int pos) {
     if (pos<0 || pos>=maxCapacity) {
         throw std::out_of_range("index out of range");
@@ -131,7 +128,7 @@ void inventory::set_capacity(const int capacity) {
     this->maxCapacity = capacity;
 }
 
-std::ostream &operator<<(std::ostream &os, inventory &x) {
+std::ostream &operator<<(std::ostream &os, const inventory &x) {
     os << "Inventar: \n";
     for (int i=0; i<x.get_capacity(); i++) {
         os << x.get_item_at_index(i) << '\n';
