@@ -8,7 +8,7 @@
 
 class topping : public item {
 private:
-    std::string nume;
+    std::string numeTopping;
     int damage; // in cazul in care este de tip posison damageul se va lua drep dmg/secunda
                 // in caz contrar va fi doar damageul instantaneu
 
@@ -17,12 +17,12 @@ public:
     topping();
     topping(const std::string &nume, int damage, float timp);
     ~topping();
-    std::string get_nume() const;
+    std::string get_numeTopping() const;
     int get_damage() const;
     float get_timp() const;
     void set_damage(int damage);
     void set_timp(float timp);
-    void set_nume(const std::string &nume);
+    void set_numeTopping(const std::string &nume);
     int calculate_overall_damage();
     int calculate_damage(float time);
     friend std::ostream &operator<<(std::ostream &os, const topping &topping);

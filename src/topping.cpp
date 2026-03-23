@@ -23,7 +23,7 @@ topping::topping(const std::string &nume, int damage, float timp) {
 
 topping::~topping() =default;
 
-std::string topping::get_nume() const {
+std::string topping::get_numeTopping() const {
     return this->nume;
 }
 
@@ -43,7 +43,7 @@ void topping::set_timp(float timpi) {
     this->timp=timpi;
 }
 
-void topping::set_nume(const std::string &x) {
+void topping::set_numeTopping(const std::string &x) {
     this->nume=x;
 }
 
