@@ -113,6 +113,7 @@ void inventory::addItem(const inventorySlot &x) {
         return;
     }
     putItem_at_pos(x,pos);
+    cntItems++;
 }
 
 inventorySlot inventory::pop_from_pos(int pos) {
@@ -134,4 +135,12 @@ std::ostream &operator<<(std::ostream &os, const inventory &x) {
         os << x.get_item_at_index(i) << '\n';
     }
     return os;
+}
+
+bool inventory::isEmpty() const {
+    return this->cntItems==0;
+}
+
+bool inventory::isFull() const {
+    return this->cntItems==maxCapacity;
 }

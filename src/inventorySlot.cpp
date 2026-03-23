@@ -21,6 +21,11 @@ inventorySlot::inventorySlot(const inventorySlot &other) {
     this->cntItem=other.cntItem;
 }
 
+void inventorySlot::setItem(const item &x, int cnt) {
+    this->Item=x;
+    this->cntItem=cnt;
+}
+
 inventorySlot &inventorySlot::operator=(const inventorySlot &other) =default;
 
 inventorySlot::~inventorySlot() = default;
@@ -45,7 +50,13 @@ bool inventorySlot::isEmpty() const{
 }
 
 std::ostream &operator<<(std::ostream &os, const inventorySlot &x) {
-    os << "Item:" << x.Item.get_nume() << " ";
-    os << "CntItem:" << x.cntItem;
+    os << "Slot de inventar\n";
+    os << "Item: " << x.Item.get_nume() << " | ";
+    os << "CntItem: " << x.cntItem;
     return os;
+}
+
+std::istream &operator>>(std::istream &is, inventorySlot &x) {
+    is >> x.Item >> x.cntItem;
+    return is;
 }

@@ -19,8 +19,8 @@ public:
     explicit item(const std::string &nume);
     virtual ~item();
     virtual std::string get_nume() const;
-    virtual void set_nume(const std::string &nume);
     friend std::ostream &operator<<(std::ostream &os, const item &item);
+    friend std::istream &operator>>(std::istream &is, item &item);
 };
 
 #endif //OOP_ITEM_H

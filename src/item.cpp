@@ -16,11 +16,14 @@ item::~item() = default;
 std::string item::get_nume() const {
     return nume;
 }
-void item::set_nume(const std::string &denumire) {
-    this->nume = denumire;
-}
 
 std::ostream &operator<<(std::ostream &os, const item &ob) {
+    os << "Item\n";
     os << "Nume: " << ob.get_nume();
     return os;
+}
+
+std::istream &operator>>(std::istream &is, item &ob) {
+    is >> ob.nume;
+    return is;
 }

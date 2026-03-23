@@ -9,22 +9,25 @@
 
 class player {
 private:
-    const std::string nume="Billy"; // aici vreau sa fac o chestie
-                                    // daca bati jocul once o sa poti sa schimbi numele
-                                    // oricum nu o sa fie o componenta super relevanta in logica jocului sau cv
+    const std::string nume="Billy";
     int hp;
     int maxHp;
-    inventory a;
-
+    inventory rucsac;
+    void normalizeHp();
 public:
-
     player();
     player(const int hp,const int maxHp, const int maxInventoryCapacity);
     ~player();
     player(const player &p);
     player &operator=(const player &p);
     friend std::ostream &operator<<(std::ostream &os, const player &p);
-    inventory get_inventory() const;
+    const inventory& get_inventory() const;
+    void addItem(const inventorySlot &other);
+    bool isALive() const;
+    bool isDead() const;
+    int getHp() const;
+    void receiveDmg(const int x);
+    void heal(const int x);
 };
 
 #endif //OOP_PLAYER_H
