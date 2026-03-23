@@ -16,7 +16,7 @@ protected:
 
 public:
     item();
-    item(const std::string &nume);
+    explicit item(const std::string &nume);
     virtual ~item();
     virtual std::string get_nume() const;
     virtual void set_nume(const std::string &nume);

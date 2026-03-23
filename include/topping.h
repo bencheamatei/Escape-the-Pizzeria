@@ -16,10 +16,10 @@ private:
 public:
     topping();
     topping(const std::string &nume, int damage, float timp);
-    ~topping();
-    std::string get_numeTopping() const;
-    int get_damage() const;
-    float get_timp() const;
+    ~topping() override;
+    [[nodiscard]] std::string get_numeTopping() const;
+    [[nodiscard]] int get_damage() const;
+    [[nodiscard]] float get_timp() const;
     void set_damage(int damage);
     void set_timp(float timp);
     void set_numeTopping(const std::string &nume);

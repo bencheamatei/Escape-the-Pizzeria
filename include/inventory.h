@@ -21,7 +21,7 @@ private:
 public:
 
     inventory();
-    inventory(const int capacity);
+    explicit inventory(const int);
     inventory(const inventory &);
     inventory &operator=(const inventory &);
     ~inventory();
