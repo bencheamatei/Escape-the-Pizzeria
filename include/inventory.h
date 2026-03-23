@@ -16,7 +16,6 @@ private:
     int cntItems;
     int maxCapacity;
     int firstEmptySlot() const;
-    void putItem_at_pos(const inventorySlot &,int);
 public:
 
     inventory();
@@ -28,8 +27,9 @@ public:
 
     int get_size() const;
     int get_capacity() const;
-    void set_capacity(const int capacity);
+    void resize_inventory(const int capacity);
     inventorySlot get_item_at_index(int index) const;
+    void insert_item_at_index(const inventorySlot &,int);
     void addItem(const inventorySlot &);
     inventorySlot pop_from_pos(int pos);
     bool isEmpty() const;

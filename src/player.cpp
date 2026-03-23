@@ -5,6 +5,9 @@
 #include <iostream>
 #include <string>
 #include "player.h"
+
+#include <memory>
+
 #include "inventory.h"
 
 player::player() : rucsac(5) {
@@ -45,6 +48,15 @@ std::ostream &operator<<(std::ostream &os, const player &p) {
     os << "Max Hp: " << p.maxHp << "\n";
     os << p.rucsac;
     return os;
+}
+
+inventorySlot player::pickItem(const inventorySlot &other, int pos) {
+    if (pos<0 || pos>=rucsac.get_capacity())
+        return inventorySlot();
+
+    inventorySlot aux=rucsac.get_item_at_index(pos);
+    rucsac.insert_item_at_index(other,pos);
+    return aux;
 }
 
 void player::addItem(const inventorySlot &other) {

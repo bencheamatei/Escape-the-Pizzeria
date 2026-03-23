@@ -13,7 +13,6 @@ private:
 
 protected:
     std::string nume;
-
 public:
     item();
     explicit item(const std::string &nume);

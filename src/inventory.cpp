@@ -56,11 +56,22 @@ int inventory::firstEmptySlot() const {
     return -1;
 }
 
+void inventory::insert_item_at_index(const inventorySlot &other, int pos) {
+    if (pos<0 || pos>=maxCapacity) {
+        return;
+    }
+    this->items[pos]=other;
+}
+
 void inventory::rearrangeItems() {
     // sa zicem ca elementele din inventarul meu sunt (le scriu doar countul)
     // 1 2 0 0 3
     // eu vreau sa transform asta in 1 2 3 0 0
     // adica le aranjez frumos
+
+    if (isFull()) {
+        return;
+    }
 
     std::queue<int> libere;
     for (int i=0; i<maxCapacity; i++) {
@@ -73,9 +84,8 @@ void inventory::rearrangeItems() {
             }
             int pos=libere.front();
             libere.pop();
-
             std::swap(this->items[pos], this->items[i]);
-            libere.push(pos);
+            libere.push(i);
         }
     }
 
@@ -99,20 +109,12 @@ inventorySlot inventory::get_item_at_index(int index) const {
     return this->items[index];
 }
 
-void inventory::putItem_at_pos(const inventorySlot &x, int pos) {
-    if (pos<0 || pos>=maxCapacity) {
-        throw std::out_of_range("index out of range");
-    }
-    this->items[pos]=x;
-}
-
 void inventory::addItem(const inventorySlot &x) {
-    int pos=firstEmptySlot();
-    if (pos==-1) {
-        // e plin inventarul
+    if (isFull()) {
         return;
     }
-    putItem_at_pos(x,pos);
+    int pos=firstEmptySlot();
+    insert_item_at_index(x,pos);
     cntItems++;
 }
 
@@ -122,11 +124,23 @@ inventorySlot inventory::pop_from_pos(int pos) {
     }
     inventorySlot aux(this->items[pos]);
     this->items[pos]=inventorySlot();
+    cntItems--;
     return aux;
 }
 
-void inventory::set_capacity(const int capacity) {
-    this->maxCapacity = capacity;
+void inventory::resize_inventory(const int capacity) {
+    if (capacity<maxCapacity) {
+        return;
+    }
+
+    inventorySlot *aux=new inventorySlot[capacity];
+    for (int i=0; i<maxCapacity; i++) {
+        aux[i]=this->items[i];
+    }
+
+    delete[] this->items;
+    this->items=aux;
+    this->maxCapacity=capacity;
 }
 
 std::ostream &operator<<(std::ostream &os, const inventory &x) {

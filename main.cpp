@@ -39,6 +39,19 @@ int main() {
     inv.rearrangeItems();
     std::cout << inv << "\n";
     std::cout << "done\n";
+
+    for (int i=0 ;i<5; i++) {
+        topping aux;
+        fin >> aux;
+        inv.addItem({aux,5});
+    }
+    inv.pop_from_pos(0);
+    inv.pop_from_pos(2);
+    std::cout << inv << "\n" << "------------------\n";
+    inv.rearrangeItems();
+    std::cout << inv;
+    inv.resize_inventory(10);
+    std::cout << inv;
     fin.close();
     return 0;
 }

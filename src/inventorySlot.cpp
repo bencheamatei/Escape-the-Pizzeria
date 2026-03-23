@@ -7,7 +7,7 @@
 #include <string>
 #include <climits>
 
-inventorySlot::inventorySlot() {
+inventorySlot::inventorySlot() : Item() {
     cntItem=0;
 }
 

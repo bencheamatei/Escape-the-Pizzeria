@@ -1,5 +1,5 @@
-Lanterna
-Surubelnita
-Coif
 Pepperoni 5 0
 Cheese 2 6
+Chicken 9 0
+Basil 1 10
+Pineapple 6 0

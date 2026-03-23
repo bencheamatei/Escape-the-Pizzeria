@@ -23,6 +23,7 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const player &p);
     const inventory& get_inventory() const;
     void addItem(const inventorySlot &other);
+    inventorySlot pickItem(const inventorySlot &other,int pos);
     bool isALive() const;
     bool isDead() const;
     int getHp() const;

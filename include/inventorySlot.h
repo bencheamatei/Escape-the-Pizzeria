@@ -12,7 +12,6 @@ class inventorySlot {
 private:
     item Item;
     int cntItem;
-
 public:
     inventorySlot();
     inventorySlot(const item &x, int cnt);
