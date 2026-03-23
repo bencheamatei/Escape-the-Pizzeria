@@ -28,6 +28,7 @@ int main() {
     for (int i=0; i<3; i++) {
         inventorySlot aux={items[i],i+4};
         aux.changeCntItem(-2);
+        aux.setItem(items[i],i+4);
         eu.addItem(aux);
     }
     std::cout << eu << "\n";
@@ -52,6 +53,29 @@ int main() {
     std::cout << inv;
     inv.resize_inventory(10);
     std::cout << inv;
+
+    std::cout << "----------------------\n";
+    std::cout << eu.getHp() << "\n";
+    eu.receiveDmg(50);
+
+    if (eu.isDead()) {
+        eu.heal(100);
+    }
+    else {
+        eu.heal(10);
+    }
+
+    std::cout << eu.getHp() << "\n";
+    topping top("mold",50,0);
+    top.set_damage(25);
+    top.set_timp(1);
+    eu.pickItem({top,1},4);
+    std::cout << eu<< "\n";
+
+    eu.receiveDmg(100);
+    if (eu.isALive()) {
+        std::cout << "all good\n";
+    }
     fin.close();
     return 0;
 }
