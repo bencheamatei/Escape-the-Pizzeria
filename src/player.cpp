@@ -5,8 +5,10 @@
 #include <iostream>
 #include <string>
 #include "player.h"
-#include <memory>
 #include "inventory.h"
+#include "pizza.h"
+#include "topping.h"
+#include "item.h"
 
 player::player() : rucsac(5) {
     this->hp=100;
@@ -102,5 +104,49 @@ void player::heal(const int x) {
 }
 
 void player::craftPizza() {
+    if (this->rucsac.isFull()) {
+        std::cout << "Inventory is full, can't craft pizza\n";
+        return;
+    }
 
+    int dough_idx=-1;
+    for (int i=0; i<this->rucsac.get_capacity(); i++) {
+        if (this->rucsac.get_item_at_index(i).isEmpty()) {
+            continue;
+        }
+        if (this->rucsac.get_at(i).getItem()->get_nume()=="dough") {
+            dough_idx=i;
+            break;
+        }
+    }
+
+    if (dough_idx==-1) {
+        std::cout << "You need dough to craft pizza\n";
+        return;
+    }
+
+    this->rucsac.pop_from_pos(dough_idx);
+
+    std::vector<topping> available_toppings;
+    for (int i=0; i<this->rucsac.get_capacity(); i++) {
+        if (available_toppings.size()==3) {
+            break;
+        }
+
+        if (i==dough_idx) {
+            continue;
+        }
+
+        if (this->rucsac.get_item_at_index(i).isEmpty()) {
+            continue;
+        }
+
+        const auto *u=dynamic_cast<const topping*>(this->rucsac.get_at(i).getItem());
+        if (u!=nullptr) {
+            available_toppings.push_back(*u);
+            this->rucsac.pop_from_pos(i);
+        }
+    }
+    pizza x(available_toppings);
+    rucsac.addItem({x,1});
 }

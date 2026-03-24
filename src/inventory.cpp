@@ -220,3 +220,10 @@ bool inventory::is_valid_index(int idx) const {
     }
     return true;
 }
+
+const inventorySlot &inventory::get_at(int pos) const {
+    if (!is_valid_index(pos) || this->items[pos]==nullptr) {
+        throw std::runtime_error("index out of range or null item");
+    }
+    return *(this->items[pos]);
+}

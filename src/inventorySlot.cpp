@@ -19,7 +19,7 @@ inventorySlot::inventorySlot(const inventorySlot &other) {
         this->Item=nullptr;
     }
     else {
-        this->Item=other.Item;
+        this->Item=other.Item->get_clone();
     }
 }
 

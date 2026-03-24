@@ -3,11 +3,8 @@
 //
 
 #include "topping.h"
-
-#include <chrono>
 #include <ostream>
 #include <string>
-#include <cmath>
 
 topping::topping() : item("topping"), damage(0) {}
 

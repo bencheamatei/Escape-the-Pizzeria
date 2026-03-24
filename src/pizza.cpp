@@ -12,16 +12,16 @@ void pizza::calculate_total_dmg() {
     }
 }
 
-pizza::pizza() {
+pizza::pizza() : item("pizza"){
     this->toppings={};
     calculate_total_dmg();
 }
 
-pizza::pizza(const std::vector<topping> &toppings) :toppings(toppings) {
+pizza::pizza(const std::vector<topping> &toppings) : toppings(toppings), item("pizza") {
     calculate_total_dmg();
 }
 
-pizza::pizza(std::initializer_list<topping> v) {
+pizza::pizza(std::initializer_list<topping> v) : item("pizza") {
     this->toppings={};
     for (const auto& it:v) {
         this->toppings.push_back(it);
