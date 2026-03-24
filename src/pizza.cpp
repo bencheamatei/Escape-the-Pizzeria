@@ -17,7 +17,8 @@ pizza::pizza() : item("pizza"){
     calculate_total_dmg();
 }
 
-pizza::pizza(const std::vector<topping> &toppings) : toppings(toppings), item("pizza") {
+pizza::pizza(const std::vector<topping> &toppings) : item("pizza") {
+    this->toppings=toppings;
     calculate_total_dmg();
 }
 
