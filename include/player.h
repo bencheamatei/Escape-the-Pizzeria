@@ -30,6 +30,7 @@ public:
     void receiveDmg(const int x);
     void heal(const int x);
     void craftPizza();
+    void drop_item(const int);
 };
 
 #endif //OOP_PLAYER_H

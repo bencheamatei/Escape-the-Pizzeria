@@ -40,6 +40,7 @@ public:
     bool isFull() const;
     void rearrangeItems();
     const inventorySlot& get_at(int) const;
+    void decrease_at_pos(int,int);
 };
 
 #endif //OOP_INVENTORY_H

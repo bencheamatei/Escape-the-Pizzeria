@@ -125,8 +125,6 @@ void player::craftPizza() {
         return;
     }
 
-    this->rucsac.pop_from_pos(dough_idx);
-
     std::vector<topping> available_toppings;
     for (int i=0; i<this->rucsac.get_capacity(); i++) {
         if (available_toppings.size()==3) {
@@ -142,11 +140,20 @@ void player::craftPizza() {
         }
 
         const auto *u=dynamic_cast<const topping*>(this->rucsac.get_at(i).getItem());
+        inventorySlot aux=this->rucsac.get_item_at_index(i);
         if (u!=nullptr) {
             available_toppings.push_back(*u);
-            this->rucsac.pop_from_pos(i);
+            this->rucsac.decrease_at_pos(i,1);
         }
     }
+    this->rucsac.decrease_at_pos(dough_idx,1);
     pizza x(available_toppings);
     rucsac.addItem({x,1});
+}
+
+void player::drop_item(const int pos) {
+    if (pos<0 || pos>=this->rucsac.get_capacity()) {
+        throw std::out_of_range("Index out of range");
+    }
+    this->rucsac.pop_from_pos(pos);
 }

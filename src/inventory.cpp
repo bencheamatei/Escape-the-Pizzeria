@@ -227,3 +227,16 @@ const inventorySlot &inventory::get_at(int pos) const {
     }
     return *(this->items[pos]);
 }
+
+void inventory::decrease_at_pos(int pos, int cnt) {
+    if (!is_valid_index(pos) || this->items[pos]==nullptr) {
+        throw std::runtime_error("index out of range or null item");
+    }
+
+    this->items[pos]->changeCntItem(-cnt);
+    if (this->items[pos]->isEmpty()) {
+        delete this->items[pos];
+        this->items[pos]=nullptr;
+        cntItems--;
+    }
+}
