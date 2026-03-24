@@ -234,7 +234,7 @@ void inventory::decrease_at_pos(int pos, int cnt) {
     }
 
     this->items[pos]->changeCntItem(-cnt);
-    if (this->items[pos]->isEmpty()) {
+    if (this->items[pos]->getCntItem()==0) {
         delete this->items[pos];
         this->items[pos]=nullptr;
         cntItems--;

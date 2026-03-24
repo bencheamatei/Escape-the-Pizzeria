@@ -50,15 +50,6 @@ std::ostream &operator<<(std::ostream &os, const player &p) {
     return os;
 }
 
-inventorySlot player::pickItem(const inventorySlot &other, int pos) {
-    if (pos<0 || pos>=rucsac.get_capacity())
-        return inventorySlot();
-
-    inventorySlot aux=rucsac.get_item_at_index(pos);
-    rucsac.insert_item_at_index(other,pos);
-    return aux;
-}
-
 void player::addItem(const inventorySlot &other) {
     if (this->rucsac.isFull()) {
         return;
@@ -144,6 +135,7 @@ void player::craftPizza() {
     }
     this->rucsac.decrease_at_pos(dough_idx,1);
     pizza x(available_toppings);
+    std::cout << "Dmg total al pizzei craftate este " << x.get_dmg() << "\n";
     rucsac.addItem({x,1});
 }
 
@@ -152,4 +144,12 @@ void player::drop_item(const int pos) {
         throw std::out_of_range("Index out of range");
     }
     this->rucsac.pop_from_pos(pos);
+}
+
+void player::arrange() {
+    this->rucsac.rearrangeItems();
+}
+
+void player::enlarge_inventory(int sz) {
+    this->rucsac.resize_inventory(sz);
 }

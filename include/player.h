@@ -23,13 +23,14 @@ public:
     friend std::ostream &operator<<(std::ostream &, const player &);
     const inventory& get_inventory() const;
     void addItem(const inventorySlot &);
-    inventorySlot pickItem(const inventorySlot &,int );
     bool isAlive() const;
     int getHp() const;
     void receiveDmg(const int x);
     void heal(const int x);
     void craftPizza();
     void drop_item(const int);
+    void arrange();
+    void enlarge_inventory(int);
 };
 
 #endif //OOP_PLAYER_H

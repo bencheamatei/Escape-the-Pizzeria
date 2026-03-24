@@ -1,5 +1,10 @@
-Pepperoni 5 0
-Cheese 2 6
-Chicken 9 0
-Basil 1 10
-Pineapple 6 0
+Paper
+Party_hats
+Party_hats
+Plate
+Confetti
+Chair
+Paper
+Pepperoni 5
+Mozzarella 1
+Pineapple 9

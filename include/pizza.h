@@ -17,7 +17,7 @@ private:
     void calculate_total_dmg();
 public:
     pizza();
-    pizza(const std::vector<topping>&);
+    explicit pizza(const std::vector<topping>&);
     pizza(std::initializer_list<topping>);
     ~pizza() override;
     item *get_clone() const override;
