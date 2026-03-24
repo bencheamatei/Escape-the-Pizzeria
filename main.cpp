@@ -7,6 +7,7 @@
 #include "include/topping.h"
 #include "include/inventory.h"
 #include "include/inventorySlot.h"
+#include "include/pizza.h"
 
 int main() {
 

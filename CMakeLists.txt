@@ -61,6 +61,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/inventorySlot.cpp
         include/player.h
         src/player.cpp
+        include/pizza.h
+        src/pizza.cpp
 )
 #target_sources(${MAIN_EXECUTABLE_NAME}
 #    PRIVATE
