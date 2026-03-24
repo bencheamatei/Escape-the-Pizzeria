@@ -16,16 +16,15 @@ private:
     void normalizeHp();
 public:
     player();
-    player(const int hp,const int maxHp, const int maxInventoryCapacity);
+    player(int , int , int );
     ~player();
-    player(const player &p);
-    player &operator=(const player &p);
-    friend std::ostream &operator<<(std::ostream &os, const player &p);
+    player(const player &);
+    player &operator=(const player &);
+    friend std::ostream &operator<<(std::ostream &, const player &);
     const inventory& get_inventory() const;
-    void addItem(const inventorySlot &other);
-    inventorySlot pickItem(const inventorySlot &other,int pos);
+    void addItem(const inventorySlot &);
+    inventorySlot pickItem(const inventorySlot &,int );
     bool isAlive() const;
-    bool isDead() const;
     int getHp() const;
     void receiveDmg(const int x);
     void heal(const int x);

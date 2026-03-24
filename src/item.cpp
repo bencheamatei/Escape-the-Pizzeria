@@ -9,8 +9,8 @@
 item::item() {
     this->nume="item";
 }
-item::item(const std::string &denumire) {
-    this->nume=denumire;
+item::item(const std::string &nume) {
+    this->nume=nume;
 }
 item::~item() = default;
 std::string item::get_nume() const {
@@ -19,7 +19,7 @@ std::string item::get_nume() const {
 
 std::ostream &operator<<(std::ostream &os, const item &ob) {
     os << "Item\n";
-    os << "Nume: " << ob.get_nume();
+    os << "Nume: " << ob.nume << "\n";
     return os;
 }
 

@@ -14,16 +14,16 @@ private:
     int cntItem;
 public:
     inventorySlot();
-    inventorySlot(const item &x, int cnt);
+    inventorySlot(const item &, int);
     inventorySlot(const inventorySlot &);
     inventorySlot &operator=(const inventorySlot &);
     ~inventorySlot();
-    friend std::ostream &operator<<(std::ostream &os, const inventorySlot &x);
+    friend std::ostream &operator<<(std::ostream &, const inventorySlot &);
     void setItem(const item &x, int cnt);
-    bool isEmpty() const;
-    void changeCntItem(const int cnt);
-    const item* getItem() const;
-    int getCntItem() const;
+    [[nodiscard]] bool isEmpty() const;
+    void changeCntItem(int cnt);
+    [[nodiscard]] const item* getItem() const;
+    [[nodiscard]] int getCntItem() const;
 };
 
 #endif //OOP_INVENTORYSLOT_H

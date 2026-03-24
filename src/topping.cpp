@@ -8,7 +8,7 @@
 
 topping::topping() : item("topping"), damage(0) {}
 
-topping::topping(const std::string &nume, int damage) : item(nume), damage(damage) {}
+topping::topping(const std::string &nume, const int damage) : item(nume), damage(damage) {}
 
 topping::~topping() = default;
 
@@ -16,14 +16,14 @@ int topping::get_damage() const {
     return this->damage;
 }
 
-void topping::set_damage(int dmg) {
+void topping::set_damage(const int dmg) {
     this->damage=dmg;
 }
 
 std::ostream &operator<<(std::ostream &os, const topping &ob) {
     os << "Topping\n";
-    os << "Nume: " << ob.get_nume() << " | ";
-    os << "Damage: " << ob.get_damage();
+    os << "Nume: " << ob.get_nume() << "\n";
+    os << "Damage: " << ob.get_damage() << "\n";
     return os;
 }
 

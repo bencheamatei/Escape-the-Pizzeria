@@ -15,11 +15,11 @@ protected:
     std::string nume;
 public:
     item();
-    explicit item(const std::string &nume);
+    explicit item(const std::string &);
     virtual ~item();
     virtual std::string get_nume() const;
-    friend std::ostream &operator<<(std::ostream &os, const item &item);
-    friend std::istream &operator>>(std::istream &is, item &item);
+    friend std::ostream &operator<<(std::ostream &, const item &);
+    friend std::istream &operator>>(std::istream &, item &);
     virtual item* get_clone() const;
 };
 

@@ -70,10 +70,6 @@ bool player::isAlive() const {
     return this->hp>0;
 }
 
-bool player::isDead() const {
-    return this->hp==0;
-}
-
 int player::getHp() const {
     return this->hp;
 }

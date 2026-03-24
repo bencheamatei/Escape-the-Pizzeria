@@ -45,7 +45,7 @@ const std::vector<topping> &pizza::get_toppings() const {
 }
 
 std::ostream &operator<<(std::ostream &os, const pizza &pizza) {
-    os << "Pizza\n";
+    os << "Pizza: \n";
     for (const auto& it:pizza.get_toppings()) {
         os << it << "\n";
     }

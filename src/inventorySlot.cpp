@@ -4,7 +4,6 @@
 
 #include "inventorySlot.h"
 #include <iostream>
-#include <string>
 #include <climits>
 
 inventorySlot::inventorySlot() : Item(nullptr), cntItem(0) {}
@@ -71,7 +70,7 @@ std::ostream &operator<<(std::ostream &os, const inventorySlot &x) {
     os << "Slot de inventar\n";
     os << "Item: ";
     if (x.Item==nullptr) {
-        os << "item";
+        os << "null";
     }
     else {
         os << *x.Item;

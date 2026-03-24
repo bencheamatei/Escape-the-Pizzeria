@@ -1,18 +1,14 @@
 #include <iostream>
 #include <fstream>
-#include <vector>
-#include "include/player.h"
-#include "include/topping.h"
-#include "include/item.h"
-#include "include/topping.h"
-#include "include/inventory.h"
-#include "include/inventorySlot.h"
-#include "include/pizza.h"
+#include "player.h"
+#include "inventory.h"
+#include "inventorySlot.h"
+#include "item.h"
+#include "pizza.h"
+#include "topping.h"
+
+
 
 int main() {
-
-    std::ifstream fin("tastatura.txt");
-
-    fin.close();
     return 0;
 }
