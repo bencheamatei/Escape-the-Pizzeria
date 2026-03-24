@@ -12,26 +12,30 @@
 
 class inventory {
 private:
-    inventorySlot *items;
+    inventorySlot **items;
     int cntItems;
     int maxCapacity;
     int firstEmptySlot() const;
+    void copy_inventory_from(const inventory &);
+    bool is_valid_index(int) const;
 public:
 
     inventory();
     explicit inventory(const int);
     inventory(const inventory &);
+    inventory(std::initializer_list<inventorySlot>);
+    inventory(std::initializer_list<inventorySlot>,int);
     inventory &operator=(const inventory &);
     ~inventory();
-    friend std::ostream &operator<<(std::ostream &os, const inventory &);
+    friend std::ostream &operator<<(std::ostream &, const inventory &);
 
     int get_size() const;
     int get_capacity() const;
-    void resize_inventory(const int capacity);
-    inventorySlot get_item_at_index(int index) const;
+    void resize_inventory(const int );
+    inventorySlot get_item_at_index(int) const;
     void insert_item_at_index(const inventorySlot &,int);
     void addItem(const inventorySlot &);
-    inventorySlot pop_from_pos(int pos);
+    inventorySlot pop_from_pos(int);
     bool isEmpty() const;
     bool isFull() const;
     void rearrangeItems();
