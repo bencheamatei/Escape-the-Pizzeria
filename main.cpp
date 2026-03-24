@@ -36,6 +36,7 @@ int main() {
     eu.drop_item(5);
     eu.drop_item(1);
     inventory p=eu.get_inventory();
+    p.insert_item_at_index({tops[0],2},100);
     eu.arrange();
 
     std::cout << eu << "-------------\n" << p << "\n";
