@@ -24,6 +24,7 @@ public:
     int calculate_damage(int time);
     friend std::ostream &operator<<(std::ostream &os, const topping &topping);
     friend std::istream &operator>>(std::istream &is, topping &topping);
+    item *get_clone() const override;
 };
 
 #endif //OOP_TOPPING_H

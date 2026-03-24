@@ -61,3 +61,6 @@ std::istream &operator>>(std::istream &is, topping &ob) {
     return is;
 }
 
+item *topping::get_clone() const {
+    return new topping(*this);
+}

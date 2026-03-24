@@ -7,28 +7,46 @@
 #include <string>
 #include <climits>
 
-inventorySlot::inventorySlot() : Item() {
-    cntItem=0;
-}
+inventorySlot::inventorySlot() : Item(nullptr), cntItem(0) {}
 
-inventorySlot::inventorySlot(const item &x, int cnt) {
-    this->Item=x;
-    this->cntItem=cnt;
+inventorySlot::inventorySlot(const item &x, int cnt) : cntItem(cnt) {
+    this->Item=x.get_clone();
 }
 
 inventorySlot::inventorySlot(const inventorySlot &other) {
-    this->Item=other.Item;
     this->cntItem=other.cntItem;
+    if (other.Item==nullptr) {
+        this->Item=nullptr;
+    }
+    else {
+        this->Item=other.Item;
+    }
 }
 
 void inventorySlot::setItem(const item &x, int cnt) {
-    this->Item=x;
+    delete this->Item;
+    this->Item=x.get_clone();
     this->cntItem=cnt;
 }
 
-inventorySlot &inventorySlot::operator=(const inventorySlot &other) =default;
+inventorySlot &inventorySlot::operator=(const inventorySlot &other) {
+    if (this==&other)
+        return *this;
 
-inventorySlot::~inventorySlot() = default;
+    delete this->Item;
+    this->cntItem=other.cntItem;
+    if (other.Item==nullptr) {
+        this->Item=nullptr;
+    }
+    else {
+        this->Item=other.Item->get_clone();
+    }
+    return *this;
+}
+
+inventorySlot::~inventorySlot() {
+    delete this->Item;
+}
 
 void inventorySlot::changeCntItem(const int cnt) {
     if (cnt==0)
@@ -46,17 +64,26 @@ void inventorySlot::changeCntItem(const int cnt) {
 }
 
 bool inventorySlot::isEmpty() const{
-    return cntItem==0;
+    return this->cntItem==0 || this->Item==nullptr;
 }
 
 std::ostream &operator<<(std::ostream &os, const inventorySlot &x) {
     os << "Slot de inventar\n";
-    os << "Item: " << x.Item.get_nume() << " | ";
-    os << "CntItem: " << x.cntItem;
+    os << "Item: ";
+    if (x.Item==nullptr) {
+        os << "item";
+    }
+    else {
+        os << *x.Item;
+    }
+    os << " | CntItem: " << x.cntItem << '\n';
     return os;
 }
 
-std::istream &operator>>(std::istream &is, inventorySlot &x) {
-    is >> x.Item >> x.cntItem;
-    return is;
+int inventorySlot::getCntItem() const {
+    return this->cntItem;
+}
+
+const item* inventorySlot::getItem() const {
+    return this->Item;
 }

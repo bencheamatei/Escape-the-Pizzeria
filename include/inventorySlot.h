@@ -10,7 +10,7 @@
 
 class inventorySlot {
 private:
-    item Item;
+    item *Item;
     int cntItem;
 public:
     inventorySlot();
@@ -19,11 +19,11 @@ public:
     inventorySlot &operator=(const inventorySlot &);
     ~inventorySlot();
     friend std::ostream &operator<<(std::ostream &os, const inventorySlot &x);
-    friend std::istream &operator>>(std::istream &is, inventorySlot &x);
-
     void setItem(const item &x, int cnt);
     bool isEmpty() const;
     void changeCntItem(const int cnt);
+    const item* getItem() const;
+    int getCntItem() const;
 };
 
 #endif //OOP_INVENTORYSLOT_H

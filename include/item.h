@@ -20,6 +20,7 @@ public:
     virtual std::string get_nume() const;
     friend std::ostream &operator<<(std::ostream &os, const item &item);
     friend std::istream &operator>>(std::istream &is, item &item);
+    virtual item* get_clone() const;
 };
 
 #endif //OOP_ITEM_H

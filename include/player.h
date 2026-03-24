@@ -24,11 +24,12 @@ public:
     const inventory& get_inventory() const;
     void addItem(const inventorySlot &other);
     inventorySlot pickItem(const inventorySlot &other,int pos);
-    bool isALive() const;
+    bool isAlive() const;
     bool isDead() const;
     int getHp() const;
     void receiveDmg(const int x);
     void heal(const int x);
+    void craftPizza();
 };
 
 #endif //OOP_PLAYER_H

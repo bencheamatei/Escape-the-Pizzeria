@@ -27,3 +27,7 @@ std::istream &operator>>(std::istream &is, item &ob) {
     is >> ob.nume;
     return is;
 }
+
+item *item::get_clone() const {
+    return new item(*this);
+}

@@ -5,9 +5,7 @@
 #include <iostream>
 #include <string>
 #include "player.h"
-
 #include <memory>
-
 #include "inventory.h"
 
 player::player() : rucsac(5) {
@@ -66,7 +64,7 @@ void player::addItem(const inventorySlot &other) {
     this->rucsac.addItem(other);
 }
 
-bool player::isALive() const {
+bool player::isAlive() const {
     return this->hp>0;
 }
 
@@ -101,4 +99,8 @@ void player::heal(const int x) {
     }
     hp+=x;
     normalizeHp();
+}
+
+void player::craftPizza() {
+
 }
