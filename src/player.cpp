@@ -127,7 +127,6 @@ void player::craftPizza() {
         }
 
         const auto *u=dynamic_cast<const topping*>(this->rucsac.get_at(i).getItem());
-        inventorySlot aux=this->rucsac.get_item_at_index(i);
         if (u!=nullptr) {
             available_toppings.push_back(*u);
             this->rucsac.decrease_at_pos(i,1);
@@ -136,6 +135,7 @@ void player::craftPizza() {
     this->rucsac.decrease_at_pos(dough_idx,1);
     pizza x(available_toppings);
     std::cout << "Dmg total al pizzei craftate este " << x.get_dmg() << "\n";
+    std::cout << x << "\n";
     rucsac.addItem({x,1});
 }
 

@@ -20,10 +20,12 @@ void topping::set_damage(const int dmg) {
     this->damage=dmg;
 }
 
+void topping::print(std::ostream &os) const {
+    os << "Topping: {Nume: " << nume << ", Damage: " << damage << "} ";
+}
+
 std::ostream &operator<<(std::ostream &os, const topping &ob) {
-    os << "Topping\n";
-    os << "Nume: " << ob.get_nume() << "\n";
-    os << "Damage: " << ob.get_damage() << "\n";
+    ob.print(os);
     return os;
 }
 

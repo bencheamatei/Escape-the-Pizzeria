@@ -67,15 +67,12 @@ bool inventorySlot::isEmpty() const{
 }
 
 std::ostream &operator<<(std::ostream &os, const inventorySlot &x) {
-    os << "Slot de inventar\n";
-    os << "Item: ";
     if (x.Item==nullptr) {
-        os << "null";
+        os << "Slot: {Empty}";
     }
     else {
-        os << *x.Item;
+        os << "Slot :{" << *x.Item << ", " << x.cntItem << "}";
     }
-    os << " | CntItem: " << x.cntItem << '\n';
     return os;
 }
 

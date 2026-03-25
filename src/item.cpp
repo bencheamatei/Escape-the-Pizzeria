@@ -17,9 +17,12 @@ std::string item::get_nume() const {
     return nume;
 }
 
+void item::print(std::ostream &os) const {
+    os << "Item: {Nume: " << nume << "} ";
+}
+
 std::ostream &operator<<(std::ostream &os, const item &ob) {
-    os << "Item\n";
-    os << "Nume: " << ob.nume << "\n";
+    ob.print(os);
     return os;
 }
 

@@ -54,13 +54,22 @@ int main() {
 
     eu.addItem(pp);
     eu.craftPizza();
+    std::cout << eu << "\n";
 
-    eu.receiveDmg(1000);
+
+    std::cout << "================Un atac de animatronic==============" << "\n";
+    // momentan nu am clasele de enemy, vreau sa vad exact cum o sa vreau sa ii incadrez
+    // dar secventa de aici poate simula cam cum ar arata o confruntare (in care nu atac inapoi)
+
+    eu.receiveDmg(70);
     if (!eu.isAlive()) {
         std::cout << "s-a dus saracul" << "\n";
-        eu.heal(30);
     }
-    std::cout << eu.getHp() << "\n";
+    else {
+        eu.heal(90);
+        std::cout << eu.getHp() << "\n";
+    }
+
     fin.close();
     return 0;
 }

@@ -24,6 +24,7 @@ public:
     int get_dmg() const;
     const std::vector<topping>& get_toppings() const;
     friend std::ostream& operator<<(std::ostream& os, const pizza& p);
+    void print(std::ostream &os) const override;
 };
 
 #endif //OOP_PIZZA_H

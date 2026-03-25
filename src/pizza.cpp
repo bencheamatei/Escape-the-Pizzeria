@@ -44,11 +44,15 @@ const std::vector<topping> &pizza::get_toppings() const {
     return this->toppings;
 }
 
-std::ostream &operator<<(std::ostream &os, const pizza &pizza) {
-    os << "Pizza: \n";
-    for (const auto& it:pizza.get_toppings()) {
-        os << it << "\n";
+void pizza::print(std::ostream &os) const {
+    os << "Pizza: {";
+    for (const auto& it:toppings) {
+        os << it;
     }
-    os << pizza.get_dmg() << "\n";
+    os << "} ";
+}
+
+std::ostream &operator<<(std::ostream &os, const pizza &pizza) {
+    pizza.print(os);
     return os;
 }
