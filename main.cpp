@@ -66,7 +66,7 @@ int main() {
         std::cout << "s-a dus saracul" << "\n";
     }
     else {
-        // eu.eat_item(5);
+        eu.eat_item(5);
         std::cout << eu.getHp() << "\n";
     }
 

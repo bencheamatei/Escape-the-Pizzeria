@@ -167,7 +167,7 @@ void player::eat_item(int pos) {
     const auto curr=this->rucsac.get_at(pos).getItem();
     const auto aux=dynamic_cast<const pizza*>(curr);
     if (aux!=nullptr) {
-        this->rucsac.decrease_at_pos(pos,1);
         this->heal(aux->get_dmg());
+        this->rucsac.decrease_at_pos(pos,1);
     }
 }
