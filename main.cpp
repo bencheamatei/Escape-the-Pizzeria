@@ -14,9 +14,8 @@ int main() {
     // pizzeria, sa dea pick up la iteme, sa invete dmg si healing sistemul si mai ales cum sa crafteze pizza,
     // care o sa fie de altfel si singura lui arma impotriva animatronicilor.
 
-
+    std::cout << "===================Billy intra in pizzerie===================\n";
     player eu(100,100,7);
-    // Billy intra in pizzerie rn
 
     std::vector<item> chestii(10);
     std::vector<topping> tops(10);
@@ -27,9 +26,9 @@ int main() {
         eu.addItem({chestii[i],1});
     }
 
+    std::cout << eu.get_inventory().get_size() << "\n";
     std::cout << eu << "\n";
     eu.enlarge_inventory(10);
-    std::cout << eu.get_inventory().get_size() << "\n";
 
     eu.drop_item(0);
     eu.drop_item(4);
@@ -39,11 +38,12 @@ int main() {
     p.insert_item_at_index({tops[0],2},100);
     eu.arrange();
 
-    std::cout << eu << "-------------\n" << p << "\n";
+    std::cout << eu << "==================\n" << p << "\n";
 
     for (int i=0; i<3; i++) {
         fin >> tops[i];
         if (i==2) {
+            // nu ne place ananasul pe pizza
             tops[i].set_damage(1);
         }
         eu.addItem({tops[i],i+2});
@@ -53,7 +53,11 @@ int main() {
     pp.setItem(item("dough"),1);
 
     eu.addItem(pp);
+    std::cout << "============Inainte sa craftez o pizza==========\n";
+    std::cout << eu.get_inventory() << "\n";
     eu.craftPizza();
+    eu.craftPizza();
+    std::cout << "==========After=========\n";
     std::cout << eu << "\n";
 
 
@@ -61,7 +65,10 @@ int main() {
     // momentan nu am clasele de enemy, vreau sa vad exact cum o sa vreau sa ii incadrez
     // dar secventa de aici poate simula cam cum ar arata o confruntare (in care nu atac inapoi)
 
-    eu.receiveDmg(70);
+    int animatronic_dmg;
+    fin >> animatronic_dmg;
+    std::cout << animatronic_dmg << "\n";
+    eu.receiveDmg(animatronic_dmg);
     if (!eu.isAlive()) {
         std::cout << "s-a dus saracul" << "\n";
     }

@@ -8,3 +8,4 @@ Paper
 Pepperoni 5
 Mozzarella 1
 Pineapple 9
+70
