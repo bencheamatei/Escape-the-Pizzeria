@@ -46,7 +46,7 @@ const std::vector<topping> &pizza::get_toppings() const {
 
 void pizza::print(std::ostream &os) const {
     os << "Pizza: {";
-    for (const auto& it:get_toppings()) {
+    for (const auto& it:toppings) {
         os << it;
     }
     os << "} ";

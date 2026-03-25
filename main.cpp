@@ -66,8 +66,14 @@ int main() {
         std::cout << "s-a dus saracul" << "\n";
     }
     else {
+
         eu.eat_item(5);
         std::cout << eu.getHp() << "\n";
+    }
+
+    pizza pi={tops[0],tops[1]};
+    for (const auto it:pi.get_toppings()) {
+        std::cout << it << "\n";
     }
 
     fin.close();
