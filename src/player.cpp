@@ -55,6 +55,7 @@ void player::addItem(const inventorySlot &other) {
         return;
     }
     this->rucsac.addItem(other);
+    arrange();
 }
 
 bool player::isAlive() const {
@@ -147,9 +148,26 @@ void player::drop_item(const int pos) {
 }
 
 void player::arrange() {
-    this->rucsac.rearrangeItems();
+    this->rucsac.merge_identic_slots();
 }
 
 void player::enlarge_inventory(int sz) {
     this->rucsac.resize_inventory(sz);
+}
+
+void player::eat_item(int pos) {
+    if (pos<0 || pos>=this->rucsac.get_capacity()) {
+        throw std::out_of_range("Index out of range");
+    }
+
+    if (this->rucsac.get_item_at_index(pos).isEmpty()) {
+        return;
+    }
+
+    const auto curr=this->rucsac.get_at(pos).getItem();
+    const auto aux=dynamic_cast<const pizza*>(curr);
+    if (aux!=nullptr) {
+        this->rucsac.decrease_at_pos(pos,1);
+        this->heal(aux->get_dmg());
+    }
 }

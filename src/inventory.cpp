@@ -240,3 +240,24 @@ void inventory::decrease_at_pos(int pos, int cnt) {
         cntItems--;
     }
 }
+
+void inventory::merge_identic_slots() {
+    for (int i=0; i<this->maxCapacity; i++) {
+        if (this->items[i]==nullptr) {
+            continue;
+        }
+
+        for (int j=i+1; j<this->maxCapacity; j++) {
+            if (this->items[j]==nullptr) {
+                continue;
+            }
+            if (this->items[j]->getItem()->get_nume()==this->items[i]->getItem()->get_nume()) {
+                this->items[i]->changeCntItem(this->items[j]->getCntItem());
+                delete this->items[j];
+                this->items[j]=nullptr;
+                this->cntItems--;
+            }
+        }
+    }
+    rearrangeItems();
+}

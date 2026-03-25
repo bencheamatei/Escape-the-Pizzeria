@@ -41,6 +41,7 @@ public:
     void rearrangeItems();
     const inventorySlot& get_at(int) const;
     void decrease_at_pos(int,int);
+    void merge_identic_slots();
 };
 
 #endif //OOP_INVENTORY_H

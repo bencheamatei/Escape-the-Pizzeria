@@ -27,9 +27,9 @@ int main() {
         eu.addItem({chestii[i],1});
     }
 
-    std::cout << eu << "\n";
+    // std::cout << eu << "\n";
     eu.enlarge_inventory(10);
-    std::cout << eu.get_inventory().get_size() << "\n";
+    // std::cout << eu.get_inventory().get_size() << "\n";
 
     eu.drop_item(0);
     eu.drop_item(4);

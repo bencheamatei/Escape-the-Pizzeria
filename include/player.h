@@ -31,6 +31,7 @@ public:
     void drop_item(const int);
     void arrange();
     void enlarge_inventory(int);
+    void eat_item(int);
 };
 
 #endif //OOP_PLAYER_H
