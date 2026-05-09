@@ -18,7 +18,7 @@ item *topping::get_clone() const {
 }
 
 void topping::apply_effect(player &p) {
-    // aici o sa facem ceva (at some point)
+    p.heal(1); // not really worth eating plain pepperoni
 }
 
 int topping::get_damage() const {

@@ -11,7 +11,6 @@
 
 class pizza : public item{
 private:
-
     int total_dmg;
     std::vector<topping> toppings;
     void calculate_total_dmg();

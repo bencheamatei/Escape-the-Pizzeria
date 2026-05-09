@@ -58,5 +58,6 @@ std::ostream &operator<<(std::ostream &os, const pizza &pizza) {
 }
 
 void pizza::apply_effect(player &p) {
-    // si aici o sa facem ceva (again at some point)
+    calculate_total_dmg();
+    p.heal(this->total_dmg/2);
 }
