@@ -3,6 +3,8 @@
 //
 
 #include "inventorySlot.h"
+#include "pizza.h"
+#include "topping.h"
 #include <iostream>
 #include <climits>
 
@@ -28,18 +30,13 @@ void inventorySlot::setItem(const item &x, int cnt) {
     this->cntItem=cnt;
 }
 
-inventorySlot &inventorySlot::operator=(const inventorySlot &other) {
-    if (this==&other)
-        return *this;
+void swap(inventorySlot &x, inventorySlot &y) noexcept {
+    std::swap(x.cntItem,y.cntItem);
+    std::swap(x.Item,y.Item);
+}
 
-    delete this->Item;
-    this->cntItem=other.cntItem;
-    if (other.Item==nullptr) {
-        this->Item=nullptr;
-    }
-    else {
-        this->Item=other.Item->get_clone();
-    }
+inventorySlot &inventorySlot::operator=(inventorySlot other) {
+    swap(*this,other);
     return *this;
 }
 
@@ -82,4 +79,12 @@ int inventorySlot::getCntItem() const {
 
 const item* inventorySlot::getItem() const {
     return this->Item;
+}
+
+bool inventorySlot::is_pizza() const {
+    return dynamic_cast<pizza*>(Item)!=nullptr;
+}
+
+bool inventorySlot::is_topping() const {
+    return dynamic_cast<topping*>(Item)!=nullptr;
 }

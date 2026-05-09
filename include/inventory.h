@@ -8,13 +8,14 @@
 #include <iostream>
 #include <string>
 #include "item.h"
+#include <memory>
+#include <vector>
 #include "inventorySlot.h"
 
 class inventory {
 private:
-    inventorySlot **items;
-    int cntItems;
-    int maxCapacity;
+    std::vector<std::unique_ptr<inventorySlot> > items;
+    int max_capacity;
     int firstEmptySlot() const;
     void copy_inventory_from(const inventory &);
     bool is_valid_index(int) const;
