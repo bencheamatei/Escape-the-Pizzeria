@@ -17,7 +17,7 @@ public:
     void set_damage(int);
     friend std::ostream &operator<<(std::ostream &os, const topping &topping);
     friend std::istream &operator>>(std::istream &is, topping &topping);
-    item *get_clone() const override;
+    item *get_clone() const;
     void print(std::ostream &os) const override;
 };
 
