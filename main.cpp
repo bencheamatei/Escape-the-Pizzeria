@@ -1,87 +1,64 @@
 #include <iostream>
-#include <fstream>
 #include "player.h"
 #include "inventory.h"
 #include "inventorySlot.h"
 #include "item.h"
 #include "pizza.h"
 #include "topping.h"
+#include "exceptions.h"
 
 int main() {
-    std::ifstream fin("tastatura.txt");
-
-    // ok deci ce scenariu prezentam noi aici? in prima etapa de joc vreau sa las playerul sa exploreze putin
-    // pizzeria, sa dea pick up la iteme, sa invete dmg si healing sistemul si mai ales cum sa crafteze pizza,
-    // care o sa fie de altfel si singura lui arma impotriva animatronicilor.
-
     std::cout << "===================Billy intra in pizzerie===================\n";
-    player eu(100,100,7);
+    player eu(100, 100, 4);
 
-    std::vector<item> chestii(10);
-    std::vector<topping> tops(10);
+    try {
+        std::cout << "\n[ ETAPA 1: Explorare & Polimorfism ]\n";
+        topping cheese("Cheese", 10);
+        topping pepperoni("Pepperoni", 15);
 
-    // Billy da pick up la chestii random
-    for (int i=0; i<7; i++) {
-        fin >> chestii[i];
-        eu.addItem({chestii[i],1});
+        eu.addItem(inventorySlot(cheese, 1));
+        eu.addItem(inventorySlot(pepperoni, 2));
+
+        std::cout << "Inventarul lui Billy:\n" << eu.get_inventory() << "\n";
+
+        std::cout << "\n[ ETAPA 2: Testare Exceptii - Crafting ]\n";
+        std::cout << "Billy incearca sa crafteze o pizza din aer...\n";
+        eu.craftPizza();
+
+    } catch (const game_exception& e) {
+        std::cerr << ">>> [Game Error prins]: " << e.what() << "\n";
     }
 
-    std::cout << eu.get_inventory().get_size() << "\n";
-    std::cout << eu << "\n";
-    eu.enlarge_inventory(10);
+    try {
+        std::cout << "\n[ ETAPA 3: Testare Exceptii - Inventar Plin ]\n";
+        topping random_junk("Scrap", 0);
 
-    eu.drop_item(0);
-    eu.drop_item(4);
-    eu.drop_item(5);
-    eu.drop_item(1);
-    inventory p=eu.get_inventory();
-    p.insert_item_at_index({tops[0],2},100);
-    eu.arrange();
+        // Umplem inventarul pana la refuz
+        eu.addItem(inventorySlot(random_junk, 1));
+        eu.addItem(inventorySlot(random_junk, 1));
+        eu.addItem(inventorySlot(random_junk, 1));
 
-    std::cout << eu << "==================\n" << p << "\n";
+        std::cout << "Incearca sa indese inca un item...\n";
+        eu.addItem(inventorySlot(random_junk, 1));
 
-    for (int i=0; i<3; i++) {
-        fin >> tops[i];
-        if (i==2) {
-            // nu ne place ananasul pe pizza
-            tops[i].set_damage(1);
-        }
-        eu.addItem({tops[i],i+2});
+    } catch (const game_exception& e) {
+        std::cerr << ">>> [Game Error prins]: " << e.what() << "\n";
+    } catch (const std::exception& e) {
+        std::cerr << ">>> [Standard Error]: " << e.what() << "\n";
     }
 
-    inventorySlot pp;
-    pp.setItem(item("dough"),1);
+    std::cout << "\n[ ETAPA 4: Atac Animatronic & Interfata Virtuala ]\n";
+    std::cout << "Un animatronic il loveste pe Billy cu 45 damage!\n";
+    eu.receiveDmg(45);
+    std::cout << "HP Billy: " << eu.getHp() << "\n";
 
-    eu.addItem(pp);
-    std::cout << "============Inainte sa craftez o pizza==========\n";
-    std::cout << eu.get_inventory() << "\n";
-    eu.craftPizza();
-    eu.craftPizza();
-    std::cout << "==========After=========\n";
-    std::cout << eu << "\n";
-
-
-    std::cout << "================Un atac de animatronic==============" << "\n";
-    // momentan nu am clasele de enemy, vreau sa vad exact cum o sa vreau sa ii incadrez
-    // dar secventa de aici poate simula cam cum ar arata o confruntare (in care nu atac inapoi)
-
-    int animatronic_dmg;
-    fin >> animatronic_dmg;
-    std::cout << animatronic_dmg << "\n";
-    eu.receiveDmg(animatronic_dmg);
-    if (!eu.isAlive()) {
-        std::cout << "s-a dus saracul" << "\n";
-    }
-    else {
-        eu.eat_item(5);
-        std::cout << eu.getHp() << "\n";
+    if (eu.isAlive()) {
+        std::cout << "Billy supravietuieste si foloseste un item!\n";
+        std::cout << "HP Billy dupa heal: " << eu.getHp() << "\n";
+    } else {
+        std::cout << "S-a dus saracul...\n";
     }
 
-    pizza pi={tops[0],tops[1]};
-    for (const auto &it:pi.get_toppings()) {
-        std::cout << it << "\n";
-    }
-
-    fin.close();
+    std::cout << "\n===================Sfarsit===================\n";
     return 0;
 }

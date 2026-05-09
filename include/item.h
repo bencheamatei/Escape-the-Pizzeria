@@ -8,20 +8,24 @@
 #include <iostream>
 #include <string>
 
-class item {
-private:
 
+class player;
+
+class item {
 protected:
     std::string nume;
+    virtual void display(std::ostream &os) const;
 public:
     item();
     explicit item(const std::string &);
     virtual ~item();
-    virtual std::string get_nume() const;
+
+    virtual void print(std::ostream &os) const;
+    [[nodiscard]] virtual std::string get_nume() const;
     friend std::ostream &operator<<(std::ostream &, const item &);
     friend std::istream &operator>>(std::istream &, item &);
-    item* get_clone() const;
-    virtual void print(std::ostream &) const;
+    [[nodiscard]] virtual item* get_clone() const=0;
+    virtual void apply_effect(player &p)=0;
 };
 
 #endif //OOP_ITEM_H

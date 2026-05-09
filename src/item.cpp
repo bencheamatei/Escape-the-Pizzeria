@@ -17,20 +17,20 @@ std::string item::get_nume() const {
     return nume;
 }
 
-void item::print(std::ostream &os) const {
-    os << "Item: {Nume: " << nume << "} ";
-}
-
-std::ostream &operator<<(std::ostream &os, const item &ob) {
-    ob.print(os);
+std::ostream &operator<<(std::ostream &os, const item &it) {
+    it.display(os);
     return os;
 }
 
-std::istream &operator>>(std::istream &is, item &ob) {
-    is >> ob.nume;
+std::istream &operator>>(std::istream &is, item &it) {
+    is >> it.nume;
     return is;
 }
 
-item *item::get_clone() const {
-    return new item(*this);
+void item::display(std::ostream &os) const {
+    os << "Item: {Nume: " << this->nume << "}";
+}
+
+void item::print(std::ostream &os) const {
+    display(os);
 }

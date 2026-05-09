@@ -56,3 +56,7 @@ std::ostream &operator<<(std::ostream &os, const pizza &pizza) {
     pizza.print(os);
     return os;
 }
+
+void pizza::apply_effect(player &p) {
+    // si aici o sa facem ceva (again at some point)
+}
