@@ -4,16 +4,16 @@ description: 'Install and run cppcheck'
 runs:
   using: "composite"
   steps:
+    - name: Install Linux Dependencies
+      if: runner.os == 'Linux'
+      uses: ./.github/actions/install-linux-deps
+
     - name: Cache cppcheck
-      # renovate: datasource=github-tags depName=actions/cache versioning=loose
-      uses: actions/cache/restore@v5.0.3
+      uses: actions/cache/restore@v4
       id: cache-cppcheck
       with:
         path: cppcheck
         key: cppcheck-${{ env.CPPCHECK_VER }}
-
-    - name: Install packages
-      uses: ./.github/actions/install-packages
 
     - name: Build cppcheck
       shell: bash
@@ -22,8 +22,7 @@ runs:
         bash ./scripts/build_cppcheck.sh -v ${CPPCHECK_VER}
 
     - name: Save cppcheck cache
-      # renovate: datasource=github-tags depName=actions/cache versioning=loose
-      uses: actions/cache/save@v5.0.3
+      uses: actions/cache/save@v4
       if: steps.cache-cppcheck.outputs.cache-hit != 'true'
       with:
         path: cppcheck
@@ -36,10 +35,12 @@ runs:
         cd cppcheck
         sudo cmake --install build
 
+    # The flag CMAKE_EXPORT_COMPILE_COMMANDS generates compile_commands.json
+    # which is used by cppcheck and clang-tidy
     - name: Configure CMake
       uses: ./.github/actions/configure-cmake
       with:
-        custom_flags: '-GNinja'
+        custom_flags: '-DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
         cache_key: 'cache-cppcheck'
 
     - name: Cppcheck
