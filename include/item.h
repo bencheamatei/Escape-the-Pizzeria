@@ -12,6 +12,8 @@
 class player;
 
 class item {
+private:
+    static int total_items;
 protected:
     std::string nume;
     virtual void display(std::ostream &os) const;
@@ -26,6 +28,7 @@ public:
     friend std::istream &operator>>(std::istream &, item &);
     [[nodiscard]] virtual item* get_clone() const=0;
     virtual void apply_effect(player &p)=0;
+    static int get_total_items();
 };
 
 #endif //OOP_ITEM_H

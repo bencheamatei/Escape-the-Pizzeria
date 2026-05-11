@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 #include "player.h"
+
+#include "exceptions.h"
 #include "inventory.h"
 #include "pizza.h"
 #include "topping.h"
@@ -93,8 +95,7 @@ void player::heal(const int x) {
 
 void player::craftPizza() {
     if (this->rucsac.isFull()) {
-        std::cout << "Inventory is full, can't craft pizza\n";
-        return;
+        throw craft_exception("must have an empty slot in order to craft");
     }
 
     int dough_idx=-1;
@@ -109,8 +110,7 @@ void player::craftPizza() {
     }
 
     if (dough_idx==-1) {
-        std::cout << "You need dough to craft pizza\n";
-        return;
+        throw craft_exception("must have at least one piece of dough to craft pizza");
     }
 
     std::vector<topping> available_toppings;
@@ -135,14 +135,12 @@ void player::craftPizza() {
     }
     this->rucsac.decrease_at_pos(dough_idx,1);
     pizza x(available_toppings);
-    std::cout << "Dmg total al pizzei craftate este " << x.get_dmg() << "\n";
-    std::cout << x << "\n";
     rucsac.addItem({x,1});
 }
 
 void player::drop_item(const int pos) {
     if (pos<0 || pos>=this->rucsac.get_capacity()) {
-        throw std::out_of_range("Index out of range");
+        throw inventory_exception("slot out of range");
     }
     this->rucsac.pop_from_pos(pos);
 }
@@ -157,7 +155,7 @@ void player::enlarge_inventory(int sz) {
 
 void player::eat_item(int pos) {
     if (pos<0 || pos>=this->rucsac.get_capacity()) {
-        throw std::out_of_range("Index out of range");
+        throw inventory_exception("slot out of range");
     }
 
     if (this->rucsac.get_item_at_index(pos).isEmpty()) {
