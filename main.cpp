@@ -1,4 +1,5 @@
 #include <iostream>
+#include <SFML/Graphics.hpp> // Libraria grafica
 #include "player.h"
 #include "inventory.h"
 #include "inventorySlot.h"
@@ -8,6 +9,9 @@
 #include "exceptions.h"
 
 int main() {
+    // ==========================================================
+    // 1. TESTUL TAU OOP (Rămâne neschimbat, rulează în consolă)
+    // ==========================================================
     std::cout << "===================Billy intra in pizzerie===================\n";
     player eu(100, 100, 4);
 
@@ -33,7 +37,6 @@ int main() {
         std::cout << "\n[ ETAPA 3: Testare Exceptii - Inventar Plin ]\n";
         topping random_junk("Scrap", 0);
 
-        // Umplem inventarul pana la refuz
         eu.addItem(inventorySlot(random_junk, 1));
         eu.addItem(inventorySlot(random_junk, 1));
         eu.addItem(inventorySlot(random_junk, 1));
@@ -47,18 +50,45 @@ int main() {
         std::cerr << ">>> [Standard Error]: " << e.what() << "\n";
     }
 
-    std::cout << "\n[ ETAPA 4: Atac Animatronic & Interfata Virtuala ]\n";
-    std::cout << "Un animatronic il loveste pe Billy cu 45 damage!\n";
-    eu.receiveDmg(45);
-    std::cout << "HP Billy: " << eu.getHp() << "\n";
+    // ==========================================================
+    // 2. TESTUL SFML (Fereastra grafica)
+    // ==========================================================
+    std::cout << "\n>>> PORNIRE INTERFATA GRAFICA SFML...\n";
 
-    if (eu.isAlive()) {
-        std::cout << "Billy supravietuieste si foloseste un item!\n";
-        std::cout << "HP Billy dupa heal: " << eu.getHp() << "\n";
-    } else {
-        std::cout << "S-a dus saracul...\n";
+    // Creăm fereastra
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Test SFML - FNAF Pizzeria");
+    window.setFramerateLimit(60); // Limităm la 60 cadre pe secundă
+
+    // Creăm un obiect de test grafic (un cerc roșu reprezentând o pizza)
+    sf::CircleShape pizzaShape(50.f);
+    pizzaShape.setFillColor(sf::Color::Red);
+    pizzaShape.setPosition(350.f, 250.f); // Îl punem pe centrul ecranului aproximativ
+
+    // Bucla infinită de joc (Game Loop)
+    while (window.isOpen()) {
+
+        // A. Procesăm Evenimentele (input de la utilizator)
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            // Dacă utilizatorul apasă pe 'X' sau pe tasta Escape
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+                window.close();
+            }
+        }
+
+        // B. Update logic (Momentan nu avem nimic care se mișcă singur pe ecran)
+
+        // C. Render (Desenăm cadrul nou)
+        window.clear(sf::Color(30, 30, 30)); // Fundal gri închis
+
+        window.draw(pizzaShape);             // Desenăm cercul roșu creat mai sus
+
+        window.display();                    // Trimitem imaginea pe monitor
     }
 
-    std::cout << "\n===================Sfarsit===================\n";
+    std::cout << "\n===================Fereastra inchisa. Sfarsit===================\n";
     return 0;
 }
