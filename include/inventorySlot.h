@@ -12,6 +12,9 @@ class inventorySlot {
 private:
     item *Item;
     int cntItem;
+
+    void clear();
+
 public:
     inventorySlot();
     inventorySlot(const item &, int);
@@ -27,6 +30,7 @@ public:
 
     [[nodiscard]] bool is_pizza() const;
     [[nodiscard]] bool is_topping() const;
+    [[nodiscard]] bool is_dough() const;
 
     friend void swap(inventorySlot &x, inventorySlot &y) noexcept;
 };

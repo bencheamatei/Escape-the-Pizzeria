@@ -18,8 +18,15 @@ player::player() : rucsac(5) {
     this->maxHp=100;
 }
 
-player::player(const int hp, const int maxHp, const int maxInventoryCapacity) : rucsac(maxInventoryCapacity){
+player::player(const int hp, const int maxHp, const int maxInventoryCapacity) : rucsac(maxInventoryCapacity) {
+    if (hp<=0) {
+        throw player_exception("initial health must be > 0");
+    }
     this->hp=hp;
+
+    if (maxHp<=0) {
+        throw player_exception("max health must be > 0");
+    }
     this->maxHp=maxHp;
 }
 
@@ -80,7 +87,7 @@ void player::normalizeHp() {
 
 void player::receiveDmg(const int x) {
     if (x<=0) {
-        return;
+        throw combat_exception("recieved damage must be > 0");
     }
     hp-=x;
     normalizeHp();

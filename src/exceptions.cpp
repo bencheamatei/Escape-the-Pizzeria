@@ -16,3 +16,6 @@ craft_exception::craft_exception(const std::string &message) :
 
 combat_exception::combat_exception(const std::string &message) :
     game_exception("combat error: "+message) {}
+
+player_exception::player_exception(const std::string &message) :
+    game_exception("player error: "+message) {}

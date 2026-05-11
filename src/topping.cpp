@@ -4,12 +4,17 @@
 
 #include "player.h"
 #include "topping.h"
+#include "exceptions.h"
 #include <ostream>
 #include <string>
 
 topping::topping() : item("topping"), damage(0) {}
 
-topping::topping(const std::string &nume, int damage) : item(nume), damage(damage) {}
+topping::topping(const std::string &nume, int damage) : item(nume), damage(damage) {
+    if (damage<0) {
+        throw craft_exception("topping damage must be positive");
+    }
+}
 
 topping::~topping() = default;
 
@@ -26,6 +31,9 @@ int topping::get_damage() const {
 }
 
 void topping::set_damage(const int dmg) {
+    if (dmg<0) {
+        throw craft_exception("topping damage must be positive");
+    }
     this->damage=dmg;
 }
 

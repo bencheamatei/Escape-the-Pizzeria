@@ -31,4 +31,9 @@ public:
     explicit combat_exception(const std::string &);
 };
 
+class player_exception : public game_exception {
+public:
+    explicit player_exception(const std::string &);
+};
+
 #endif //OOP_EXCEPTIONS_H

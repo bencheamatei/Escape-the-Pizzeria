@@ -5,12 +5,18 @@
 #include "inventorySlot.h"
 #include "pizza.h"
 #include "topping.h"
+#include "dough.h"
 #include <iostream>
-#include <climits>
+
+#include "exceptions.h"
 
 inventorySlot::inventorySlot() : Item(nullptr), cntItem(0) {}
 
-inventorySlot::inventorySlot(const item &x, int cnt) : cntItem(cnt) {
+inventorySlot::inventorySlot(const item &x, int cnt) {
+    if (cnt<=0) {
+        throw inventory_exception("the count of an item must be > 0");
+    }
+    this->cntItem=cnt;
     this->Item=x.get_clone();
 }
 
@@ -25,7 +31,10 @@ inventorySlot::inventorySlot(const inventorySlot &other) {
 }
 
 void inventorySlot::setItem(const item &x, int cnt) {
-    delete this->Item;
+    if (cnt<=0) {
+        throw inventory_exception("the count of an item must be > 0");
+    }
+    this->clear();
     this->Item=x.get_clone();
     this->cntItem=cnt;
 }
@@ -45,18 +54,20 @@ inventorySlot::~inventorySlot() {
 }
 
 void inventorySlot::changeCntItem(const int cnt) {
-    if (cnt==0)
-        return ;
-    if (cnt<0) {
-        if (-cnt>cntItem || 1LL*cnt+1LL*cntItem<INT_MIN)
-            return ;
-        cntItem+=cnt;
+    if (cnt==0) {
+        return;
     }
-    else {
-        if (1LL*cnt+1LL*cntItem>INT_MAX)
-            return ;
-        cntItem+=cnt;
+
+    int new_count=this->cntItem+cnt;
+    if (new_count<0) {
+        throw inventory_exception("can't pop more items than you have");
     }
+
+    if (new_count==0) {
+        this->clear();
+        return;
+    }
+    this->cntItem=new_count;
 }
 
 bool inventorySlot::isEmpty() const{
@@ -68,7 +79,7 @@ std::ostream &operator<<(std::ostream &os, const inventorySlot &x) {
         os << "Slot: {Empty}";
     }
     else {
-        os << "Slot :{" << *x.Item << ", " << x.cntItem << "}";
+        os << "Slot: {" << *x.Item << ", " << x.cntItem << "}";
     }
     return os;
 }
@@ -87,4 +98,14 @@ bool inventorySlot::is_pizza() const {
 
 bool inventorySlot::is_topping() const {
     return dynamic_cast<topping*>(Item)!=nullptr;
+}
+
+bool inventorySlot::is_dough() const {
+    return dynamic_cast<dough*>(Item)!=nullptr;
+}
+
+void inventorySlot::clear() {
+    delete this->Item;
+    this->Item=nullptr;
+    this->cntItem=0;
 }
