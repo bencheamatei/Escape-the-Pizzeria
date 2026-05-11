@@ -13,7 +13,7 @@ ResourceManager& ResourceManager::Instance()
 ResourceManager::ResourceManager()
 {
     loadTexture("images", "airplane.png");
-
+    loadTexture("images", "podea-fin.png");
     loadFont("fonts", "FiraSans-Regular.ttf");
 }
 
