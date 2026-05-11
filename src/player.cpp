@@ -18,8 +18,15 @@ player::player() : rucsac(5) {
     this->maxHp=100;
 }
 
-player::player(const int hp, const int maxHp, const int maxInventoryCapacity) : rucsac(maxInventoryCapacity){
+player::player(const int hp, const int maxHp, const int maxInventoryCapacity) : rucsac(maxInventoryCapacity) {
+    if (hp<=0) {
+        throw player_exception("initial health must be > 0");
+    }
     this->hp=hp;
+
+    if (maxHp<=0) {
+        throw player_exception("max health must be > 0");
+    }
     this->maxHp=maxHp;
 }
 
@@ -80,7 +87,7 @@ void player::normalizeHp() {
 
 void player::receiveDmg(const int x) {
     if (x<=0) {
-        return;
+        throw combat_exception("recieved damage must be > 0");
     }
     hp-=x;
     normalizeHp();
@@ -160,13 +167,12 @@ void player::eat_item(int pos) {
     }
 
     if (this->rucsac.get_item_at_index(pos).isEmpty()) {
-        return;
+        throw player_exception("can't consume nothing");
     }
 
-    const auto curr=this->rucsac.get_at(pos).getItem();
-    const auto aux=dynamic_cast<const pizza*>(curr);
-    if (aux!=nullptr) {
-        this->heal(aux->get_dmg());
+    item *curr=const_cast<item*>(this->rucsac.get_at(pos).getItem());
+    if (const_cast<item*>(this->rucsac.get_at(pos).getItem())!=nullptr) {
+        curr->apply_effect(*this);
         this->rucsac.decrease_at_pos(pos,1);
     }
 }

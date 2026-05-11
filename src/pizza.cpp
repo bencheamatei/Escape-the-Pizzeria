@@ -12,9 +12,8 @@ void pizza::calculate_total_dmg() {
     }
 }
 
-pizza::pizza() : item("pizza"){
+pizza::pizza() : item("pizza"), total_dmg(0) {
     this->toppings={};
-    calculate_total_dmg();
 }
 
 pizza::pizza(const std::vector<topping> &toppings) : item("pizza") {
@@ -22,7 +21,7 @@ pizza::pizza(const std::vector<topping> &toppings) : item("pizza") {
     calculate_total_dmg();
 }
 
-pizza::pizza(std::initializer_list<topping> v) : item("pizza") {
+pizza::pizza(const std::initializer_list<topping> v) : item("pizza") {
     this->toppings={};
     for (const auto& it:v) {
         this->toppings.push_back(it);
