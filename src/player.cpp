@@ -167,13 +167,12 @@ void player::eat_item(int pos) {
     }
 
     if (this->rucsac.get_item_at_index(pos).isEmpty()) {
-        return;
+        throw player_exception("can't consume nothing");
     }
 
-    const auto curr=this->rucsac.get_at(pos).getItem();
-    const auto aux=dynamic_cast<const pizza*>(curr);
-    if (aux!=nullptr) {
-        this->heal(aux->get_dmg());
+    item *curr=const_cast<item*>(this->rucsac.get_at(pos).getItem());
+    if (const_cast<item*>(this->rucsac.get_at(pos).getItem())!=nullptr) {
+        curr->apply_effect(*this);
         this->rucsac.decrease_at_pos(pos,1);
     }
 }

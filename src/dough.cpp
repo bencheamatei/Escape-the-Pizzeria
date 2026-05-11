@@ -5,7 +5,7 @@
 #include "dough.h"
 #include "player.h"
 
-dough::dough() = default;
+dough::dough() : item("dough") {}
 
 void dough::display(std::ostream &os) const {
     os << "Dough";
