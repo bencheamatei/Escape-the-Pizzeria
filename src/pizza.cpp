@@ -49,7 +49,7 @@ void pizza::print(std::ostream &os) const {
     for (const auto& it:toppings) {
         os << it;
     }
-    os << "} ";
+    os << "}";
 }
 
 std::ostream &operator<<(std::ostream &os, const pizza &pizza) {

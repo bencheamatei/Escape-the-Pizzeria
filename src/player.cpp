@@ -11,6 +11,7 @@
 #include "pizza.h"
 #include "topping.h"
 #include "item.h"
+#include "dough.h"
 
 player::player() : rucsac(5) {
     this->hp=100;
@@ -103,7 +104,7 @@ void player::craftPizza() {
         if (this->rucsac.get_item_at_index(i).isEmpty()) {
             continue;
         }
-        if (this->rucsac.get_at(i).getItem()->get_nume()=="dough") {
+        if (dynamic_cast<const dough*>(this->rucsac.get_item_at_index(i).getItem())!=nullptr) {
             dough_idx=i;
             break;
         }

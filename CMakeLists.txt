@@ -65,6 +65,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/pizza.cpp
         include/exceptions.h
         src/exceptions.cpp
+        include/dough.h
+        src/dough.cpp
 )
 #target_sources(${MAIN_EXECUTABLE_NAME}
 #    PRIVATE
