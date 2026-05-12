@@ -22,7 +22,7 @@ item *topping::get_clone() const {
     return new topping(*this);
 }
 
-void topping::apply_effect(player &p) {
+void topping::on_use(player &p) {
     p.heal(1); // not really worth eating plain pepperoni
 }
 

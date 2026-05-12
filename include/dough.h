@@ -11,7 +11,7 @@ class dough : public item {
 public:
     dough();
     [[nodiscard]] item* get_clone() const override;
-    void apply_effect(player &p) override;
+    void on_use(player &p) override;
     void display(std::ostream &os) const override;
 };
 

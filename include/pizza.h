@@ -24,7 +24,7 @@ public:
     // [[nodiscard]] int get_dmg() const;
     friend std::ostream& operator<<(std::ostream& os, const pizza& p);
     void print(std::ostream &os) const override;
-    void apply_effect(player &p) override;
+    void on_use(player &p) override;
 };
 
 #endif //OOP_PIZZA_H

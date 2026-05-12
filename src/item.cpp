@@ -6,6 +6,8 @@
 #include <ostream>
 #include <string>
 
+#include "player.h"
+
 item::item() {
     this->nume="item";
 }
@@ -33,4 +35,10 @@ void item::display(std::ostream &os) const {
 
 void item::print(std::ostream &os) const {
     display(os);
+}
+
+void item::use(player &p) {
+    if (p.isAlive()) {
+        this->on_use(p);
+    }
 }

@@ -11,7 +11,7 @@ void dough::display(std::ostream &os) const {
     os << "Dough";
 }
 
-void dough::apply_effect(player &p) {
+void dough::on_use(player &p) {
     p.heal(1); // not really worth eating plain dough
 }
 

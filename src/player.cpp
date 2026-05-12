@@ -177,7 +177,7 @@ void player::eat_item(int pos) {
 
     item *curr=const_cast<item*>(this->rucsac.get_at(pos).getItem());
     if (const_cast<item*>(this->rucsac.get_at(pos).getItem())!=nullptr) {
-        curr->apply_effect(*this);
+        curr->use(*this);
         this->rucsac.decrease_at_pos(pos,1);
     }
 }

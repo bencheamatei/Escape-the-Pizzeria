@@ -17,6 +17,7 @@ private:
 protected:
     std::string nume;
     virtual void display(std::ostream &os) const;
+    virtual void on_use(player &p)=0;
 public:
     item();
     explicit item(const std::string &);
@@ -27,7 +28,7 @@ public:
     friend std::ostream &operator<<(std::ostream &, const item &);
     friend std::istream &operator>>(std::istream &, item &);
     [[nodiscard]] virtual item* get_clone() const=0;
-    virtual void apply_effect(player &p)=0;
+    void use(player &p);
     // static int get_total_items();
 };
 

@@ -20,7 +20,7 @@ public:
 
     [[nodiscard]] int get_damage() const;
     friend std::istream &operator>>(std::istream &, topping &);
-    void apply_effect(player &p) override;
+    void on_use(player &p) override;
 };
 
 #endif //OOP_TOPPING_H
