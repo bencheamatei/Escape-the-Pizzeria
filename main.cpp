@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "game.h"
 #include "exceptions.h"
 #include <iostream>
 
