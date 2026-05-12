@@ -68,13 +68,6 @@ int inventory::firstEmptySlot() const {
     return -1;
 }
 
-void inventory::insert_item_at_index(const inventorySlot &other, int pos) {
-    if (!is_valid_index(pos)) {
-        throw inventory_exception("slot out of range");
-    }
-    items[pos]=std::make_unique<inventorySlot>(other);
-}
-
 void inventory::rearrangeItems() {
     // sa zicem ca elementele din inventarul meu sunt (le scriu doar countul)
     // 1 2 0 0 3

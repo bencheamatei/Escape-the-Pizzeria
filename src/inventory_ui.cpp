@@ -8,10 +8,6 @@
 
 inventory_ui::inventory_ui(const player &p, sf::Font &font) : player_data(p), font(font) {}
 
-int inventory_ui::get_slot() const {
-    return slot_index;
-}
-
 void inventory_ui::draw(sf::RenderWindow &window) const {
     const inventory &inv=player_data.get_inventory();
     int capacity=inv.get_capacity();
@@ -61,9 +57,8 @@ void inventory_ui::draw_slot(sf::RenderWindow &window, int idx, sf::Vector2f pos
         const sf::Texture& tex = ResourceManager::Instance().getTexture(tex_name);
         icon.setTexture(tex);
         sf::Vector2u texSize = tex.getSize();
-        float targetWidth = SLOT_SIZE - 16.f;
-        float targetHeight = SLOT_SIZE - 16.f;
-        icon.setScale(targetWidth / texSize.x, targetHeight / texSize.y);
+        float targetWH = SLOT_SIZE - 16.f;
+        icon.setScale(targetWH / texSize.x, targetWH / texSize.y);
 
         icon.setPosition(pos.x + 8.f, pos.y + 8.f);
         window.draw(icon);

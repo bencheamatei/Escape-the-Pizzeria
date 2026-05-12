@@ -30,15 +30,6 @@ inventorySlot::inventorySlot(const inventorySlot &other) {
     }
 }
 
-void inventorySlot::setItem(const item &x, int cnt) {
-    if (cnt<=0) {
-        throw inventory_exception("the count of an item must be > 0");
-    }
-    this->clear();
-    this->Item=x.get_clone();
-    this->cntItem=cnt;
-}
-
 void swap(inventorySlot &x, inventorySlot &y) noexcept {
     std::swap(x.cntItem,y.cntItem);
     std::swap(x.Item,y.Item);

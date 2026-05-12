@@ -39,10 +39,6 @@ int pizza::get_dmg() const {
     return this->total_dmg;
 }
 
-const std::vector<topping> &pizza::get_toppings() const {
-    return this->toppings;
-}
-
 void pizza::print(std::ostream &os) const {
     os << "Pizza: {";
     for (const auto& it:toppings) {

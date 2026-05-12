@@ -34,7 +34,6 @@ public:
     int get_capacity() const;
     void resize_inventory(const int );
     inventorySlot get_item_at_index(int) const;
-    void insert_item_at_index(const inventorySlot &,int);
     void addItem(const inventorySlot &);
     inventorySlot pop_from_pos(int);
     bool isEmpty() const;

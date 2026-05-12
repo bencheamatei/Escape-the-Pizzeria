@@ -19,7 +19,6 @@ public:
     [[nodiscard]] item *get_clone() const override;
 
     [[nodiscard]] int get_damage() const;
-    void set_damage(int);
     friend std::istream &operator>>(std::istream &, topping &);
     void apply_effect(player &p) override;
 };

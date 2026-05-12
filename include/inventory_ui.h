@@ -20,14 +20,11 @@ private:
     static constexpr float BOTTOM_PAD = 14.f;
 
     void draw_slot(sf::RenderWindow&,int idx,sf::Vector2f,bool) const;
-    sf::Color slot_item_color(const inventorySlot& s) const;
-    std::string slot_item_label(const inventorySlot& s) const;
-    std::string get_texture_name(const inventorySlot &) const;
+    [[nodiscard]] std::string get_texture_name(const inventorySlot &) const;
 public:
     inventory_ui(const player&, sf::Font&);
     void draw(sf::RenderWindow&) const;
     void event_handler(const sf::Event&,player&);
-    int get_slot() const;
 };
 
 
