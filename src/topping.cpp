@@ -30,13 +30,6 @@ int topping::get_damage() const {
     return this->damage;
 }
 
-void topping::set_damage(const int dmg) {
-    if (dmg<0) {
-        throw craft_exception("topping damage must be positive");
-    }
-    this->damage=dmg;
-}
-
 void topping::display(std::ostream &os) const {
     os << "Topping: {Nume: " << nume << ", Damage: " << damage << "} ";
 }

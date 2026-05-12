@@ -16,13 +16,13 @@ class inventory {
 private:
     std::vector<std::unique_ptr<inventorySlot> > items;
     int max_capacity;
-    int firstEmptySlot() const;
+    [[nodiscard]] int firstEmptySlot() const;
     void copy_inventory_from(const inventory &);
-    bool is_valid_index(int) const;
+    [[nodiscard]] bool is_valid_index(int) const;
 public:
 
     inventory();
-    explicit inventory(const int);
+    explicit inventory(int);
     inventory(const inventory &);
     inventory(std::initializer_list<inventorySlot>);
     inventory(std::initializer_list<inventorySlot>,int);
@@ -30,17 +30,16 @@ public:
     ~inventory();
     friend std::ostream &operator<<(std::ostream &, const inventory &);
 
-    int get_size() const;
-    int get_capacity() const;
-    void resize_inventory(const int );
-    inventorySlot get_item_at_index(int) const;
-    void insert_item_at_index(const inventorySlot &,int);
+    [[nodiscard]] int get_size() const;
+    [[nodiscard]] int get_capacity() const;
+    // void resize_inventory(const int );
+    [[nodiscard]] inventorySlot get_item_at_index(int) const;
     void addItem(const inventorySlot &);
     inventorySlot pop_from_pos(int);
-    bool isEmpty() const;
-    bool isFull() const;
+    [[nodiscard]] bool isEmpty() const;
+    [[nodiscard]] bool isFull() const;
     void rearrangeItems();
-    const inventorySlot& get_at(int) const;
+    [[nodiscard]] const inventorySlot& get_at(int) const;
     void decrease_at_pos(int,int);
     void merge_identic_slots();
 };

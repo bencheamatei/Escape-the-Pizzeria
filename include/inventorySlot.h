@@ -22,7 +22,6 @@ public:
     inventorySlot &operator=(inventorySlot);
     ~inventorySlot();
     friend std::ostream &operator<<(std::ostream &, const inventorySlot &);
-    void setItem(const item &x, int cnt);
     [[nodiscard]] bool isEmpty() const;
     void changeCntItem(int cnt);
     [[nodiscard]] const item* getItem() const;

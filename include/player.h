@@ -21,16 +21,16 @@ public:
     player(const player &);
     player &operator=(const player &);
     friend std::ostream &operator<<(std::ostream &, const player &);
-    const inventory& get_inventory() const;
+    [[nodiscard]] const inventory& get_inventory() const;
     void addItem(const inventorySlot &);
-    bool isAlive() const;
-    int getHp() const;
-    void receiveDmg(const int x);
-    void heal(const int x);
+    [[nodiscard]] bool isAlive() const;
+    [[nodiscard]] int getHp() const;
+    // void receiveDmg(int x);
+    void heal(int x);
     void craftPizza();
-    void drop_item(const int);
+    void drop_item(int);
     void arrange();
-    void enlarge_inventory(int);
+    // void enlarge_inventory(int);
     void eat_item(int);
 };
 

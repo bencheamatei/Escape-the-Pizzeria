@@ -21,8 +21,7 @@ public:
     ~pizza() override;
 
     [[nodiscard]] item *get_clone() const override;
-    [[nodiscard]] int get_dmg() const;
-    [[nodiscard]] const std::vector<topping>& get_toppings() const;
+    // [[nodiscard]] int get_dmg() const;
     friend std::ostream& operator<<(std::ostream& os, const pizza& p);
     void print(std::ostream &os) const override;
     void apply_effect(player &p) override;

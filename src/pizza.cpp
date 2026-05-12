@@ -35,13 +35,11 @@ item *pizza::get_clone() const {
     return new pizza(*this);
 }
 
-int pizza::get_dmg() const {
-    return this->total_dmg;
-}
+// o sa folosesc cand implementez mecanica de a arunca pizza
 
-const std::vector<topping> &pizza::get_toppings() const {
-    return this->toppings;
-}
+// int pizza::get_dmg() const {
+//     return this->total_dmg;
+// }
 
 void pizza::print(std::ostream &os) const {
     os << "Pizza: {";

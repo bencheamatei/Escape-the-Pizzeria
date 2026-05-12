@@ -85,13 +85,15 @@ void player::normalizeHp() {
     }
 }
 
-void player::receiveDmg(const int x) {
-    if (x<=0) {
-        throw combat_exception("recieved damage must be > 0");
-    }
-    hp-=x;
-    normalizeHp();
-}
+// pentru cand adaug animatronicii
+
+// void player::receiveDmg(const int x) {
+//     if (x<=0) {
+//         throw combat_exception("recieved damage must be > 0");
+//     }
+//     hp-=x;
+//     normalizeHp();
+// }
 
 void player::heal(const int x) {
     if (x<=0) {
@@ -111,7 +113,9 @@ void player::craftPizza() {
         if (this->rucsac.get_item_at_index(i).isEmpty()) {
             continue;
         }
-        if (dynamic_cast<const dough*>(this->rucsac.get_item_at_index(i).getItem())!=nullptr) {
+
+        if (this->rucsac.get_item_at_index(i).is_dough()) {
+        // if (dynamic_cast<const dough*>(this->rucsac.get_item_at_index(i).getItem())!=nullptr) {
             dough_idx=i;
             break;
         }
@@ -135,8 +139,8 @@ void player::craftPizza() {
             continue;
         }
 
-        const auto *u=dynamic_cast<const topping*>(this->rucsac.get_at(i).getItem());
-        if (u!=nullptr) {
+        if (this->rucsac.get_item_at_index(i).is_topping()) {
+            const auto *u=dynamic_cast<const topping*>(this->rucsac.get_at(i).getItem());
             available_toppings.push_back(*u);
             this->rucsac.decrease_at_pos(i,1);
         }
@@ -144,6 +148,7 @@ void player::craftPizza() {
     this->rucsac.decrease_at_pos(dough_idx,1);
     pizza x(available_toppings);
     rucsac.addItem({x,1});
+    this->rucsac.rearrangeItems();
 }
 
 void player::drop_item(const int pos) {
@@ -157,9 +162,9 @@ void player::arrange() {
     this->rucsac.merge_identic_slots();
 }
 
-void player::enlarge_inventory(int sz) {
-    this->rucsac.resize_inventory(sz);
-}
+// void player::enlarge_inventory(int sz) {
+//     this->rucsac.resize_inventory(sz);
+// }
 
 void player::eat_item(int pos) {
     if (pos<0 || pos>=this->rucsac.get_capacity()) {
