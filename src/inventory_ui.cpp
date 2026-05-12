@@ -124,6 +124,10 @@ std::string inventory_ui::get_texture_name(const inventorySlot &slot) const {
         return "dough.png";
     }
 
+    if (slot.is_backpack()) {
+        return "backpack.png";
+    }
+
     std::string aux_name=slot.getItem()->get_nume();
     if (aux_name=="pepperoni") {
         return "pepperoni.png";

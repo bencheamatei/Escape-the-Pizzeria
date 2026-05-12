@@ -8,6 +8,7 @@
 #include "dough.h"
 #include <iostream>
 
+#include "backpack.h"
 #include "exceptions.h"
 
 inventorySlot::inventorySlot() : Item(nullptr), cntItem(0) {}
@@ -93,6 +94,10 @@ bool inventorySlot::is_topping() const {
 
 bool inventorySlot::is_dough() const {
     return dynamic_cast<dough*>(Item)!=nullptr;
+}
+
+bool inventorySlot::is_backpack() const {
+    return dynamic_cast<backpack*>(Item)!=nullptr;
 }
 
 void inventorySlot::clear() {

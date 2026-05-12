@@ -30,6 +30,7 @@ public:
     [[nodiscard]] bool is_pizza() const;
     [[nodiscard]] bool is_topping() const;
     [[nodiscard]] bool is_dough() const;
+    [[nodiscard]] bool is_backpack() const;
 
     friend void swap(inventorySlot &x, inventorySlot &y) noexcept;
 };

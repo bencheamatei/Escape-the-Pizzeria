@@ -20,6 +20,7 @@ ResourceManager::ResourceManager()
     loadTexture("images", "pizza.png");
     loadTexture("images", "pepperoni.png");
     loadTexture("images", "mushroom.png");
+    loadTexture("images", "backpack.png");
 
     loadFont("fonts", "FiraSans-Regular.ttf");
     m_textures["podea-fin.png"].setRepeated(true);
