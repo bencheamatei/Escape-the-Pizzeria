@@ -6,15 +6,11 @@
 #include <ostream>
 #include <string>
 
-int item::total_items=0;
-
 item::item() {
     this->nume="item";
-    total_items++;
 }
 item::item(const std::string &nume) {
     this->nume=nume;
-    total_items++;
 }
 item::~item() = default;
 std::string item::get_nume() const {
@@ -37,8 +33,4 @@ void item::display(std::ostream &os) const {
 
 void item::print(std::ostream &os) const {
     display(os);
-}
-
-int item::get_total_items() {
-    return total_items;
 }

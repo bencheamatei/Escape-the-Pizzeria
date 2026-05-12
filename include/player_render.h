@@ -49,9 +49,9 @@ public:
     void update(float, const room&);
     void draw(sf::RenderWindow&) const;
 
-    void set_position(sf::Vector2f);
+    // void set_position(sf::Vector2f);
     sf::Vector2f get_position() const;
-    bool is_moving() const;
+    // bool is_moving() const;
 };
 
 

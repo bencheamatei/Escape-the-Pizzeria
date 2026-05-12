@@ -85,13 +85,15 @@ void player::normalizeHp() {
     }
 }
 
-void player::receiveDmg(const int x) {
-    if (x<=0) {
-        throw combat_exception("recieved damage must be > 0");
-    }
-    hp-=x;
-    normalizeHp();
-}
+// pentru cand adaug animatronicii
+
+// void player::receiveDmg(const int x) {
+//     if (x<=0) {
+//         throw combat_exception("recieved damage must be > 0");
+//     }
+//     hp-=x;
+//     normalizeHp();
+// }
 
 void player::heal(const int x) {
     if (x<=0) {

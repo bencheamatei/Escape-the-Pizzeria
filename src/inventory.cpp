@@ -146,13 +146,16 @@ inventorySlot inventory::pop_from_pos(int pos) {
     return aux;
 }
 
-void inventory::resize_inventory(const int capacity) {
-    if (capacity<max_capacity) {
-        throw inventory_exception("can't resize to a smaller capacity");
-    }
-    items.resize(capacity);
-    this->max_capacity=capacity;
-}
+// de folosit pentru atunci cand implementez itemul de tip rucsac
+// se va spawna doar unul pe harta si o sa mareasca inventarul de la 5 la 8
+
+// void inventory::resize_inventory(const int capacity) {
+//     if (capacity<max_capacity) {
+//         throw inventory_exception("can't resize to a smaller capacity");
+//     }
+//     items.resize(capacity);
+//     this->max_capacity=capacity;
+// }
 
 std::ostream &operator<<(std::ostream &os, const inventory &x) {
     os << "Inventar: \n";
