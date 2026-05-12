@@ -5,7 +5,7 @@
 #ifndef OOP_PIZZA_H
 #define OOP_PIZZA_H
 #include <string>
-#include "item.h"
+#include "../item.h"
 #include "topping.h"
 #include <vector>
 

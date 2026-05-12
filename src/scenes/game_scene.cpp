@@ -2,13 +2,13 @@
 // Created by matei on 5/12/2026.
 //
 
-#include "../include/game_scene.h"
+#include "../../include/scenes/game_scene.h"
 #include "../ResourceManager.hpp"
-#include "dough.h"
-#include "game.h"
-#include "pause_scene.h"
-#include "topping.h"
-#include "pizza.h"
+#include "../../include/items/dough.h"
+#include "../../include/game.h"
+#include "../../include/scenes/pause_scene.h"
+#include "../../include/items/topping.h"
+#include "../../include/items/pizza.h"
 
 game_scene::game_scene(game& g)
     : scene(g)

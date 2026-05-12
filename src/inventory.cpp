@@ -2,10 +2,10 @@
 // Created by matei on 3/22/2026.
 //
 
+#include "../../include/inventory.h"
+#include "../../include/exceptions.h"
 #include <iostream>
-#include "inventory.h"
 #include <queue>
-#include "exceptions.h"
 
 inventory::inventory() : max_capacity(5) {
     items.resize(5);

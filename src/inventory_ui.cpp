@@ -2,8 +2,8 @@
 // Created by matei on 5/12/2026.
 //
 
-#include "../include/inventory_ui.h"
-#include "exceptions.h"
+#include "../../include/inventory_ui.h"
+#include "../../include/exceptions.h"
 #include "../ResourceManager.hpp"
 
 inventory_ui::inventory_ui(const player &p, sf::Font &font) : player_data(p), font(font) {}

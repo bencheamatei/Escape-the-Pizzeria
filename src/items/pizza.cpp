@@ -2,7 +2,7 @@
 // Created by matei on 3/24/2026.
 //
 
-#include "pizza.h"
+#include "../../include/items/pizza.h"
 #include <iostream>
 
 void pizza::calculate_total_dmg() {

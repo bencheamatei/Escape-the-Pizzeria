@@ -2,10 +2,10 @@
 // Created by matei on 3/22/2026.
 //
 
-#include "inventorySlot.h"
-#include "pizza.h"
-#include "topping.h"
-#include "dough.h"
+#include "../../include/inventorySlot.h"
+#include "../../include/items/pizza.h"
+#include "../../include/items/topping.h"
+#include "../../include/items/dough.h"
 #include <iostream>
 
 #include "exceptions.h"

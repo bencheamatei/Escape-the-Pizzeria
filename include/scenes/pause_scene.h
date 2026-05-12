@@ -5,7 +5,7 @@
 #ifndef OOP_PAUSE_SCENE_H
 #define OOP_PAUSE_SCENE_H
 
-#include "scene.h"
+#include "../scene.h"
 #include <vector>
 #include <SFML/Graphics.hpp>
 

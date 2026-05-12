@@ -2,9 +2,9 @@
 // Created by matei on 5/12/2026.
 //
 
-#include "../include/game.h"
+#include "../../include/game.h"
 #include "../ResourceManager.hpp"
-#include "menu_scene.h"
+#include "../../include/scenes/menu_scene.h"
 
 game::game() : window(sf::VideoMode(960,640), "Escape the Pizzeria"
                 , sf::Style::Close | sf::Style::Titlebar) {

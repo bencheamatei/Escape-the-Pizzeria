@@ -2,9 +2,9 @@
 // Created by matei on 3/22/2026.
 //
 
-#include "player.h"
-#include "topping.h"
-#include "exceptions.h"
+#include "../../include/player.h"
+#include "../../include/items/topping.h"
+#include "../../include/exceptions.h"
 #include <ostream>
 #include <string>
 

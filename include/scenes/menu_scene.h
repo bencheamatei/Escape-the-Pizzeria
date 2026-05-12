@@ -5,7 +5,7 @@
 #ifndef OOP_MENU_SCENE_H
 #define OOP_MENU_SCENE_H
 
-#include "scene.h"
+#include "../scene.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 

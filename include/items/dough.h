@@ -5,7 +5,7 @@
 #ifndef OOP_DOUGH_H
 #define OOP_DOUGH_H
 
-#include "item.h"
+#include "../item.h"
 
 class dough : public item {
 public:

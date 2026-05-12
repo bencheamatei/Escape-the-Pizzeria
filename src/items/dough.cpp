@@ -2,8 +2,8 @@
 // Created by matei on 5/11/2026.
 //
 
-#include "dough.h"
-#include "player.h"
+#include "../../include/items/dough.h"
+#include "../../include/player.h"
 
 dough::dough() : item("dough") {}
 

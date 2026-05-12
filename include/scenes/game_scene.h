@@ -6,11 +6,11 @@
 #define OOP_GAME_SCENE_H
 
 #include <SFML/Graphics.hpp>
-#include "room.h"
-#include "player_render.h"
-#include "inventory_ui.h"
-#include "player.h"
-#include "scene.h"
+#include "../room.h"
+#include "../player_render.h"
+#include "../inventory_ui.h"
+#include "../player.h"
+#include "../scene.h"
 
 class game_scene : public scene {
 private:

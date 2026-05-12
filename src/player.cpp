@@ -6,12 +6,11 @@
 #include <string>
 #include "player.h"
 
-#include "exceptions.h"
-#include "inventory.h"
-#include "pizza.h"
-#include "topping.h"
-#include "item.h"
-#include "dough.h"
+#include "../../include/exceptions.h"
+#include "../../include/inventory.h"
+#include "../../include/items/pizza.h"
+#include "../../include/items/topping.h"
+#include "../../include/item.h"
 
 player::player() : rucsac(5) {
     this->hp=100;

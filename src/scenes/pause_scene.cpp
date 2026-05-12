@@ -2,9 +2,10 @@
 // Created by matei on 5/12/2026.
 //
 
-#include "../include/pause_scene.h"
+#include <memory>
+#include "../../include/scenes/pause_scene.h"
 #include "../ResourceManager.hpp"
-#include "game.h"
+#include "../../include/game.h"
 
 pause_scene::pause_scene(game &game) : scene(game) {
     overlay.setSize({960.f, 640.f});
