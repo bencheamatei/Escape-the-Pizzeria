@@ -126,5 +126,9 @@ void game_scene::on_event(const sf::Event& event) {
         if (event.key.code == sf::Keyboard::Escape) {
             _game.add_scene(std::make_unique<pause_scene>(_game));
         }
+
+        if (event.key.code==sf::Keyboard::F3) {
+            game::toggle_debug_mode();
+        }
     }
 }

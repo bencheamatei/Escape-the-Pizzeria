@@ -3,6 +3,7 @@
 //
 
 #include "../include/player_render.h"
+#include "../include/game.h"
 
 player_render::player_render(player &p, sf::Texture &texture, sf::Vector2f init_pos) :
                     player_data(p), position(init_pos) {
@@ -108,6 +109,15 @@ void player_render::update_sprite_rect() {
 
 void player_render::draw(sf::RenderWindow &window) const {
     window.draw(sprite);
+    if (game::is_debug_mode()) {
+        sf::RectangleShape hitbox({BOX_W, BOX_H});
+        hitbox.setOrigin(BOX_W / 2.0f, BOX_H / 2.0f);
+        hitbox.setPosition(position);
+        hitbox.setFillColor(sf::Color::Transparent);
+        hitbox.setOutlineColor(sf::Color::Red);
+        hitbox.setOutlineThickness(1.0f);
+        window.draw(hitbox);
+    }
 }
 
 void player_render::update(float dt, const room &room) {

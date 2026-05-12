@@ -80,4 +80,14 @@ sf::RenderWindow &game::get_window() {
     return window;
 }
 
+bool game::debug_mode=false;
+
+bool game::is_debug_mode() {
+    return debug_mode;
+}
+
+void game::toggle_debug_mode() {
+    debug_mode=!debug_mode;
+}
+
 

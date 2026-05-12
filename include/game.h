@@ -22,12 +22,15 @@ private:
     void render();
     void apply_lazy();
     void process_event();
+    static bool debug_mode;
 public:
     game();
     void run();
     void add_scene(std::unique_ptr<scene>);
     void rm_scene();
     sf::RenderWindow& get_window();
+    static void toggle_debug_mode();
+    static bool is_debug_mode();
 };
 
 
