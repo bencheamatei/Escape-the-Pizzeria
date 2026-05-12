@@ -19,13 +19,13 @@ private:
     player_render player_render_;
     inventory_ui inventory_ui_;
 
-    sf::View       game_view;
-    sf::View       hud_view;
-    sf::Vector2f   camera_pos;
+    sf::View game_view;
+    sf::View hud_view;
+    sf::Vector2f camera_pos;
 
     sf::RectangleShape hpBarBg;
     sf::RectangleShape hpBar;
-    sf::Text           hpLabel;
+    sf::Text hpLabel;
 
     static constexpr float CAM_LERP = 5.0f;
 

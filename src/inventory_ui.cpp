@@ -32,7 +32,7 @@ void inventory_ui::draw(sf::RenderWindow &window) const {
 
     sf::Text hint;
     hint.setFont(font);
-    hint.setString("Q/E: select   F: eat   C: craft pizza");
+    hint.setString("Q/E: left/right   F: eat   C: craft pizza");
     hint.setCharacterSize(10);
     hint.setFillColor(sf::Color(120, 110, 140));
     hint.setPosition(startX, y + SLOT_SIZE + 4.f);
@@ -68,20 +68,6 @@ void inventory_ui::draw_slot(sf::RenderWindow &window, int idx, sf::Vector2f pos
         icon.setPosition(pos.x + 8.f, pos.y + 8.f);
         window.draw(icon);
 
-        // o sa adaug niste sprites ca sa nu fie nevoie sa scrie mereu jos
-        // cuz hella ugly
-
-        // sf::Text label;
-        // label.setFont(font);
-        // label.setString(slot_item_label(slot));
-        // label.setCharacterSize(9);
-        // label.setFillColor(sf::Color::White);
-        // sf::FloatRect lb = label.getLocalBounds();
-        // label.setPosition(
-        //     pos.x + (SLOT_SIZE - lb.width) / 2.f,
-        //     pos.y + SLOT_SIZE - 16.f);
-        // window.draw(label);
-
         if (slot.getCntItem() > 1) {
             sf::Text cnt;
             cnt.setFont(font);
@@ -100,22 +86,6 @@ void inventory_ui::draw_slot(sf::RenderWindow &window, int idx, sf::Vector2f pos
     num.setFillColor(sf::Color(90, 78, 110));
     num.setPosition(pos.x + 3.f, pos.y + SLOT_SIZE - 14.f);
     window.draw(num);
-}
-
-sf::Color inventory_ui::slot_item_color(const inventorySlot& s) const {
-    if (s.is_pizza())   return sf::Color(210, 120, 40);
-    if (s.is_topping()) return sf::Color(170, 50,  50);
-    if (s.is_dough())   return sf::Color(225, 205, 150);
-    return sf::Color(110, 110, 170);
-}
-
-std::string inventory_ui::slot_item_label(const inventorySlot &s) const {
-    if (!s.getItem()) {
-        return "";
-    }
-
-    std::string n=s.getItem()->get_nume();
-    return n.length()>6?n.substr(0,6) : n;
 }
 
 void inventory_ui::event_handler(const sf::Event& event, player& p) {

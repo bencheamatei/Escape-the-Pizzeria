@@ -61,15 +61,15 @@ room game_scene::buildRoom(sf::Texture& floorTex) {
     r.add_wall(  0,   0,  28, 600, wall);
     r.add_wall(772,   0,  28, 600, wall);
 
-    // r.add_wall(520,  40, 240,  48, counter);
-    //
-    // r.add_wall(100, 140, 110,  56, furniture);
-    // r.add_wall(100, 260, 110,  56, furniture);
-    // r.add_wall(590, 140, 110,  56, furniture);
-    // r.add_wall(590, 260, 110,  56, furniture);
+    r.add_wall(520,  40, 240,  48, counter);
 
-    // r.add_wall(330, 380,  48, 110, wall);
-    // r.add_wall(422, 380,  48, 110, wall);
+    r.add_wall(100, 140, 110,  56, furniture);
+    r.add_wall(100, 260, 110,  56, furniture);
+    r.add_wall(590, 140, 110,  56, furniture);
+    r.add_wall(590, 260, 110,  56, furniture);
+
+    r.add_wall(330, 380,  48, 110, wall);
+    r.add_wall(422, 380,  48, 110, wall);
 
     return r;
 }

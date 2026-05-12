@@ -80,19 +80,22 @@ void player_render::resolve_collision(sf::Vector2f delta, const room &room) {
     }
 }
 
-void player_render::update_animation(float dt) {
-    if (moving) {
-        frameTimer+=dt;
-        if (frameTimer>=FRAME_TIME) {
-            frameTimer=0.0f;
-            frame=(frame+1)%FRAME_COUNT;
-        }
-    }
-    else {
-        frame=0;
-        frameTimer=0.0f;
-    }
-}
+// in viitor o sa vreau ca sprite-ul pentru billy sa nu fie static cum este acum
+// adica ca in jocurile vechi sa aduc ceva miscare sus-jos ca sa arat respiratia gen
+
+// void player_render::update_animation(float dt) {
+//     if (moving) {
+//         frameTimer+=dt;
+//         if (frameTimer>=FRAME_TIME) {
+//             frameTimer=0.0f;
+//             frame=(frame+1)%FRAME_COUNT;
+//         }
+//     }
+//     else {
+//         frame=0;
+//         frameTimer=0.0f;
+//     }
+// }
 
 void player_render::update_sprite_rect() {
     sprite.setTextureRect(sf::IntRect(frame*FRAME_W,
@@ -110,7 +113,7 @@ void player_render::update(float dt, const room &room) {
         resolve_collision(velocity*SPEED*dt,room);
     }
 
-    update_animation(dt);
+    // update_animation(dt);
     sprite.setPosition(position);
 }
 
