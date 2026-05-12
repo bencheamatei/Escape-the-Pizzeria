@@ -14,6 +14,12 @@ ResourceManager::ResourceManager()
 {
     loadTexture("images", "podea-fin.png");
     loadTexture("images", "billy.png");
+    loadTexture("images", "dough.png");
+    loadTexture("images", "generic.png");
+    loadTexture("images", "pizza.png");
+    loadTexture("images", "pepperoni.png");
+    loadTexture("images", "mushroom.png");
+
     loadFont("fonts", "FiraSans-Regular.ttf");
     m_textures["podea-fin.png"].setRepeated(true);
 }

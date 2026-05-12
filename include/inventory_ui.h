@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "player.h"
+#include <string>
 
 class inventory_ui {
 private:
@@ -21,6 +22,7 @@ private:
     void draw_slot(sf::RenderWindow&,int idx,sf::Vector2f,bool) const;
     sf::Color slot_item_color(const inventorySlot& s) const;
     std::string slot_item_label(const inventorySlot& s) const;
+    std::string get_texture_name(const inventorySlot &) const;
 public:
     inventory_ui(const player&, sf::Font&);
     void draw(sf::RenderWindow&) const;

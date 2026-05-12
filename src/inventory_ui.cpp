@@ -4,6 +4,7 @@
 
 #include "../include/inventory_ui.h"
 #include "exceptions.h"
+#include "../ResourceManager.hpp"
 
 inventory_ui::inventory_ui(const player &p, sf::Font &font) : player_data(p), font(font) {}
 
@@ -55,21 +56,31 @@ void inventory_ui::draw_slot(sf::RenderWindow &window, int idx, sf::Vector2f pos
     window.draw(box);
 
     if (!slot.isEmpty()) {
-        sf::RectangleShape icon({SLOT_SIZE - 16.f, SLOT_SIZE - 20.f});
-        icon.setFillColor(slot_item_color(slot));
-        icon.setPosition(pos.x + 8.f, pos.y + 6.f);
+        sf::Sprite icon;
+        std::string tex_name = get_texture_name(slot);
+        const sf::Texture& tex = ResourceManager::Instance().getTexture(tex_name);
+        icon.setTexture(tex);
+        sf::Vector2u texSize = tex.getSize();
+        float targetWidth = SLOT_SIZE - 16.f;
+        float targetHeight = SLOT_SIZE - 16.f;
+        icon.setScale(targetWidth / texSize.x, targetHeight / texSize.y);
+
+        icon.setPosition(pos.x + 8.f, pos.y + 8.f);
         window.draw(icon);
 
-        sf::Text label;
-        label.setFont(font);
-        label.setString(slot_item_label(slot));
-        label.setCharacterSize(9);
-        label.setFillColor(sf::Color::White);
-        sf::FloatRect lb = label.getLocalBounds();
-        label.setPosition(
-            pos.x + (SLOT_SIZE - lb.width) / 2.f,
-            pos.y + SLOT_SIZE - 16.f);
-        window.draw(label);
+        // o sa adaug niste sprites ca sa nu fie nevoie sa scrie mereu jos
+        // cuz hella ugly
+
+        // sf::Text label;
+        // label.setFont(font);
+        // label.setString(slot_item_label(slot));
+        // label.setCharacterSize(9);
+        // label.setFillColor(sf::Color::White);
+        // sf::FloatRect lb = label.getLocalBounds();
+        // label.setPosition(
+        //     pos.x + (SLOT_SIZE - lb.width) / 2.f,
+        //     pos.y + SLOT_SIZE - 16.f);
+        // window.draw(label);
 
         if (slot.getCntItem() > 1) {
             sf::Text cnt;
@@ -133,4 +144,29 @@ void inventory_ui::event_handler(const sf::Event& event, player& p) {
             break;
         default: break;
     }
+}
+
+std::string inventory_ui::get_texture_name(const inventorySlot &slot) const {
+    if (slot.isEmpty()) {
+        return "";
+    }
+
+    if (slot.is_pizza()) {
+        return "pizza.png";
+    }
+
+    if (slot.is_dough()) {
+        return "dough.png";
+    }
+
+    std::string aux_name=slot.getItem()->get_nume();
+    if (aux_name=="pepperoni") {
+        return "pepperoni.png";
+    }
+
+    if (aux_name=="mushroom") {
+        return "mushroom.png";
+    }
+
+    return "generic.png";
 }

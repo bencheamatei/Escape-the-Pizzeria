@@ -24,8 +24,8 @@ game_scene::game_scene(game& g)
 {
     try {
         player_data.addItem(inventorySlot(dough(), 2));
-        player_data.addItem(inventorySlot(topping("peperoni", 5), 3));
-        player_data.addItem(inventorySlot(topping("ciuperci", 3), 2));
+        player_data.addItem(inventorySlot(topping("pepperoni", 5), 3));
+        player_data.addItem(inventorySlot(topping("mushroom", 3), 2));
     } catch (...) {}
 
     game_view.setSize(480.f, 320.f);
