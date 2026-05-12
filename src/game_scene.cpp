@@ -3,6 +3,8 @@
 //
 
 #include "../include/game_scene.h"
+
+#include "backpack.h"
 #include "../ResourceManager.hpp"
 #include "dough.h"
 #include "game.h"
@@ -27,6 +29,7 @@ game_scene::game_scene(game& g)
         player_data.addItem(inventorySlot(dough(), 2));
         player_data.addItem(inventorySlot(topping("pepperoni", 5), 3));
         player_data.addItem(inventorySlot(topping("mushroom", 3), 2));
+        player_data.addItem(inventorySlot(backpack(8), 1));
     } catch (...) {}
 
     game_view.setSize(480.f, 320.f);

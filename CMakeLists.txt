@@ -84,6 +84,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/game_scene.h
         src/pause_scene.cpp
         include/pause_scene.h
+        src/backpack.cpp
+        include/backpack.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})
