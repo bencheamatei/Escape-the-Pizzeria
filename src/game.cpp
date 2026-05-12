@@ -61,13 +61,13 @@ void game::add_scene(std::unique_ptr<scene> scene) {
 }
 
 void game::rm_scene() {
-    to_pop=true;
+    to_pop++;
 }
 
 void game::apply_lazy() {
-    if (to_pop && !d.empty()) {
+    while (to_pop>0 && !d.empty()) {
         d.pop();
-        to_pop=false;
+        to_pop--;
     }
 
     if (to_push) {

@@ -6,6 +6,7 @@
 #include "../ResourceManager.hpp"
 #include "dough.h"
 #include "game.h"
+#include "pause_scene.h"
 #include "topping.h"
 #include "pizza.h"
 
@@ -123,7 +124,7 @@ void game_scene::on_event(const sf::Event& event) {
     inventory_ui_.event_handler(event, player_data);
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Escape) {
-            _game.rm_scene();
+            _game.add_scene(std::make_unique<pause_scene>(_game));
         }
     }
 }

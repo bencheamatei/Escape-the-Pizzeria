@@ -82,6 +82,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/inventory_ui.h
         src/game_scene.cpp
         include/game_scene.h
+        src/pause_scene.cpp
+        include/pause_scene.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})
