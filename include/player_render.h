@@ -47,7 +47,7 @@ public:
 
     void handle_input();
     void update(float, const room&);
-    void draw(sf::RenderWindow&) const;
+    void draw(sf::RenderTarget&) const;
 
     void set_position(sf::Vector2f);
     sf::Vector2f get_position() const;

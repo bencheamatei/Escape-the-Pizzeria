@@ -14,7 +14,7 @@ void scene::update(float dt) {
     on_update(dt);
 }
 
-void scene::render(sf::RenderWindow &window) {
+void scene::render(sf::RenderTarget &window) {
     on_render(window);
 }
 
