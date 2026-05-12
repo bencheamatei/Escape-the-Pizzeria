@@ -14,6 +14,7 @@ ResourceManager::ResourceManager()
 {
     loadTexture("images", "airplane.png");
     loadTexture("images", "podea-fin.png");
+    loadTexture("images", "billy.png");
     loadFont("fonts", "FiraSans-Regular.ttf");
 }
 

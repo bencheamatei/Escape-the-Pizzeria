@@ -68,6 +68,20 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         generated/src/Helper.cpp
         ResourceManager.cpp
         ResourceManager.hpp
+        src/scene.cpp
+        include/scene.h
+        src/game.cpp
+        include/game.h
+        src/menu_scene.cpp
+        include/menu_scene.h
+        src/room.cpp
+        include/room.h
+        src/player_render.cpp
+        include/player_render.h
+        src/inventory_ui.cpp
+        include/inventory_ui.h
+        src/game_scene.cpp
+        include/game_scene.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})
