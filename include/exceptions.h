@@ -36,4 +36,9 @@ public:
     explicit player_exception(const std::string &);
 };
 
+class resources_exception : public game_exception {
+public:
+    explicit resources_exception(const std::string &);
+};
+
 #endif //OOP_EXCEPTIONS_H

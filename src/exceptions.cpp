@@ -19,3 +19,6 @@ combat_exception::combat_exception(const std::string &message) :
 
 player_exception::player_exception(const std::string &message) :
     game_exception("player error: "+message) {}
+
+resources_exception::resources_exception(const std::string &message) :
+    game_exception("external resources error: "+message) {}

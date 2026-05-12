@@ -3,6 +3,7 @@
 //
 
 #include "ResourceManager.hpp"
+#include "exceptions.h"
 
 ResourceManager& ResourceManager::Instance()
 {
@@ -32,7 +33,8 @@ void ResourceManager::loadTexture(const std::string& path, const std::string& te
     {
         // Fiind un exemplu demonstrativ aruncăm std::runtime_error, dar la teme va trebui
         // să vă faceți o ierarhie proprie de excepții
-        throw std::runtime_error("Textura " + texture_name + " nu a putut fi incarcata.");
+        // throw std::runtime_error("Textura " + texture_name + " nu a putut fi incarcata.");
+        throw resources_exception("Textura " + texture_name + " nu a putut fi incarcata.");
     }
 
     m_textures[texture_name] = texture;
@@ -46,7 +48,8 @@ void ResourceManager::loadFont(const std::string& path, const std::string& font_
     {
         // Fiind un exemplu demonstrativ aruncăm std::runtime_error, dar la teme va trebui
         // să vă faceți o ierarhie proprie de excepții
-        throw std::runtime_error("Textura " + font_name + " nu a putut fi incarcata.");
+        // throw std::runtime_error("Textura " + font_name + " nu a putut fi incarcata.");
+        throw resources_exception("Fontul " + font_name + " nu a putut fi incarcat.");
     }
 
     m_fonts[font_name] = font;
@@ -60,7 +63,8 @@ sf::Texture& ResourceManager::getTexture(const std::string& texture_name)
     {
         // Fiind un exemplu demonstrativ aruncăm std::runtime_error, dar la teme va trebui
         // să vă faceți o ierarhie proprie de excepții
-        throw std::runtime_error("Textura " + texture_name + " nu a fost gasita.");
+        // throw std::runtime_error("Textura " + texture_name + " nu a fost gasita.");
+        throw resources_exception("Textura " + texture_name + " nu a fost gasita.");
     }
 
     return m_textures[texture_name];
@@ -73,7 +77,7 @@ sf::Font& ResourceManager::getFont(const std::string& font_name)
     {
         // Fiind un exemplu demonstrativ aruncăm std::runtime_error, dar la teme va trebui
         // să vă faceți o ierarhie proprie de excepții
-        throw std::runtime_error("Font-ul " + font_name + " nu a fost gasit.");
+        throw resources_exception("Fontul " + font_name + " nu a fost gasita.");
     }
 
     return m_fonts[font_name];
