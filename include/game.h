@@ -8,7 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <stack>
-#include "Scene.h"
+#include "scene.h"
 
 
 class game {

@@ -12,10 +12,10 @@ ResourceManager& ResourceManager::Instance()
 
 ResourceManager::ResourceManager()
 {
-    loadTexture("images", "airplane.png");
     loadTexture("images", "podea-fin.png");
     loadTexture("images", "billy.png");
     loadFont("fonts", "FiraSans-Regular.ttf");
+    m_textures["podea-fin.png"].setRepeated(true);
 }
 
 void ResourceManager::loadTexture(const std::string& path, const std::string& texture_name)

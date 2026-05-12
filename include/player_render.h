@@ -15,7 +15,7 @@ private:
     static constexpr int FRAME_H=64;
     static constexpr int FRAME_COUNT=1;
     static constexpr int DIR_COUNT=1;
-    static constexpr float SPEED=130.f;
+    static constexpr float SPEED=500.f;
     static constexpr float BOX_W=18.f;
     static constexpr float BOX_H=24.f;
     static constexpr float FRAME_TIME=0.13f;
