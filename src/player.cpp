@@ -162,9 +162,9 @@ void player::arrange() {
     this->rucsac.merge_identic_slots();
 }
 
-// void player::enlarge_inventory(int sz) {
-//     this->rucsac.resize_inventory(sz);
-// }
+void player::enlarge_inventory(int sz) {
+    this->rucsac.resize_inventory(sz);
+}
 
 void player::eat_item(int pos) {
     if (pos<0 || pos>=this->rucsac.get_capacity()) {

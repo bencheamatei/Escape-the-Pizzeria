@@ -32,7 +32,7 @@ public:
 
     [[nodiscard]] int get_size() const;
     [[nodiscard]] int get_capacity() const;
-    // void resize_inventory(const int );
+    void resize_inventory(int);
     [[nodiscard]] inventorySlot get_item_at_index(int) const;
     void addItem(const inventorySlot &);
     inventorySlot pop_from_pos(int);

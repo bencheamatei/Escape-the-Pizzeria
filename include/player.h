@@ -30,7 +30,7 @@ public:
     void craftPizza();
     void drop_item(int);
     void arrange();
-    // void enlarge_inventory(int);
+    void enlarge_inventory(int);
     void eat_item(int);
 };
 
