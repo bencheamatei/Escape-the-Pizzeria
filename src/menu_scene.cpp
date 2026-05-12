@@ -93,7 +93,7 @@ void menu_scene::on_update(float dt) {
     }
 }
 
-void menu_scene::on_render(sf::RenderTarget& window) {
+void menu_scene::on_render(sf::RenderWindow& window) {
     window.draw(background);
     window.draw(overlay);
     window.draw(title);

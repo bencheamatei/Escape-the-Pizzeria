@@ -93,7 +93,7 @@ void game_scene::updateCamera(float dt) {
     game_view.setCenter(camera_pos);
 }
 
-void game_scene::on_render(sf::RenderTarget& window) {
+void game_scene::on_render(sf::RenderWindow& window) {
     window.setView(game_view);
     window.draw(room_);
     player_render_.draw(window);
@@ -103,7 +103,7 @@ void game_scene::on_render(sf::RenderTarget& window) {
     inventory_ui_.draw(window);
 }
 
-void game_scene::drawHUD(sf::RenderTarget& window) {
+void game_scene::drawHUD(sf::RenderWindow& window) {
     float frac = (float)player_data.getHp() / 100.f;
     hpBar.setSize({200.f * frac, 12.f});
     hpBar.setFillColor(

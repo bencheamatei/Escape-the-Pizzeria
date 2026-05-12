@@ -6,12 +6,11 @@
 #include "../ResourceManager.hpp"
 #include "menu_scene.h"
 
-game::game() : window(sf::VideoMode::getDesktopMode(), "Escape the Pizzeria", sf::Style::Fullscreen) {
+game::game() : window(sf::VideoMode(960,640), "Escape the Pizzeria"
+                , sf::Style::Close | sf::Style::Titlebar) {
 
     window.setFramerateLimit(60);
     ResourceManager::Instance();
-
-    backbuffer.create(960,640);
 }
 
 void game::run() {
@@ -50,21 +49,10 @@ void game::update(float dt) {
 }
 
 void game::render() {
-    backbuffer.clear(sf::Color(12,10,18));
+    window.clear(sf::Color(12,10,18));
     if (!d.empty()) {
-        d.top()->render(backbuffer);
+        d.top()->render(window);
     }
-    backbuffer.display();
-
-    backbuffer_sprite.setTexture(backbuffer.getTexture());
-    sf::Vector2u winSize = window.getSize();
-    float scale = std::min((float)winSize.x / 960.f, (float)winSize.y / 640.f);
-    backbuffer_sprite.setScale(scale, scale);
-    float posX = (winSize.x - 960.f * scale) / 2.f;
-    float posY = (winSize.y - 640.f * scale) / 2.f;
-    backbuffer_sprite.setPosition(posX, posY);
-    window.clear(sf::Color::Black);
-    window.draw(backbuffer_sprite);
     window.display();
 }
 

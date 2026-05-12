@@ -22,10 +22,6 @@ private:
     void render();
     void apply_lazy();
     void process_event();
-
-    sf::RenderTexture backbuffer;
-    sf::Sprite backbuffer_sprite;
-
 public:
     game();
     void run();

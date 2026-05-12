@@ -101,7 +101,7 @@ void player_render::update_sprite_rect() {
     ));
 }
 
-void player_render::draw(sf::RenderTarget &window) const {
+void player_render::draw(sf::RenderWindow &window) const {
     window.draw(sprite);
 }
 

@@ -28,7 +28,7 @@ private:
     bool show_cursor=true;
 
     void on_update(float) override;
-    void on_render(sf::RenderTarget &) override;
+    void on_render(sf::RenderWindow &) override;
     void on_event(const sf::Event &) override;
 
     void build_items();
