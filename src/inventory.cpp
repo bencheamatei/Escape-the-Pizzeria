@@ -30,11 +30,8 @@ inventory::inventory(const inventory &other) {
     copy_inventory_from(other);
 }
 
-inventory &inventory::operator=(const inventory &other) {
-    if (this==&other) {
-        return *this;
-    }
-    copy_inventory_from(other);
+inventory &inventory::operator=(inventory other) {
+    swap(*this,other);
     return *this;
 }
 
@@ -215,4 +212,9 @@ void inventory::merge_identic_slots() {
         }
     }
     rearrangeItems();
+}
+
+void swap(inventory &x, inventory &y) noexcept {
+    std::swap(x.items,y.items);
+    std::swap(x.max_capacity,y.max_capacity);
 }

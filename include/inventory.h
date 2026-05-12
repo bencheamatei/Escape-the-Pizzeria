@@ -26,7 +26,7 @@ public:
     inventory(const inventory &);
     inventory(std::initializer_list<inventorySlot>);
     inventory(std::initializer_list<inventorySlot>,int);
-    inventory &operator=(const inventory &);
+    inventory &operator=(inventory);
     ~inventory();
     friend std::ostream &operator<<(std::ostream &, const inventory &);
 
@@ -42,6 +42,7 @@ public:
     [[nodiscard]] const inventorySlot& get_at(int) const;
     void decrease_at_pos(int,int);
     void merge_identic_slots();
+    friend void swap(inventory&,inventory&) noexcept;
 };
 
 #endif //OOP_INVENTORY_H
