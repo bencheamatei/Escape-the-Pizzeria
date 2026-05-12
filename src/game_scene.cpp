@@ -11,7 +11,7 @@
 
 game_scene::game_scene(game& g)
     : scene(g)
-    , player_data(100, 100, 8)
+    , player_data(70, 100, 5)
     , room_(buildRoom(
         ResourceManager::Instance().getTexture("podea-fin.png")))
     , player_render_(
@@ -51,9 +51,9 @@ room game_scene::buildRoom(sf::Texture& floorTex) {
     room r({800.f, 600.f}, floorTex);
     r.spawn_point = {400.f, 340.f};
 
-    sf::Color wall      = sf::Color(70,  50, 35);
-    sf::Color furniture = sf::Color(88,  62, 38);
-    sf::Color counter   = sf::Color(100, 72, 44);
+    sf::Color wall=sf::Color(70,  50, 35);
+    sf::Color furniture=sf::Color(88,  62, 38);
+    sf::Color counter=sf::Color(100, 72, 44);
 
     r.add_wall(  0,   0, 300,  28, wall);
     r.add_wall(500,   0, 300,  28, wall);
@@ -61,15 +61,15 @@ room game_scene::buildRoom(sf::Texture& floorTex) {
     r.add_wall(  0,   0,  28, 600, wall);
     r.add_wall(772,   0,  28, 600, wall);
 
-    r.add_wall(520,  40, 240,  48, counter);
+    // r.add_wall(520,  40, 240,  48, counter);
+    //
+    // r.add_wall(100, 140, 110,  56, furniture);
+    // r.add_wall(100, 260, 110,  56, furniture);
+    // r.add_wall(590, 140, 110,  56, furniture);
+    // r.add_wall(590, 260, 110,  56, furniture);
 
-    r.add_wall(100, 140, 110,  56, furniture);
-    r.add_wall(100, 260, 110,  56, furniture);
-    r.add_wall(590, 140, 110,  56, furniture);
-    r.add_wall(590, 260, 110,  56, furniture);
-
-    r.add_wall(330, 380,  48, 110, wall);
-    r.add_wall(422, 380,  48, 110, wall);
+    // r.add_wall(330, 380,  48, 110, wall);
+    // r.add_wall(422, 380,  48, 110, wall);
 
     return r;
 }
