@@ -94,6 +94,25 @@ void menu_scene::on_update(float dt) {
 }
 
 void menu_scene::on_render(sf::RenderTarget& window) {
+
+    float windowRatio = (float)window.getSize().x / (float)window.getSize().y;
+    float viewRatio = (float)game::BASE_W / (float)game::BASE_H;
+
+    float sizeX = 1.0f, sizeY = 1.0f;
+    float posX = 0.0f, posY = 0.0f;
+
+    if (windowRatio >= viewRatio) {
+        sizeX = viewRatio / windowRatio;
+        posX = (1.0f - sizeX) / 2.0f;
+    } else {
+        sizeY = windowRatio / viewRatio;
+        posY = (1.0f - sizeY) / 2.0f;
+    }
+
+    sf::View menu_view(sf::FloatRect(0, 0, game::BASE_W, game::BASE_H));
+    menu_view.setViewport(sf::FloatRect(posX, posY, sizeX, sizeY));
+    window.setView(menu_view);
+
     window.draw(background);
     window.draw(overlay);
     window.draw(title);

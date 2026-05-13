@@ -101,6 +101,24 @@ void game_scene::updateCamera(float dt) {
 }
 
 void game_scene::on_render(sf::RenderTarget& window) {
+    float windowRatio = (float)window.getSize().x / (float)window.getSize().y;
+    float viewRatio = (float)game::BASE_W / (float)game::BASE_H;
+
+    float sizeX = 1.0f, sizeY = 1.0f;
+    float posX = 0.0f, posY = 0.0f;
+
+    if (windowRatio >= viewRatio) {
+        sizeX = viewRatio / windowRatio;
+        posX = (1.0f - sizeX) / 2.0f;
+    } else {
+        sizeY = windowRatio / viewRatio;
+        posY = (1.0f - sizeY) / 2.0f;
+    }
+
+    sf::FloatRect viewport(posX, posY, sizeX, sizeY);
+    game_view.setViewport(viewport);
+    hud_view.setViewport(viewport);
+
     window.setView(game_view);
     window.draw(room_);
     player_render_.draw(window);

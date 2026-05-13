@@ -92,6 +92,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/food_poisoning.h
         src/soda.cpp
         include/soda.h
+        src/animatronic.cpp
+        include/animatronic.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})

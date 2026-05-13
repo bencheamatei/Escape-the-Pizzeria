@@ -73,7 +73,22 @@ void pause_scene::on_update(float dt) {
 
 
 void pause_scene::on_render(sf::RenderTarget& target) {
-    sf::View fixed({480.f, 320.f}, {960.f, 640.f});
+    float windowRatio = (float)target.getSize().x / (float)target.getSize().y;
+    float viewRatio = (float)game::BASE_W / (float)game::BASE_H;
+
+    float sizeX = 1.0f, sizeY = 1.0f;
+    float posX = 0.0f, posY = 0.0f;
+
+    if (windowRatio >= viewRatio) {
+        sizeX = viewRatio / windowRatio;
+        posX = (1.0f - sizeX) / 2.0f;
+    } else {
+        sizeY = windowRatio / viewRatio;
+        posY = (1.0f - sizeY) / 2.0f;
+    }
+
+    sf::View fixed({480.f, 320.f}, {960.f, 640.f}); // Assuming BASE_W=960, BASE_H=640
+    fixed.setViewport(sf::FloatRect(posX, posY, sizeX, sizeY));
     target.setView(fixed);
 
     target.draw(overlay);
