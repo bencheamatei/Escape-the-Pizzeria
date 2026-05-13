@@ -4,6 +4,9 @@
 
 #include "dough.h"
 #include "player.h"
+#include <memory>
+
+#include "food_poisoning.h"
 
 dough::dough() : item("dough") {}
 
@@ -12,7 +15,8 @@ void dough::display(std::ostream &os) const {
 }
 
 void dough::on_use(player &p) {
-    p.heal(1); // not really worth eating plain dough
+    // not really worth eating plain dough
+    p.add_effect(std::make_unique<food_poisoning>());
 }
 
 item *dough::get_clone() const {

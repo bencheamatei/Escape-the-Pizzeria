@@ -36,6 +36,12 @@ player &player::operator=(const player &other) {
     this->hp=other.hp;
     this->maxHp=other.maxHp;
     this->rucsac=other.rucsac;
+    this->effects.clear();
+    for (const auto& effect : other.effects) {
+        if (effect != nullptr) {
+            this->effects.push_back(std::unique_ptr<status_effect>(effect->get_clone()));
+        }
+    }
     return *this;
 }
 
@@ -43,6 +49,12 @@ player::player(const player &other) {
     this->hp=other.hp;
     this->maxHp=other.maxHp;
     this->rucsac=other.rucsac;
+    this->effects.clear();
+    for (const auto& effect : other.effects) {
+        if (effect != nullptr) {
+            this->effects.push_back(std::unique_ptr<status_effect>(effect->get_clone()));
+        }
+    }
 }
 
 player::~player() = default;
@@ -87,13 +99,13 @@ void player::normalizeHp() {
 
 // pentru cand adaug animatronicii
 
-// void player::receiveDmg(const int x) {
-//     if (x<=0) {
-//         throw combat_exception("recieved damage must be > 0");
-//     }
-//     hp-=x;
-//     normalizeHp();
-// }
+void player::receiveDmg(const int x) {
+    if (x<=0) {
+        throw combat_exception("recieved damage must be > 0");
+    }
+    hp-=x;
+    normalizeHp();
+}
 
 void player::heal(const int x) {
     if (x<=0) {
@@ -176,8 +188,20 @@ void player::eat_item(int pos) {
     }
 
     item *curr=const_cast<item*>(this->rucsac.get_at(pos).getItem());
-    if (const_cast<item*>(this->rucsac.get_at(pos).getItem())!=nullptr) {
+    if (curr!=nullptr) {
         curr->use(*this);
         this->rucsac.decrease_at_pos(pos,1);
     }
+    this->process_effects();
+}
+
+void player::add_effect(std::unique_ptr<status_effect> effect) {
+    effects.push_back(std::move(effect));
+}
+
+void player::process_effects() {
+    for (auto& effect:effects) {
+        effect->trigger(*this);
+    }
+    effects.clear();
 }

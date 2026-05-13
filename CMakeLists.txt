@@ -86,6 +86,10 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/pause_scene.h
         src/backpack.cpp
         include/backpack.h
+        src/status_effect.cpp
+        include/status_effect.h
+        src/food_poisoning.cpp
+        include/food_poisoning.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})

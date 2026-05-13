@@ -5,14 +5,18 @@
 #ifndef OOP_PLAYER_H
 #define OOP_PLAYER_H
 #include <string>
+#include <vector>
+#include <memory>
 #include "inventory.h"
+#include "status_effect.h"
 
 class player {
 private:
-    const std::string nume="Billy";
+    static constexpr std::string nume="Billy";
     int hp;
     int maxHp;
     inventory rucsac;
+    std::vector<std::unique_ptr<status_effect> > effects;
     void normalizeHp();
 public:
     player();
@@ -25,13 +29,15 @@ public:
     void addItem(const inventorySlot &);
     [[nodiscard]] bool isAlive() const;
     [[nodiscard]] int getHp() const;
-    // void receiveDmg(int x);
+    void receiveDmg(int x);
     void heal(int x);
     void craftPizza();
     void drop_item(int);
     void arrange();
     void enlarge_inventory(int);
     void eat_item(int);
+    void add_effect(std::unique_ptr<status_effect> effect);
+    void process_effects();
 };
 
 #endif //OOP_PLAYER_H
