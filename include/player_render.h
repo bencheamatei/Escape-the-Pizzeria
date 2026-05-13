@@ -35,7 +35,7 @@ private:
 
     Dir facing=Dir::Down;
     int frame=0;
-    float frameTimer=0.0f;
+    // float frameTimer=0.0f;
 
     void resolve_collision(sf::Vector2f, const room&);
     bool overlap_solid(sf::FloatRect, const room&) const;
