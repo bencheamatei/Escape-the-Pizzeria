@@ -19,11 +19,11 @@ private:
     static constexpr float SLOT_GAP   =  6.f;
     static constexpr float BOTTOM_PAD = 14.f;
 
-    void draw_slot(sf::RenderWindow&,int idx,sf::Vector2f,bool) const;
+    void draw_slot(sf::RenderTarget&,int idx,sf::Vector2f,bool) const;
     [[nodiscard]] std::string get_texture_name(const inventorySlot &) const;
 public:
     inventory_ui(const player&, sf::Font&);
-    void draw(sf::RenderWindow&) const;
+    void draw(sf::RenderTarget&) const;
     void event_handler(const sf::Event&,player&);
 };
 

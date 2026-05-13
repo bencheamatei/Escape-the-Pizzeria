@@ -72,7 +72,7 @@ void pause_scene::on_update(float dt) {
 }
 
 
-void pause_scene::on_render(sf::RenderWindow& target) {
+void pause_scene::on_render(sf::RenderTarget& target) {
     sf::View fixed({480.f, 320.f}, {960.f, 640.f});
     target.setView(fixed);
 

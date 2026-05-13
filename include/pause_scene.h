@@ -29,7 +29,7 @@ private:
     void confirm();
 
     void on_update(float dt) override;
-    void on_render(sf::RenderWindow& target) override;
+    void on_render(sf::RenderTarget& target) override;
     void on_event(const sf::Event& event) override;
 public:
     explicit pause_scene(game&);

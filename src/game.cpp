@@ -5,12 +5,31 @@
 #include "../include/game.h"
 #include "../ResourceManager.hpp"
 #include "menu_scene.h"
+#include <cmath>
 
-game::game() : window(sf::VideoMode(960,640), "Escape the Pizzeria"
-                , sf::Style::Close | sf::Style::Titlebar) {
-
-    window.setFramerateLimit(60);
+game::game() {
+    rebuild_window(false);
+    render_tex.create(BASE_W,BASE_H);
+    render_sprite.setTexture(render_tex.getTexture());
+    render_tex.setSmooth(true);
     ResourceManager::Instance();
+}
+
+
+void game::rebuild_window(bool fullscreen) {
+    is_fullscreen=fullscreen;
+    if (fullscreen) {
+        window.create(sf::VideoMode::getDesktopMode(), "Escape the Pizzeria", sf::Style::Fullscreen);
+    }
+    else {
+        window.create(sf::VideoMode(BASE_W, BASE_H), "Escape the Pizzeria",
+            sf::Style::Close|sf::Style::Titlebar);
+    }
+    window.setFramerateLimit(60);
+}
+
+void game::toggle_fullscreen() {
+    rebuild_window(!is_fullscreen);
 }
 
 void game::run() {
@@ -36,6 +55,12 @@ void game::process_event() {
             window.close();
         }
 
+        if (event.type==sf::Event::KeyPressed) {
+            if (event.key.code==sf::Keyboard::F11) {
+                toggle_fullscreen();
+            }
+        }
+
         if (!d.empty()) {
             d.top()->event_handler(event);
         }
@@ -49,10 +74,22 @@ void game::update(float dt) {
 }
 
 void game::render() {
-    window.clear(sf::Color(12,10,18));
-    if (!d.empty()) {
-        d.top()->render(window);
-    }
+    render_tex.clear(sf::Color(12, 10, 18));
+    if (!d.empty()) d.top()->render(render_tex);
+    render_tex.display();
+
+    float wx=(float)window.getSize().x;
+    float wy=(float)window.getSize().y;
+    float precise_scale=std::min(wx / BASE_W, wy / BASE_H);
+    // float scale = std::max(1.0f, std::floor(precise_scale));
+
+    render_sprite.setScale(precise_scale, precise_scale);
+    render_sprite.setPosition(
+        std::floor((wx - BASE_W * precise_scale) / 2.f),
+        std::floor((wy - BASE_H * precise_scale) / 2.f));
+
+    window.clear(sf::Color::Black);
+    window.draw(render_sprite);
     window.display();
 }
 

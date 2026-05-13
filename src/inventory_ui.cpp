@@ -8,7 +8,7 @@
 
 inventory_ui::inventory_ui(const player &p, sf::Font &font) : player_data(p), font(font) {}
 
-void inventory_ui::draw(sf::RenderWindow &window) const {
+void inventory_ui::draw(sf::RenderTarget &window) const {
     const inventory &inv=player_data.get_inventory();
     int capacity=inv.get_capacity();
 
@@ -36,7 +36,7 @@ void inventory_ui::draw(sf::RenderWindow &window) const {
 
 }
 
-void inventory_ui::draw_slot(sf::RenderWindow &window, int idx, sf::Vector2f pos, bool selectat) const {
+void inventory_ui::draw_slot(sf::RenderTarget &window, int idx, sf::Vector2f pos, bool selectat) const {
     const inventory &inv=player_data.get_inventory();
     inventorySlot slot=inv.get_item_at_index(idx);
 

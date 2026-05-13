@@ -23,6 +23,11 @@ private:
     void apply_lazy();
     void process_event();
     static bool debug_mode;
+
+    sf::RenderTexture render_tex;
+    sf::Sprite render_sprite;
+    bool is_fullscreen = false;
+
 public:
     game();
     void run();
@@ -31,6 +36,13 @@ public:
     sf::RenderWindow& get_window();
     static void toggle_debug_mode();
     static bool is_debug_mode();
+
+    void rebuild_window(bool fullscreen);
+
+    static constexpr unsigned BASE_W = 960;
+    static constexpr unsigned BASE_H = 640;
+
+    void toggle_fullscreen();
 };
 
 

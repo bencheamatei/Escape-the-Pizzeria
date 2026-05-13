@@ -12,6 +12,7 @@
 #include "topping.h"
 #include "pizza.h"
 #include "soda.h"
+#include <cmath>
 
 game_scene::game_scene(game& g)
     : scene(g)
@@ -96,10 +97,10 @@ void game_scene::updateCamera(float dt) {
     float hh = game_view.getSize().y / 2.f;
     camera_pos.x = std::clamp(camera_pos.x, hw, room_.get_size().x - hw);
     camera_pos.y = std::clamp(camera_pos.y, hh, room_.get_size().y - hh);
-    game_view.setCenter(camera_pos);
+    game_view.setCenter(std::floor(camera_pos.x), std::floor(camera_pos.y));
 }
 
-void game_scene::on_render(sf::RenderWindow& window) {
+void game_scene::on_render(sf::RenderTarget& window) {
     window.setView(game_view);
     window.draw(room_);
     player_render_.draw(window);
@@ -109,7 +110,7 @@ void game_scene::on_render(sf::RenderWindow& window) {
     inventory_ui_.draw(window);
 }
 
-void game_scene::drawHUD(sf::RenderWindow& window) {
+void game_scene::drawHUD(sf::RenderTarget& window) {
     float frac = (float)player_data.getHp() / 100.f;
     hpBar.setSize({200.f * frac, 12.f});
     hpBar.setFillColor(

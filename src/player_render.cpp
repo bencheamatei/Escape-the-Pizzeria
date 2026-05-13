@@ -107,7 +107,7 @@ void player_render::update_sprite_rect() {
     ));
 }
 
-void player_render::draw(sf::RenderWindow &window) const {
+void player_render::draw(sf::RenderTarget &window) const {
     window.draw(sprite);
     if (game::is_debug_mode()) {
         sf::RectangleShape hitbox({BOX_W, BOX_H});

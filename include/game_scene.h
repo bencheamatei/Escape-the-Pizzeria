@@ -30,11 +30,11 @@ private:
     static constexpr float CAM_LERP = 5.0f;
 
     void on_update(float dt) override;
-    void on_render(sf::RenderWindow& window) override;
+    void on_render(sf::RenderTarget& window) override;
     void on_event(const sf::Event& event) override;
 
     void updateCamera(float dt);
-    void drawHUD(sf::RenderWindow& window);
+    void drawHUD(sf::RenderTarget& window);
 
     static room buildRoom(sf::Texture& floorTex);
 
