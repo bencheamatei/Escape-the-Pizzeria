@@ -12,7 +12,7 @@
 
 class player {
 private:
-    static constexpr std::string nume="Billy";
+    const std::string nume="Billy";
     int hp;
     int maxHp;
     inventory rucsac;
