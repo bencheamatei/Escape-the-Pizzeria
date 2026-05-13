@@ -6,6 +6,7 @@
 #include "pizza.h"
 #include "topping.h"
 #include "dough.h"
+#include "soda.h"
 #include <iostream>
 
 #include "backpack.h"
@@ -104,4 +105,8 @@ void inventorySlot::clear() {
     delete this->Item;
     this->Item=nullptr;
     this->cntItem=0;
+}
+
+bool inventorySlot::is_soda() const {
+    return dynamic_cast<soda*>(Item)!=nullptr;
 }

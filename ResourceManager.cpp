@@ -21,6 +21,7 @@ ResourceManager::ResourceManager()
     loadTexture("images", "pepperoni.png");
     loadTexture("images", "mushroom.png");
     loadTexture("images", "backpack.png");
+    loadTexture("images", "soda.png");
 
     loadFont("fonts", "FiraSans-Regular.ttf");
     m_textures["podea-fin.png"].setRepeated(true);
@@ -32,9 +33,6 @@ void ResourceManager::loadTexture(const std::string& path, const std::string& te
 
     if(!texture.loadFromFile(path + '/' + texture_name))
     {
-        // Fiind un exemplu demonstrativ aruncăm std::runtime_error, dar la teme va trebui
-        // să vă faceți o ierarhie proprie de excepții
-        // throw std::runtime_error("Textura " + texture_name + " nu a putut fi incarcata.");
         throw resources_exception("Textura " + texture_name + " nu a putut fi incarcata.");
     }
 
@@ -47,9 +45,6 @@ void ResourceManager::loadFont(const std::string& path, const std::string& font_
 
     if(!font.loadFromFile(path + '/' + font_name))
     {
-        // Fiind un exemplu demonstrativ aruncăm std::runtime_error, dar la teme va trebui
-        // să vă faceți o ierarhie proprie de excepții
-        // throw std::runtime_error("Textura " + font_name + " nu a putut fi incarcata.");
         throw resources_exception("Fontul " + font_name + " nu a putut fi incarcat.");
     }
 
@@ -59,12 +54,8 @@ void ResourceManager::loadFont(const std::string& path, const std::string& font_
 
 sf::Texture& ResourceManager::getTexture(const std::string& texture_name)
 {
-    // Înainte de a returna o textură trebuie să verificăm dacă acea textură există.
     if(m_textures.find(texture_name) == m_textures.end())
     {
-        // Fiind un exemplu demonstrativ aruncăm std::runtime_error, dar la teme va trebui
-        // să vă faceți o ierarhie proprie de excepții
-        // throw std::runtime_error("Textura " + texture_name + " nu a fost gasita.");
         throw resources_exception("Textura " + texture_name + " nu a fost gasita.");
     }
 
@@ -73,11 +64,8 @@ sf::Texture& ResourceManager::getTexture(const std::string& texture_name)
 
 sf::Font& ResourceManager::getFont(const std::string& font_name)
 {
-    // Înainte de a returna un font trebuie să verificăm dacă acel font există.
     if(m_fonts.find(font_name) == m_fonts.end())
     {
-        // Fiind un exemplu demonstrativ aruncăm std::runtime_error, dar la teme va trebui
-        // să vă faceți o ierarhie proprie de excepții
         throw resources_exception("Fontul " + font_name + " nu a fost gasita.");
     }
 
