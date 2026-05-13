@@ -12,6 +12,7 @@ private:
     int sz_upgrade;
 public:
     explicit backpack(int sz=8);
+    ~backpack() override = default;
     void display(std::ostream &os) const override;
     void on_use(player &) override;
     [[nodiscard]] item* get_clone() const override;

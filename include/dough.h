@@ -12,6 +12,7 @@ private:
     void display(std::ostream &os) const override;
 public:
     dough();
+    ~dough() override = default;
     [[nodiscard]] item* get_clone() const override;
     void on_use(player &p) override;
 };
