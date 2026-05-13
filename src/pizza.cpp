@@ -41,7 +41,7 @@ item *pizza::get_clone() const {
 //     return this->total_dmg;
 // }
 
-void pizza::print(std::ostream &os) const {
+void pizza::display(std::ostream &os) const {
     os << "Pizza: {";
     for (const auto& it:toppings) {
         os << it;
@@ -50,7 +50,7 @@ void pizza::print(std::ostream &os) const {
 }
 
 std::ostream &operator<<(std::ostream &os, const pizza &pizza) {
-    pizza.print(os);
+    pizza.display(os);
     return os;
 }
 

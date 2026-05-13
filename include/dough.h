@@ -8,11 +8,12 @@
 #include "item.h"
 
 class dough : public item {
+private:
+    void display(std::ostream &os) const override;
 public:
     dough();
     [[nodiscard]] item* get_clone() const override;
     void on_use(player &p) override;
-    void display(std::ostream &os) const override;
 };
 
 #endif //OOP_DOUGH_H

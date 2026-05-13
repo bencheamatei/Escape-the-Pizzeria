@@ -15,7 +15,7 @@ private:
     static constexpr int FRAME_H=64;
     static constexpr int FRAME_COUNT=1;
     static constexpr int DIR_COUNT=1;
-    static constexpr float SPEED=500.f;
+    static constexpr float SPEED=1000.0f;
     static constexpr float BOX_W=18.f;
     static constexpr float BOX_H=24.f;
     static constexpr float FRAME_TIME=0.13f;
@@ -39,7 +39,7 @@ private:
 
     void resolve_collision(sf::Vector2f, const room&);
     bool overlap_solid(sf::FloatRect, const room&) const;
-    void update_animation(float);
+    // void update_animation(float);
     void update_sprite_rect();
 
 public:

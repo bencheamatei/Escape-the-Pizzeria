@@ -14,6 +14,7 @@ private:
     int total_dmg;
     std::vector<topping> toppings;
     void calculate_total_dmg();
+    void display(std::ostream &os) const override;
 public:
     pizza();
     explicit pizza(const std::vector<topping>&);
@@ -23,7 +24,6 @@ public:
     [[nodiscard]] item *get_clone() const override;
     // [[nodiscard]] int get_dmg() const;
     friend std::ostream& operator<<(std::ostream& os, const pizza& p);
-    void print(std::ostream &os) const override;
     void on_use(player &p) override;
 };
 

@@ -23,7 +23,6 @@ public:
     explicit item(const std::string &);
     virtual ~item();
 
-    virtual void print(std::ostream &os) const;
     [[nodiscard]] virtual std::string get_nume() const;
     friend std::ostream &operator<<(std::ostream &, const item &);
     friend std::istream &operator>>(std::istream &, item &);

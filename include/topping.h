@@ -10,7 +10,6 @@
 class topping : public item {
 private:
     int damage;
-protected:
     void display(std::ostream &os) const override;
 public:
     topping();

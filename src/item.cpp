@@ -33,10 +33,6 @@ void item::display(std::ostream &os) const {
     os << "Item: {Nume: " << this->nume << "}";
 }
 
-void item::print(std::ostream &os) const {
-    display(os);
-}
-
 void item::use(player &p) {
     if (p.isAlive()) {
         this->on_use(p);
