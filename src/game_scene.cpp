@@ -13,14 +13,23 @@
 #include "pizza.h"
 #include "soda.h"
 #include <cmath>
+#include <codecvt>
 
 game_scene::game_scene(game& g)
     : scene(g)
     , player_data(70, 100, 5)
     , room_(buildRoom(ResourceManager::Instance().getTexture("tileset.png")))
-    , player_render_(player_data,ResourceManager::Instance().getTexture("billy.png"),room_.spawn_point)
+    , player_render_(player_data,ResourceManager::Instance().getTexture("billy.png"),{0.f,0.f})
     , inventory_ui_(player_data,ResourceManager::Instance().getFont("FiraSans-Regular.ttf"))
 {
+    auto& tileset = ResourceManager::Instance().getTexture("tileset.png");
+
+    rooms.push_back(buildPizzeriaMain(tileset));
+    rooms.push_back(buildKitchen(tileset));
+
+    player_render_.set_position(current_room().spawn_point);
+    camera_pos = current_room().spawn_point;
+
     try {
         player_data.addItem(inventorySlot(dough(), 2));
         player_data.addItem(inventorySlot(topping("pepperoni", 5), 3));
@@ -48,6 +57,10 @@ game_scene::game_scene(game& g)
     hpLabel.setPosition(20.f, 38.f);
 }
 
+room &game_scene::current_room() {
+    return rooms[room_idx];
+}
+
 room game_scene::buildRoom(sf::Texture& floorTex) {
     std::vector<std::vector<int>> level_map = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -67,10 +80,72 @@ room game_scene::buildRoom(sf::Texture& floorTex) {
     return r;
 }
 
+room game_scene::buildPizzeriaMain(sf::Texture& tex) {
+    std::vector<std::vector<int>> grid = {
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
+        {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1},
+    };
+
+    room r(grid, tex, 64);
+    r.spawn_point = {3 * 64.f + 32.f, 4 * 64.f + 32.f};
+
+    r.add_door(7, 8, 1, {7 * 64.f + 32.f, 1 * 64.f + 32.f});
+
+    return r;
+}
+
+room game_scene::buildKitchen(sf::Texture& tex) {
+    std::vector<std::vector<int>> grid = {
+        {1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
+        {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    };
+
+    room r(grid, tex, 64);
+    r.spawn_point = {7 * 64.f + 32.f, 2 * 64.f + 32.f};
+
+    r.add_door(7, 0, 0, {7 * 64.f + 32.f, 7 * 64.f + 32.f});
+
+    return r;
+}
+
+void game_scene::door_transition() {
+    const door* usa = current_room().check_door(player_render_.get_position());
+    if (!usa) return;
+
+    room_idx = usa->room_id;
+
+    player_render_.set_position(usa->spawn);
+    camera_pos = usa->spawn;
+
+    door_cooldown = DOOR_COOLDOWN;
+}
+
+
 void game_scene::on_update(float dt) {
     if (!player_data.isAlive()) return;
     player_render_.handle_input();
-    player_render_.update(dt, room_);
+    player_render_.update(dt, current_room());
+
+    if (door_cooldown>0.0f) {
+        door_cooldown-=dt;
+    }
+    else {
+        door_transition();
+    }
+
     updateCamera(dt);
 }
 
@@ -81,8 +156,8 @@ void game_scene::updateCamera(float dt) {
 
     float hw = game_view.getSize().x / 2.f;
     float hh = game_view.getSize().y / 2.f;
-    camera_pos.x = std::clamp(camera_pos.x, hw, room_.get_size().x - hw);
-    camera_pos.y = std::clamp(camera_pos.y, hh, room_.get_size().y - hh);
+    camera_pos.x = std::clamp(camera_pos.x, hw, current_room().get_size().x - hw);
+    camera_pos.y = std::clamp(camera_pos.y, hh, current_room().get_size().y - hh);
     game_view.setCenter(std::floor(camera_pos.x), std::floor(camera_pos.y));
 }
 
@@ -106,7 +181,7 @@ void game_scene::on_render(sf::RenderTarget& window) {
     hud_view.setViewport(viewport);
 
     window.setView(game_view);
-    window.draw(room_);
+    window.draw(current_room());
     player_render_.draw(window);
 
     window.setView(hud_view);

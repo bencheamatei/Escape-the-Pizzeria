@@ -2,7 +2,7 @@
 #include <cmath>
 
 room::room(const std::vector<std::vector<int>>& grid, sf::Texture& tex, int t_size)
-    : map_grid(grid), tileset(tex), tile_size(t_size) {}
+    : map_grid(grid), tileset(&tex), tile_size(t_size) {}
 
 sf::Vector2f room::get_size() const {
     if (map_grid.empty()) return {0.f, 0.f};
@@ -10,7 +10,10 @@ sf::Vector2f room::get_size() const {
 }
 
 void room::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    sf::Sprite tile_sprite(tileset);
+    if (!tileset)
+        return;
+
+    sf::Sprite tile_sprite(*tileset);
     
     for (size_t y = 0; y < map_grid.size(); ++y) {
         for (size_t x = 0; x < map_grid[y].size(); ++x) {
@@ -40,10 +43,33 @@ bool room::collide(sf::FloatRect bounds) const {
 
     for (int y = top_tile; y <= bottom_tile; ++y) {
         for (int x = left_tile; x <= right_tile; ++x) {
-            if (map_grid[y][x] != 0) {
+            if (map_grid[y][x] == 1) {
                 return true;
             }
         }
     }
     return false;
+}
+
+const door *room::check_door(sf::Vector2f pos) const {
+    int gx = (int)(pos.x / tile_size);
+    int gy = (int)(pos.y / tile_size);
+
+    for (const auto& door : doors) {
+        if (door.lin == gx && door.col == gy) {
+            return &door;
+        }
+    }
+    return nullptr;
+}
+
+int room::get_tile(int x, int y) const {
+    if (x<0 || y<0 || x>=map_grid.size() || y>=map_grid[x].size()) {
+        return 1;
+    }
+    return map_grid[x][y];
+}
+
+void room::add_door(int x, int y, int care_camera, sf::Vector2f target_spawn) {
+    doors.push_back({x,y,care_camera,target_spawn});
 }

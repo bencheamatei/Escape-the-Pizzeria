@@ -35,8 +35,19 @@ private:
 
     void updateCamera(float dt);
     void drawHUD(sf::RenderTarget& window);
+    void door_transition();
 
     static room buildRoom(sf::Texture& floorTex);
+
+    std::vector<room> rooms;
+    int room_idx=0;
+    float door_cooldown = 0.f;
+    static constexpr float DOOR_COOLDOWN = 0.8f;
+
+    room& current_room();
+
+    static room buildPizzeriaMain(sf::Texture& tex);
+    static room buildKitchen(sf::Texture& tex);
 
 public:
     explicit game_scene(game&);

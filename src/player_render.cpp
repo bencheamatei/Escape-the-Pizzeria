@@ -15,11 +15,10 @@ player_render::player_render(player &p, sf::Texture &texture, sf::Vector2f init_
 }
 
 // daca implementez un sistem de spawnpoint
-
-// void player_render::set_position(sf::Vector2f pos) {
-//     position=pos;
-//     sprite.setPosition(pos);
-// }
+void player_render::set_position(sf::Vector2f pos) {
+    position=pos;
+    sprite.setPosition(pos);
+}
 
 void player_render::handle_input() {
     velocity={0.0f,0.0f};
