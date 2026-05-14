@@ -13,7 +13,8 @@
 #include "pizza.h"
 #include "soda.h"
 #include <cmath>
-#include <codecvt>
+
+#include "freddy.h"
 
 game_scene::game_scene(game& g)
     : scene(g)
@@ -55,6 +56,15 @@ game_scene::game_scene(game& g)
     hpLabel.setCharacterSize(11);
     hpLabel.setFillColor(sf::Color(220, 210, 230));
     hpLabel.setPosition(20.f, 38.f);
+
+    auto foxy_data = std::make_unique<freddy>();
+    auto foxy_render = std::make_unique<animatronic_render>(
+        *foxy_data,
+        ResourceManager::Instance().getTexture("freddy.png"),
+        sf::Vector2f(400.f, 400.f)
+    );
+
+    enemies.push_back({std::move(foxy_data), std::move(foxy_render)});
 }
 
 room &game_scene::current_room() {
@@ -146,6 +156,17 @@ void game_scene::on_update(float dt) {
         door_transition();
     }
 
+    for (auto& enemy : enemies) {
+        enemy.render->update(dt, current_room(), player_render_.get_position());
+        enemy.data->tick_timer(dt);
+        if (enemy.render->get_bounds().intersects(player_render_.get_bound())) {
+            if (enemy.data->can_attack()) {
+                enemy.data->on_attack(player_data);
+                enemy.data->reset_cooldown();
+            }
+        }
+    }
+
     updateCamera(dt);
 }
 
@@ -183,6 +204,10 @@ void game_scene::on_render(sf::RenderTarget& window) {
     window.setView(game_view);
     window.draw(current_room());
     player_render_.draw(window);
+
+    for (const auto& enemy : enemies) {
+        enemy.render->draw(window);
+    }
 
     window.setView(hud_view);
     drawHUD(window);

@@ -11,6 +11,13 @@
 #include "inventory_ui.h"
 #include "player.h"
 #include "scene.h"
+#include "animatronic.h"
+#include "animatronic_render.h"
+
+struct EnemyEntity {
+    std::unique_ptr<animatronic> data;
+    std::unique_ptr<animatronic_render> render;
+};
 
 class game_scene : public scene {
 private:
@@ -48,6 +55,8 @@ private:
 
     static room buildPizzeriaMain(sf::Texture& tex);
     static room buildKitchen(sf::Texture& tex);
+
+    std::vector<EnemyEntity> enemies;
 
 public:
     explicit game_scene(game&);

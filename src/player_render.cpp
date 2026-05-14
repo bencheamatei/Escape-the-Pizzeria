@@ -135,3 +135,7 @@ void player_render::update(float dt, const room &room) {
 sf::Vector2f player_render::get_position() const {
     return position;
 }
+
+sf::FloatRect player_render::get_bound() const {
+    return sf::FloatRect(position.x - BOX_W / 2.0f, position.y - BOX_H / 2.0f, BOX_W, BOX_H);
+}

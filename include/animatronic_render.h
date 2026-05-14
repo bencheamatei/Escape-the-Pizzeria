@@ -1,0 +1,34 @@
+//
+// Created by matei on 5/14/2026.
+//
+
+#ifndef OOP_ANIMATRONIC_RENDER_H
+#define OOP_ANIMATRONIC_RENDER_H
+
+#include "animatronic.h"
+#include <SFML/Graphics.hpp>
+#include "room.h"
+
+class animatronic_render {
+private:
+    animatronic& data;
+    sf::Sprite sprite;
+    sf::Vector2f pos;
+    static constexpr float BOX_W = 18.f;
+    static constexpr float BOX_H = 24.f;
+
+    void resolve_collision(sf::Vector2f delta, const room& room);
+    bool overlap_solid(sf::FloatRect rect, const room& room) const;
+
+public:
+    animatronic_render(animatronic& a, sf::Texture& texture, sf::Vector2f init_pos);
+
+    void update(float dt, const room& room, sf::Vector2f target_pos);
+    void draw(sf::RenderTarget& window) const;
+
+    sf::FloatRect get_bounds() const;
+    sf::Vector2f get_position() const;
+};
+
+
+#endif //OOP_ANIMATRONIC_RENDER_H
