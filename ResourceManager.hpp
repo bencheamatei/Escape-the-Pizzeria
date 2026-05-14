@@ -37,6 +37,8 @@ private:
 
     std::unordered_map<std::string, sf::Texture> m_textures; // Aici vom ține toate texturile încărcate
     std::unordered_map<std::string, sf::Font> m_fonts; // Aici vom ține toate font-urile încărcate
+
+    sf::Image generate_tileset(int tile_size);
 };
 
 

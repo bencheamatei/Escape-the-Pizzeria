@@ -17,15 +17,9 @@
 game_scene::game_scene(game& g)
     : scene(g)
     , player_data(70, 100, 5)
-    , room_(buildRoom(
-        ResourceManager::Instance().getTexture("podea-fin.png")))
-    , player_render_(
-        player_data,
-        ResourceManager::Instance().getTexture("billy.png"),
-        room_.spawn_point)
-    , inventory_ui_(
-        player_data,
-        ResourceManager::Instance().getFont("FiraSans-Regular.ttf"))
+    , room_(buildRoom(ResourceManager::Instance().getTexture("tileset.png")))
+    , player_render_(player_data,ResourceManager::Instance().getTexture("billy.png"),room_.spawn_point)
+    , inventory_ui_(player_data,ResourceManager::Instance().getFont("FiraSans-Regular.ttf"))
 {
     try {
         player_data.addItem(inventorySlot(dough(), 2));
@@ -55,28 +49,20 @@ game_scene::game_scene(game& g)
 }
 
 room game_scene::buildRoom(sf::Texture& floorTex) {
-    room r({800.f, 600.f}, floorTex);
-    r.spawn_point = {400.f, 340.f};
+    std::vector<std::vector<int>> level_map = {
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
+        {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+    };
 
-    sf::Color wall=sf::Color(70,  50, 35);
-    sf::Color furniture=sf::Color(88,  62, 38);
-    sf::Color counter=sf::Color(100, 72, 44);
-
-    r.add_wall(  0,   0, 300,  28, wall);
-    r.add_wall(500,   0, 300,  28, wall);
-    r.add_wall(  0, 572, 800,  28, wall);
-    r.add_wall(  0,   0,  28, 600, wall);
-    r.add_wall(772,   0,  28, 600, wall);
-
-    r.add_wall(520,  40, 240,  48, counter);
-
-    r.add_wall(100, 140, 110,  56, furniture);
-    r.add_wall(100, 260, 110,  56, furniture);
-    r.add_wall(590, 140, 110,  56, furniture);
-    r.add_wall(590, 260, 110,  56, furniture);
-
-    r.add_wall(330, 380,  48, 110, wall);
-    r.add_wall(422, 380,  48, 110, wall);
+    room r(level_map, floorTex, 64);
+    r.spawn_point = {200.f, 100.f};
 
     return r;
 }
