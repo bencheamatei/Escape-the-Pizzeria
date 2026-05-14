@@ -63,12 +63,12 @@ const door *room::check_door(sf::Vector2f pos) const {
     return nullptr;
 }
 
-int room::get_tile(int x, int y) const {
-    if (x<0 || y<0 || x>=map_grid.size() || y>=map_grid[x].size()) {
-        return 1;
-    }
-    return map_grid[x][y];
-}
+// int room::get_tile(int x, int y) const {
+//     if (x<0 || y<0 || x>=(int)map_grid.size() || y>=(int)map_grid[x].size()) {
+//         return 1;
+//     }
+//     return map_grid[x][y];
+// }
 
 void room::add_door(int x, int y, int care_camera, sf::Vector2f target_spawn) {
     doors.push_back({x,y,care_camera,target_spawn});

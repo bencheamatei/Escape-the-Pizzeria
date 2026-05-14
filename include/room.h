@@ -40,7 +40,7 @@ public:
     [[nodiscard]] bool collide(sf::FloatRect bounds) const;
     [[nodiscard]] sf::Vector2f get_size() const;
 
-    [[nodiscard]] int get_tile(int x, int y) const;
+    // [[nodiscard]] int get_tile(int x, int y) const;
     void add_door(int x,int y,int care_camera, sf::Vector2f target_spawn);
-    const door* check_door(sf::Vector2f pos) const;
+    [[nodiscard]] const door* check_door(sf::Vector2f pos) const;
 };
