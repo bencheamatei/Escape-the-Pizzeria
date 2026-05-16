@@ -9,7 +9,7 @@
 
 animatronic::animatronic(std::string nume, int dmg, float speed, bool active, float rate) :
     name(std::move(nume)), damage(dmg), speed(speed), active(active),
-    attack_rate(rate), attack_cooldown(0.f) {}
+    attack_cooldown(0.0f), attack_rate(rate) {}
 
 bool animatronic::is_active() const {
     return active;

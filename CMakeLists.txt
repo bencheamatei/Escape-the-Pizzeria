@@ -13,9 +13,6 @@ include(cmake/Options.cmake)
 include(cmake/CompilerFlags.cmake)
 include(cmake/CopyHelper.cmake)
 
-###############################################################################
-# SETUP SFML (Versiunea de la profesor: 2.6.2)
-###############################################################################
 include(FetchContent)
 
 set(FETCHCONTENT_QUIET OFF)
@@ -31,22 +28,14 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(SFML)
 
-###############################################################################
-# DEPENDENȚE EXTERNE
-###############################################################################
 find_package(Threads REQUIRED)
 if(APPLE)
 elseif(UNIX)
     find_package(X11)
 endif()
 
-###############################################################################
-# CLASELE TALE + SURSELE TEMPLATE-ULUI
-###############################################################################
 add_executable(${MAIN_EXECUTABLE_NAME}
         main.cpp
-
-        # Clasele tale OOP
         include/item.h
         src/item.cpp
         include/topping.h
@@ -64,7 +53,6 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/dough.h
         src/dough.cpp
 
-        # Fișierele aduse de branch-ul SFML (Lasă-le comentate dacă nu le folosești încă sau dacă primești eroare că nu există)
         generated/src/Helper.cpp
         ResourceManager.cpp
         ResourceManager.hpp
@@ -102,15 +90,10 @@ add_executable(${MAIN_EXECUTABLE_NAME}
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})
 
-###############################################################################
-# LINK-UIRE ȘI FOLDERE INCLUDE
-###############################################################################
-# 1. Folderul tău 'include' pentru clasele OOP
 target_include_directories(${MAIN_EXECUTABLE_NAME} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
 )
 
-# 2. Folderele și librăriile SFML
 target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE generated/include)
 target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ${SFML_SOURCE_DIR}/include)
 target_link_directories(${MAIN_EXECUTABLE_NAME} PRIVATE ${SFML_BINARY_DIR}/lib)
@@ -121,15 +104,11 @@ elseif(UNIX)
     target_link_libraries(${MAIN_EXECUTABLE_NAME} PRIVATE X11)
 endif()
 
-###############################################################################
-# COPIERE FIȘIERE (Imagini, sunete, fonturi)
-###############################################################################
 install(TARGETS ${MAIN_EXECUTABLE_NAME} DESTINATION ${DESTINATION_DIR})
 if(APPLE)
     install(FILES launcher.command DESTINATION ${DESTINATION_DIR})
 endif()
 
-# Copiem DLL-urile necesare pentru audio pe Windows
 if (WIN32 AND SFML_BUILD_AUDIO)
     add_custom_command(TARGET ${MAIN_EXECUTABLE_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
@@ -138,5 +117,4 @@ if (WIN32 AND SFML_BUILD_AUDIO)
     )
 endif()
 
-# Copiem fișierele text și folderele cu grafică/resurse unde are nevoie executabilul
 copy_files(FILES tastatura.txt DIRECTORY assets images fonts COPY_TO_DESTINATION TARGET_NAME ${MAIN_EXECUTABLE_NAME})
