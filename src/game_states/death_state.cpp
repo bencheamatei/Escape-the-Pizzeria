@@ -60,6 +60,3 @@ void death_state::on_render(game_scene &ctx, sf::RenderTarget &t) {
     }
 }
 
-std::string death_state::get_name() const {
-    return "dying";
-}

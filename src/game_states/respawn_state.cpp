@@ -55,7 +55,3 @@ void respawn_state::on_render(game_scene &ctx, sf::RenderTarget &window) {
     window.setView(ctx.get_hud_view());
     ctx.get_inventory_ui().draw(window);
 }
-
-std::string respawn_state::get_name() const {
-    return "respawning";
-}

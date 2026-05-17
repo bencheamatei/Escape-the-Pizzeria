@@ -18,7 +18,6 @@ private:
 public:
     void on_update(game_scene&, float) override;
     void on_render(game_scene&, sf::RenderTarget&) override;
-    [[nodiscard]] std::string get_name() const override;
 };
 
 

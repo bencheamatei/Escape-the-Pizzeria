@@ -19,7 +19,6 @@ public:
     virtual void on_update(game_scene& ctx, float dt)=0;
     virtual void on_render(game_scene& ctx, sf::RenderTarget& t)=0;
 
-    [[nodiscard]] virtual std::string get_name() const=0;
 };
 
 

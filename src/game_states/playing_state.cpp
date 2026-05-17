@@ -8,10 +8,6 @@
 #include "../../include/game_states/death_state.h"
 #include "scenes/game_scene.h"
 
-std::string playing_state::get_name() const {
-    return "playing";
-}
-
 void playing_state::on_update(game_scene &ctx, float dt) {
     auto& p=ctx.get_player();
     auto& player_render_=ctx.get_player_render();

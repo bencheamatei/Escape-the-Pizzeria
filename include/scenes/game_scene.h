@@ -57,7 +57,7 @@ private:
 
     std::vector<EnemyEntity> enemies;
 
-    float hit_flash_timer=0.0f;
+    // float hit_flash_timer=0.0f;
     static constexpr float hit_duration=0.25f;
 public:
     explicit game_scene(game&);

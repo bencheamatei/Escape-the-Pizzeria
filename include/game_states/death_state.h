@@ -15,7 +15,6 @@ public:
     void on_render(game_scene &ctx, sf::RenderTarget &t) override;
     void on_update(game_scene &ctx, float dt) override;
     void on_enter(game_scene &) override;
-    [[nodiscard]] std::string get_name() const override;
 };
 
 
