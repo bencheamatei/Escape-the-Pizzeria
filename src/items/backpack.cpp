@@ -2,9 +2,9 @@
 // Created by matei on 5/13/2026.
 //
 
-#include "../include/backpack.h"
-#include "../include/player.h"
-#include "../include/exceptions.h"
+#include "../../include/items/backpack.h"
+#include "../../include/player.h"
+#include "../../include/exceptions.h"
 
 backpack::backpack(int sz) : item("backpack"), sz_upgrade(sz) {}
 

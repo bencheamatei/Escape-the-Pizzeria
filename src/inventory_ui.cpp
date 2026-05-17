@@ -8,7 +8,7 @@
 
 inventory_ui::inventory_ui(const player &p, sf::Font &font) : player_data(p), font(font) {}
 
-void inventory_ui::draw(sf::RenderWindow &window) const {
+void inventory_ui::draw(sf::RenderTarget &window) const {
     const inventory &inv=player_data.get_inventory();
     int capacity=inv.get_capacity();
 
@@ -26,17 +26,17 @@ void inventory_ui::draw(sf::RenderWindow &window) const {
         draw_slot(window, i, {x,y}, i==slot_index);
     }
 
-    sf::Text hint;
-    hint.setFont(font);
-    hint.setString("Q/E: left/right   F: eat   C: craft pizza");
-    hint.setCharacterSize(10);
-    hint.setFillColor(sf::Color(120, 110, 140));
-    hint.setPosition(startX, y + SLOT_SIZE + 4.f);
-    window.draw(hint);
+    // sf::Text hint;
+    // hint.setFont(font);
+    // hint.setString("Q/E: left/right   F: eat   C: craft pizza");
+    // hint.setCharacterSize(10);
+    // hint.setFillColor(sf::Color(120, 110, 140));
+    // hint.setPosition(startX, y + SLOT_SIZE + 4.f);
+    // window.draw(hint);
 
 }
 
-void inventory_ui::draw_slot(sf::RenderWindow &window, int idx, sf::Vector2f pos, bool selectat) const {
+void inventory_ui::draw_slot(sf::RenderTarget &window, int idx, sf::Vector2f pos, bool selectat) const {
     const inventory &inv=player_data.get_inventory();
     inventorySlot slot=inv.get_item_at_index(idx);
 
@@ -88,13 +88,13 @@ void inventory_ui::event_handler(const sf::Event& event, player& p) {
     int cap = p.get_inventory().get_capacity();
 
     switch (event.key.code) {
-        case sf::Keyboard::Q:
+        case sf::Keyboard::Left:
             slot_index = (slot_index - 1 + cap) % cap;
             break;
-        case sf::Keyboard::E:
+        case sf::Keyboard::Right:
             slot_index = (slot_index + 1) % cap;
             break;
-        case sf::Keyboard::F:
+        case sf::Keyboard::E:
             try { p.eat_item(slot_index); }
             catch (const player_exception&)   {}
             catch (const inventory_exception&) {}

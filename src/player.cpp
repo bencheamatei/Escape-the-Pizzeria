@@ -8,10 +8,10 @@
 
 #include "exceptions.h"
 #include "inventory.h"
-#include "pizza.h"
-#include "topping.h"
-#include "item.h"
-#include "dough.h"
+#include "../include/items/pizza.h"
+#include "../include/items/topping.h"
+#include "../include/items/item.h"
+#include "../include/items/dough.h"
 
 player::player() : rucsac(5) {
     this->hp=100;

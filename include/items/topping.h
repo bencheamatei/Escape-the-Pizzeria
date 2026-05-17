@@ -5,7 +5,7 @@
 #ifndef OOP_TOPPING_H
 #define OOP_TOPPING_H
 #include "item.h"
-#include "player.h"
+#include "../player.h"
 
 class topping : public item {
 private:

@@ -2,7 +2,7 @@
 // Created by matei on 5/12/2026.
 //
 
-#include "../include/scene.h"
+#include "../../include/scenes/scene.h"
 #include <SFML/Graphics.hpp>
 
 class game;
@@ -14,7 +14,7 @@ void scene::update(float dt) {
     on_update(dt);
 }
 
-void scene::render(sf::RenderWindow &window) {
+void scene::render(sf::RenderTarget &window) {
     on_render(window);
 }
 

@@ -6,7 +6,7 @@
 #define OOP_INVENTORYSLOT_H
 
 #include <iostream>
-#include "item.h"
+#include "items/item.h"
 
 class inventorySlot {
 private:

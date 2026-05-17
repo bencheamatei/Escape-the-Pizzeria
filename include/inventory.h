@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <string>
-#include "item.h"
+#include "items/item.h"
 #include <memory>
 #include <vector>
 #include "inventorySlot.h"

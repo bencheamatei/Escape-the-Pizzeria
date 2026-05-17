@@ -2,7 +2,7 @@
 // Created by matei on 5/13/2026.
 //
 
-#include "soda.h"
+#include "../../include/items/soda.h"
 #include "player.h"
 
 soda::soda() : item("soda") {}
