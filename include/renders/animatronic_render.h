@@ -5,9 +5,9 @@
 #ifndef OOP_ANIMATRONIC_RENDER_H
 #define OOP_ANIMATRONIC_RENDER_H
 
-#include "animatronic.h"
+#include "../animatronic/animatronic.h"
 #include <SFML/Graphics.hpp>
-#include "room.h"
+#include "../room.h"
 
 class animatronic_render {
 private:

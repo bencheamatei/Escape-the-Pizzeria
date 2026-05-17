@@ -2,11 +2,11 @@
 // Created by matei on 5/14/2026.
 //
 
-#include "../include/animatronic_render.h"
-#include "animatronic.h"
+#include "../../include/renders/animatronic_render.h"
+#include "../../include/animatronic/animatronic.h"
 #include "game.h"
 #include <cmath>
-#include "animatronic_ai.h"
+#include "../../include/animatronic/animatronic_ai.h"
 
 animatronic_render::animatronic_render(animatronic& a, sf::Texture& texture, sf::Vector2f init_pos)
     : data(a), pos(init_pos) {

@@ -4,7 +4,7 @@
 
 #include "../include/game.h"
 #include "../ResourceManager.hpp"
-#include "menu_scene.h"
+#include "../include/scenes/menu_scene.h"
 
 game::game() {
     rebuild_window(false);

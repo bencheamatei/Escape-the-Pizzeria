@@ -2,8 +2,8 @@
 // Created by matei on 5/12/2026.
 //
 
-#include "../include/pause_scene.h"
-#include "../ResourceManager.hpp"
+#include "../../include/scenes/pause_scene.h"
+#include "../../ResourceManager.hpp"
 #include "game.h"
 
 pause_scene::pause_scene(game &game) : scene(game) {

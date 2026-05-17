@@ -2,10 +2,10 @@
 // Created by matei on 5/12/2026.
 //
 
-#include "../include/menu_scene.h"
+#include "../../include/scenes/menu_scene.h"
 #include "game.h"
-#include "../ResourceManager.hpp"
-#include "game_scene.h"
+#include "../../ResourceManager.hpp"
+#include "../../include/scenes/game_scene.h"
 
 menu_scene::menu_scene(game &game) : scene(game) {
     auto& res_man=ResourceManager::Instance();

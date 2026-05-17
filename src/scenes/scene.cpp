@@ -2,7 +2,7 @@
 // Created by matei on 5/12/2026.
 //
 
-#include "../include/scene.h"
+#include "../../include/scenes/scene.h"
 #include <SFML/Graphics.hpp>
 
 class game;

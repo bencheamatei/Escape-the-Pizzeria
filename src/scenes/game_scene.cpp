@@ -2,19 +2,19 @@
 // Created by matei on 5/12/2026.
 //
 
-#include "../include/game_scene.h"
+#include "../../include/scenes/game_scene.h"
 
-#include "backpack.h"
-#include "../ResourceManager.hpp"
-#include "dough.h"
+#include "../../include/items/backpack.h"
+#include "../../ResourceManager.hpp"
+#include "../../include/items/dough.h"
 #include "game.h"
-#include "pause_scene.h"
-#include "topping.h"
-#include "pizza.h"
-#include "soda.h"
+#include "../../include/scenes/pause_scene.h"
+#include "../../include/items/topping.h"
+#include "../../include/items/pizza.h"
+#include "../../include/items/soda.h"
 #include <cmath>
 
-#include "freddy.h"
+#include "../../include/animatronic/freddy.h"
 
 game_scene::game_scene(game& g)
     : scene(g)

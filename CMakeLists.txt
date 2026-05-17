@@ -36,58 +36,58 @@ endif()
 
 add_executable(${MAIN_EXECUTABLE_NAME}
         main.cpp
-        include/item.h
-        src/item.cpp
-        include/topping.h
-        src/topping.cpp
+        include/items/item.h
+        src/items/item.cpp
+        include/items/topping.h
+        src/items/topping.cpp
         include/inventory.h
         src/inventory.cpp
         include/inventorySlot.h
         src/inventorySlot.cpp
         include/player.h
         src/player.cpp
-        include/pizza.h
-        src/pizza.cpp
+        include/items/pizza.h
+        src/items/pizza.cpp
         include/exceptions.h
         src/exceptions.cpp
-        include/dough.h
-        src/dough.cpp
+        include/items/dough.h
+        src/items/dough.cpp
 
         generated/src/Helper.cpp
         ResourceManager.cpp
         ResourceManager.hpp
-        src/scene.cpp
-        include/scene.h
+        src/scenes/scene.cpp
+        include/scenes/scene.h
         src/game.cpp
         include/game.h
-        src/menu_scene.cpp
-        include/menu_scene.h
+        src/scenes/menu_scene.cpp
+        include/scenes/menu_scene.h
         src/room.cpp
         include/room.h
-        src/player_render.cpp
-        include/player_render.h
+        src/renders/player_render.cpp
+        include/renders/player_render.h
         src/inventory_ui.cpp
         include/inventory_ui.h
-        src/game_scene.cpp
-        include/game_scene.h
-        src/pause_scene.cpp
-        include/pause_scene.h
-        src/backpack.cpp
-        include/backpack.h
+        src/scenes/game_scene.cpp
+        include/scenes/game_scene.h
+        src/scenes/pause_scene.cpp
+        include/scenes/pause_scene.h
+        src/items/backpack.cpp
+        include/items/backpack.h
         src/status_effect.cpp
         include/status_effect.h
         src/food_poisoning.cpp
         include/food_poisoning.h
-        src/soda.cpp
-        include/soda.h
-        src/animatronic.cpp
-        include/animatronic.h
-        src/freddy.cpp
-        include/freddy.h
-        src/animatronic_render.cpp
-        include/animatronic_render.h
-        src/animatronic_ai.cpp
-        include/animatronic_ai.h
+        src/items/soda.cpp
+        include/items/soda.h
+        src/animatronics/animatronic.cpp
+        include/animatronic/animatronic.h
+        src/animatronics/freddy.cpp
+        include/animatronic/freddy.h
+        src/renders/animatronic_render.cpp
+        include/renders/animatronic_render.h
+        src/animatronics/animatronic_ai.cpp
+        include/animatronic/animatronic_ai.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})

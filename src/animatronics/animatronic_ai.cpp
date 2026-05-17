@@ -2,7 +2,7 @@
 // Created by matei on 5/17/2026.
 //
 
-#include "../include/animatronic_ai.h"
+#include "../../include/animatronic/animatronic_ai.h"
 #include <queue>
 #include <vector>
 #include <cmath>

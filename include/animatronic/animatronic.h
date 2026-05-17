@@ -6,7 +6,7 @@
 #define OOP_ANIMATRONIC_H
 
 #include <string>
-#include "player.h"
+#include "../player.h"
 
 class animatronic {
 protected:

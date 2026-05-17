@@ -8,7 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <stack>
-#include "scene.h"
+#include "scenes/scene.h"
 
 class game {
 private:

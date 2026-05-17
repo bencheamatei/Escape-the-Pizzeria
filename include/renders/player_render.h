@@ -6,8 +6,8 @@
 #define OOP_PLAYER_RENDER_H
 
 #include <SFML/Graphics.hpp>
-#include "player.h"
-#include "room.h"
+#include "../player.h"
+#include "../room.h"
 
 class player_render {
 private:

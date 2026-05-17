@@ -6,13 +6,13 @@
 #define OOP_GAME_SCENE_H
 
 #include <SFML/Graphics.hpp>
-#include "room.h"
-#include "player_render.h"
-#include "inventory_ui.h"
-#include "player.h"
+#include "../room.h"
+#include "../renders/player_render.h"
+#include "../inventory_ui.h"
+#include "../player.h"
 #include "scene.h"
-#include "animatronic.h"
-#include "animatronic_render.h"
+#include "../animatronic/animatronic.h"
+#include "../renders/animatronic_render.h"
 
 struct EnemyEntity {
     std::unique_ptr<animatronic> data;

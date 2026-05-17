@@ -3,13 +3,13 @@
 //
 
 #include "inventorySlot.h"
-#include "pizza.h"
-#include "topping.h"
-#include "dough.h"
-#include "soda.h"
+#include "../include/items/pizza.h"
+#include "../include/items/topping.h"
+#include "../include/items/dough.h"
+#include "../include/items/soda.h"
 #include <iostream>
 
-#include "backpack.h"
+#include "../include/items/backpack.h"
 #include "exceptions.h"
 
 inventorySlot::inventorySlot() : Item(nullptr), cntItem(0) {}

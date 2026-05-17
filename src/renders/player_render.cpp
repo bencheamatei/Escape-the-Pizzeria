@@ -2,8 +2,8 @@
 // Created by matei on 5/12/2026.
 //
 
-#include "../include/player_render.h"
-#include "../include/game.h"
+#include "../../include/renders/player_render.h"
+#include "../../include/game.h"
 
 player_render::player_render(player &p, sf::Texture &texture, sf::Vector2f init_pos) :
                     player_data(p), position(init_pos) {
