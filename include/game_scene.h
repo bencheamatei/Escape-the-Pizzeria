@@ -17,12 +17,12 @@
 struct EnemyEntity {
     std::unique_ptr<animatronic> data;
     std::unique_ptr<animatronic_render> render;
+    int room_id=0;
 };
 
 class game_scene : public scene {
 private:
     player player_data;
-    room room_;
     player_render player_render_;
     inventory_ui inventory_ui_;
 
@@ -57,7 +57,6 @@ private:
     static room buildKitchen(sf::Texture& tex);
 
     std::vector<EnemyEntity> enemies;
-
 public:
     explicit game_scene(game&);
 };

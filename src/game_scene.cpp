@@ -19,7 +19,6 @@
 game_scene::game_scene(game& g)
     : scene(g)
     , player_data(70, 100, 5)
-    , room_(buildRoom(ResourceManager::Instance().getTexture("tileset.png")))
     , player_render_(player_data,ResourceManager::Instance().getTexture("billy.png"),{0.f,0.f})
     , inventory_ui_(player_data,ResourceManager::Instance().getFont("FiraSans-Regular.ttf"))
 {
@@ -42,7 +41,6 @@ game_scene::game_scene(game& g)
     game_view.setSize(480.f, 320.f);
     hud_view.setSize(960.f, 640.f);
     hud_view.setCenter(480.f, 320.f);
-    camera_pos = room_.spawn_point;
 
     auto& font = ResourceManager::Instance().getFont("FiraSans-Regular.ttf");
 
@@ -57,14 +55,13 @@ game_scene::game_scene(game& g)
     hpLabel.setFillColor(sf::Color(220, 210, 230));
     hpLabel.setPosition(20.f, 38.f);
 
-    auto foxy_data = std::make_unique<freddy>();
-    auto foxy_render = std::make_unique<animatronic_render>(
-        *foxy_data,
+    auto freddy_ = std::make_unique<freddy>();
+    auto freddy_render_ = std::make_unique<animatronic_render>(
+        *freddy_,
         ResourceManager::Instance().getTexture("freddy.png"),
-        sf::Vector2f(400.f, 400.f)
+        sf::Vector2f(400.f, 200.f)
     );
-
-    enemies.push_back({std::move(foxy_data), std::move(foxy_render)});
+    enemies.push_back({std::move(freddy_), std::move(freddy_render_), 0});
 }
 
 room &game_scene::current_room() {
@@ -157,6 +154,8 @@ void game_scene::on_update(float dt) {
     }
 
     for (auto& enemy : enemies) {
+        if (enemy.room_id!=room_idx)
+            continue;
         enemy.render->update(dt, current_room(), player_render_.get_position());
         enemy.data->tick_timer(dt);
         if (enemy.render->get_bounds().intersects(player_render_.get_bound())) {
@@ -206,6 +205,8 @@ void game_scene::on_render(sf::RenderTarget& window) {
     player_render_.draw(window);
 
     for (const auto& enemy : enemies) {
+        if (enemy.room_id!=room_idx)
+            continue;
         enemy.render->draw(window);
     }
 
