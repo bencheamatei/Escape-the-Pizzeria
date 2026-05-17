@@ -68,24 +68,24 @@ room &game_scene::current_room() {
     return rooms[room_idx];
 }
 
-room game_scene::buildRoom(sf::Texture& floorTex) {
-    std::vector<std::vector<int>> level_map = {
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
-        {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-    };
-
-    room r(level_map, floorTex, 64);
-    r.spawn_point = {200.f, 100.f};
-
-    return r;
-}
+// room game_scene::buildRoom(sf::Texture& floorTex) {
+//     std::vector<std::vector<int>> level_map = {
+//         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+//         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+//         {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
+//         {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
+//         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+//         {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+//         {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+//         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+//         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+//     };
+//
+//     room r(level_map, floorTex, 64);
+//     r.spawn_point = {200.f, 100.f};
+//
+//     return r;
+// }
 
 room game_scene::buildPizzeriaMain(sf::Texture& tex) {
     std::vector<std::vector<int>> grid = {
@@ -153,6 +153,8 @@ void game_scene::on_update(float dt) {
         door_transition();
     }
 
+    int hp_before=player_data.getHp();
+
     for (auto& enemy : enemies) {
         if (enemy.room_id!=room_idx)
             continue;
@@ -164,6 +166,13 @@ void game_scene::on_update(float dt) {
                 enemy.data->reset_cooldown();
             }
         }
+    }
+
+    if (player_data.getHp()<hp_before) {
+        hit_flash_timer=hit_duration;
+    }
+    else {
+        hit_flash_timer-=dt;
     }
 
     updateCamera(dt);
@@ -208,6 +217,14 @@ void game_scene::on_render(sf::RenderTarget& window) {
         if (enemy.room_id!=room_idx)
             continue;
         enemy.render->draw(window);
+    }
+
+    if (hit_flash_timer > 0.f) {
+        float alpha = (hit_flash_timer / hit_duration) * 140.f;
+        sf::RectangleShape flash(game_view.getSize());
+        flash.setFillColor(sf::Color(220, 30, 30, (sf::Uint8)alpha));
+        flash.setPosition(game_view.getCenter() - game_view.getSize()/2.f);
+        window.draw(flash);
     }
 
     window.setView(hud_view);

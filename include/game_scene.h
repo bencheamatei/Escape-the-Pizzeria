@@ -44,7 +44,7 @@ private:
     void drawHUD(sf::RenderTarget& window);
     void door_transition();
 
-    static room buildRoom(sf::Texture& floorTex);
+    // static room buildRoom(sf::Texture& floorTex);
 
     std::vector<room> rooms;
     int room_idx=0;
@@ -57,6 +57,9 @@ private:
     static room buildKitchen(sf::Texture& tex);
 
     std::vector<EnemyEntity> enemies;
+
+    float hit_flash_timer=0.0f;
+    static constexpr float hit_duration=0.25f;
 public:
     explicit game_scene(game&);
 };
