@@ -51,9 +51,9 @@ std::vector<sf::Vector2i> animatronic_ai::find(const room &r, sf::Vector2i st, s
     int ss=get_index(st.x,st.y,w);
 
     auto heuristic = [&](int x, int y) -> float {
-        float dx = std::abs(x - target.x);
-        float dy = std::abs(y - target.y);
-        return std::max(dx, dy) + 0.414f * std::min(dx, dy);
+        float dxx = std::abs(x - target.x);
+        float dyy = std::abs(y - target.y);
+        return std::max(dxx, dyy) + 0.414f * std::min(dxx, dyy);
     };
 
     dist[ss]=0;
