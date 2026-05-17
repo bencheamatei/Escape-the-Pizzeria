@@ -9,9 +9,8 @@
 
 animatronic_render::animatronic_render(animatronic& a, sf::Texture& texture, sf::Vector2f init_pos)
     : data(a), pos(init_pos) {
-
     sprite.setTexture(texture);
-    sprite.setOrigin(32.0f, 32.0f);
+    sprite.setOrigin(16.0f, 16.0f);
     sprite.setPosition(pos);
 }
 

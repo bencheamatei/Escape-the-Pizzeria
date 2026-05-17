@@ -73,3 +73,17 @@ const door *room::check_door(sf::Vector2f pos) const {
 void room::add_door(int x, int y, int care_camera, sf::Vector2f target_spawn) {
     doors.push_back({x,y,care_camera,target_spawn});
 }
+
+sf::Vector2i room::get_grid_size() const {
+    if (map_grid.empty())
+        return {0,0};
+    return {(int)map_grid[0].size(),(int)map_grid.size()};
+}
+
+bool room::is_solid(int x, int y) const {
+    if (x<0 || x>(int)map_grid.size())
+        return false;
+    if (y<0 || y>(int)map_grid[0].size())
+        return false;
+    return map_grid[x][y]==1;
+}

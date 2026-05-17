@@ -5,7 +5,7 @@
 #include "../include/freddy.h"
 #include "player.h"
 
-freddy::freddy() : animatronic("Freddy", 40, 50.f, true, 5.0f) {}
+freddy::freddy() : animatronic("Freddy", 40, 50.f, true, 3.0f) {}
 
 void freddy::on_attack(player &p) {
     p.receiveDmg(damage);
