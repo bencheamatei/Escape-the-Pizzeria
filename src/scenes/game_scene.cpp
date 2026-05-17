@@ -206,7 +206,7 @@ void game_scene::updateCamera(float dt) {
     float hh = game_view.getSize().y / 2.f;
     camera_pos.x = std::clamp(camera_pos.x, hw, current_room().get_size().x - hw);
     camera_pos.y = std::clamp(camera_pos.y, hh, current_room().get_size().y - hh);
-    game_view.setCenter(std::floor(camera_pos.x), std::floor(camera_pos.y));
+    game_view.setCenter(std::round(camera_pos.x), std::round(camera_pos.y));
 }
 
 // void game_scene::drawHUD(sf::RenderTarget& window) {

@@ -12,7 +12,7 @@ animatronic_render::animatronic_render(animatronic& a, sf::Texture& texture, sf:
     : data(a), pos(init_pos) {
     sprite.setTexture(texture);
     sprite.setOrigin(32.0f, 32.0f);
-    sprite.setPosition(pos);
+    sprite.setPosition(std::round(pos.x), std::round(pos.y));
 }
 
 bool animatronic_render::overlap_solid(sf::FloatRect rect, const room& room) const {
@@ -50,7 +50,7 @@ void animatronic_render::update(float dt, const room& room, sf::Vector2f target_
             resolve_collision(dir * data.get_speed() * dt, room);
         }
     }
-    sprite.setPosition(pos);
+    sprite.setPosition(std::round(pos.x), std::round(pos.y));
 }
 
 void animatronic_render::draw(sf::RenderTarget& window) const {

@@ -4,6 +4,7 @@
 
 #include "../../include/renders/player_render.h"
 #include "../../include/game.h"
+#include <cmath>
 
 player_render::player_render(player &p, sf::Texture &texture, sf::Vector2f init_pos) :
                     player_data(p), position(init_pos) {
@@ -11,13 +12,12 @@ player_render::player_render(player &p, sf::Texture &texture, sf::Vector2f init_
     sprite.setTexture(texture);
     sprite.setOrigin(FRAME_W/2.0f, FRAME_H/2.0f);
     update_sprite_rect();
-    sprite.setPosition(position);
+    sprite.setPosition(std::round(position.x), std::round(position.y));
 }
 
-// daca implementez un sistem de spawnpoint
 void player_render::set_position(sf::Vector2f pos) {
     position=pos;
-    sprite.setPosition(pos);
+    sprite.setPosition(std::round(position.x), std::round(position.y));
 }
 
 void player_render::handle_input() {
@@ -125,7 +125,7 @@ void player_render::update(float dt, const room &room) {
     }
 
     // update_animation(dt);
-    sprite.setPosition(position);
+    sprite.setPosition(std::round(position.x), std::round(position.y));
 }
 
 // bool player_render::is_moving() const {
