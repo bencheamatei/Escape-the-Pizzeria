@@ -15,10 +15,7 @@ void playing_state::on_update(game_scene &ctx, float dt) {
     player_render_.handle_input();
     player_render_.update(dt,ctx.get_current_room());
 
-    int hp=p.getHp();
-
-    update_enemies(ctx,dt);
-    if (p.getHp() < hp) {
+    if (update_enemies(ctx,dt)) {
         hit_flash_timer = hir_duration;
     }
     if (hit_flash_timer > 0.f) {
@@ -30,9 +27,12 @@ void playing_state::on_update(game_scene &ctx, float dt) {
     }
 }
 
-void playing_state::update_enemies(game_scene &ctx, float dt) {
+bool playing_state::update_enemies(game_scene &ctx, float dt) {
     auto& p=ctx.get_player();
     auto& player_render_=ctx.get_player_render();
+
+    bool recieved_dmg=false;
+
     for (const auto& it:ctx.get_enemies()) {
         if (it.room_id!=ctx.get_room_idx())
             continue;
@@ -42,9 +42,11 @@ void playing_state::update_enemies(game_scene &ctx, float dt) {
             if (it.data->can_attack()) {
                 it.data->on_attack(p);
                 it.data->reset_cooldown();
+                recieved_dmg=true;
             }
         }
     }
+    return recieved_dmg;
 }
 
 void playing_state::on_render(game_scene &ctx, sf::RenderTarget &window) {

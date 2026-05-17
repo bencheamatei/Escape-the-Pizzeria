@@ -13,7 +13,7 @@ private:
     float hit_flash_timer = 0.f;
     static constexpr float hir_duration=0.3f;
 
-    void update_enemies(game_scene&, float);
+    bool update_enemies(game_scene&, float);
     void draw_hud(game_scene&, sf::RenderTarget&);
 public:
     void on_update(game_scene&, float) override;
