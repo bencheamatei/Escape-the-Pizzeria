@@ -42,7 +42,7 @@ private:
     void on_event(const sf::Event& event) override;
 
     void updateCamera(float dt);
-    void drawHUD(sf::RenderTarget& window);
+    // void drawHUD(sf::RenderTarget& window);
     void door_transition();
 
     std::vector<room> rooms;

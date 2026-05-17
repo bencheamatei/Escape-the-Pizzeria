@@ -209,21 +209,21 @@ void game_scene::updateCamera(float dt) {
     game_view.setCenter(std::floor(camera_pos.x), std::floor(camera_pos.y));
 }
 
-void game_scene::drawHUD(sf::RenderTarget& window) {
-    float frac = (float)player_data.getHp() / 100.f;
-    hpBar.setSize({200.f * frac, 12.f});
-    hpBar.setFillColor(
-        frac > 0.5f  ? sf::Color(195, 50, 50) :
-        frac > 0.25f ? sf::Color(215, 135, 25) :
-                       sf::Color(255, 45, 45));
-
-    hpLabel.setString("HP  " + std::to_string(player_data.getHp())
-                      + " / 100");
-
-    window.draw(hpBarBg);
-    window.draw(hpBar);
-    window.draw(hpLabel);
-}
+// void game_scene::drawHUD(sf::RenderTarget& window) {
+//     float frac = (float)player_data.getHp() / 100.f;
+//     hpBar.setSize({200.f * frac, 12.f});
+//     hpBar.setFillColor(
+//         frac > 0.5f  ? sf::Color(195, 50, 50) :
+//         frac > 0.25f ? sf::Color(215, 135, 25) :
+//                        sf::Color(255, 45, 45));
+//
+//     hpLabel.setString("HP  " + std::to_string(player_data.getHp())
+//                       + " / 100");
+//
+//     window.draw(hpBarBg);
+//     window.draw(hpBar);
+//     window.draw(hpLabel);
+// }
 
 player &game_scene::get_player() {
     return player_data;
