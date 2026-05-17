@@ -86,6 +86,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/freddy.h
         src/animatronic_render.cpp
         include/animatronic_render.h
+        src/animatronic_ai.cpp
+        include/animatronic_ai.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})

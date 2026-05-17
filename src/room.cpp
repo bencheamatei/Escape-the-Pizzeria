@@ -81,9 +81,9 @@ sf::Vector2i room::get_grid_size() const {
 }
 
 bool room::is_solid(int x, int y) const {
-    if (x<0 || x>(int)map_grid.size())
-        return false;
-    if (y<0 || y>(int)map_grid[0].size())
-        return false;
-    return map_grid[x][y]==1;
+    if (x<0 || x>=(int)map_grid[0].size())
+        return true;
+    if (y<0 || y>=(int)map_grid.size())
+        return true;
+    return map_grid[y][x]==1;
 }

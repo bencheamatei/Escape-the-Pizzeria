@@ -6,6 +6,7 @@
 #include "animatronic.h"
 #include "game.h"
 #include <cmath>
+#include "animatronic_ai.h"
 
 animatronic_render::animatronic_render(animatronic& a, sf::Texture& texture, sf::Vector2f init_pos)
     : data(a), pos(init_pos) {
@@ -33,19 +34,22 @@ void animatronic_render::resolve_collision(sf::Vector2f delta, const room& room)
 void animatronic_render::update(float dt, const room& room, sf::Vector2f target_pos) {
     if (!data.is_active()) return;
 
-    sf::Vector2f direction = target_pos - pos;
-
-    float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-
-    if (distance > 0.5f) {
-        direction.x /= distance;
-        direction.y /= distance;
-
-        sf::Vector2f velocity = direction * data.get_speed() * dt;
-
-        resolve_collision(velocity, room);
+    path_timer-=dt;
+    if (path_timer<=0.f) {
+        recalc_path(room,target_pos);
+        path_timer=path_refresh;
     }
 
+    if (!follow_path(dt, room)) {
+        sf::Vector2f dir = target_pos - pos;
+        float dist = std::sqrt(dir.x * dir.x + dir.y * dir.y);
+
+        if (dist > 0.5f) {
+            dir.x /= dist;
+            dir.y /= dist;
+            resolve_collision(dir * data.get_speed() * dt, room);
+        }
+    }
     sprite.setPosition(pos);
 }
 
@@ -54,13 +58,12 @@ void animatronic_render::draw(sf::RenderTarget& window) const {
 
     window.draw(sprite);
 
-    // Draw hitbox in debug mode (Matches your player logic)
     if (game::is_debug_mode()) {
         sf::RectangleShape hitbox({BOX_W, BOX_H});
         hitbox.setOrigin(BOX_W / 2.0f, BOX_H / 2.0f);
         hitbox.setPosition(pos);
         hitbox.setFillColor(sf::Color::Transparent);
-        hitbox.setOutlineColor(sf::Color::Magenta); // Magenta to distinguish from player
+        hitbox.setOutlineColor(sf::Color::Magenta);
         hitbox.setOutlineThickness(1.0f);
         window.draw(hitbox);
     }
@@ -72,4 +75,34 @@ sf::FloatRect animatronic_render::get_bounds() const {
 
 sf::Vector2f animatronic_render::get_position() const {
     return pos;
+}
+
+bool animatronic_render::follow_path(float dt, const room &r) {
+    if (path.empty()) return false;
+
+    sf::Vector2f waypoint{
+        path.front().x * 64.f + 64.f / 2.f,
+        path.front().y * 64.f + 64.f / 2.f
+    };
+
+    sf::Vector2f dir = waypoint - pos;
+    float dist = std::sqrt(dir.x*dir.x + dir.y*dir.y);
+
+    if (dist < 4.f) {
+        path.erase(path.begin());
+        return true;
+    }
+
+    dir.x /= dist;
+    dir.y /= dist;
+
+    resolve_collision(dir * data.get_speed() * dt, r);
+    return true;
+}
+
+void animatronic_render::recalc_path(const room &r, sf::Vector2f target_world) {
+    sf::Vector2i start{(int)(pos.x / 64.f), (int)(pos.y / 64.f)};
+    sf::Vector2i goal {(int)(target_world.x / 64.f),
+                       (int)(target_world.y / 64.f)};
+    path = animatronic_ai::find(r, start, goal);
 }
