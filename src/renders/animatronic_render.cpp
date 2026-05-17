@@ -66,6 +66,15 @@ void animatronic_render::draw(sf::RenderTarget& window) const {
         hitbox.setOutlineColor(sf::Color::Magenta);
         hitbox.setOutlineThickness(1.0f);
         window.draw(hitbox);
+
+        for (const auto& wp : path) {
+            sf::RectangleShape dot({6.f, 6.f});
+            dot.setOrigin(3.f, 3.f);
+            dot.setFillColor(sf::Color(255, 100, 255, 180));
+            dot.setPosition(wp.x * 64.f + 64.f/2.f,
+                            wp.y * 64.f + 64.f/2.f);
+            window.draw(dot);
+        }
     }
 }
 

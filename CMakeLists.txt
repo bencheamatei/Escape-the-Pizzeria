@@ -88,6 +88,14 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/renders/animatronic_render.h
         src/animatronics/animatronic_ai.cpp
         include/animatronic/animatronic_ai.h
+        src/game_states/game_state.cpp
+        include/game_states/game_state.h
+        src/game_states/playing_state.cpp
+        include/game_states/playing_state.h
+        src/game_states/death_state.cpp
+        include/game_states/death_state.h
+        src/game_states/respawn_state.cpp
+        include/game_states/respawn_state.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})
