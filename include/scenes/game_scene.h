@@ -36,13 +36,8 @@ private:
     sf::Text hpLabel;
 
     static constexpr float CAM_LERP = 5.0f;
-
-    void on_update(float dt) override;
     void on_render(sf::RenderTarget& window) override;
     void on_event(const sf::Event& event) override;
-
-    void updateCamera(float dt);
-    // void drawHUD(sf::RenderTarget& window);
     void door_transition();
 
     std::vector<room> rooms;
@@ -80,6 +75,9 @@ public:
 
     std::vector<sf::CircleShape> blood_drops;
     void generate_death_background_drops();
+
+    void updateCamera(float dt);
+    void on_update(float dt) override;
 };
 
 

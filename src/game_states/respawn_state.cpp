@@ -25,7 +25,9 @@ void respawn_state::on_enter(game_scene &ctx) {
 }
 
 void respawn_state::on_update(game_scene &ctx, float dt) {
-    timer -= dt;
+    ctx.get_player_render().handle_input();
+    ctx.get_player_render().update(dt, ctx.get_current_room());
+    ctx.updateCamera(dt);
 
     blink_timer -= dt;
     if (blink_timer <= 0.f) {
@@ -40,6 +42,7 @@ void respawn_state::on_update(game_scene &ctx, float dt) {
         e.data->tick_timer(dt);
     }
 
+    timer -= dt;
     if (timer <= 0.f) {
         ctx.transition_to(std::make_unique<playing_state>());
     }

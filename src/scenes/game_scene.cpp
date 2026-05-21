@@ -79,25 +79,6 @@ room &game_scene::current_room() {
     return rooms[room_idx];
 }
 
-// room game_scene::buildRoom(sf::Texture& floorTex) {
-//     std::vector<std::vector<int>> level_map = {
-//         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-//         {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
-//         {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
-//         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-//         {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-//         {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-//         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-//         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-//     };
-//
-//     room r(level_map, floorTex, 64);
-//     r.spawn_point = {200.f, 100.f};
-//
-//     return r;
-// }
-
 room game_scene::buildPizzeriaMain(sf::Texture& tex) {
     std::vector<std::vector<int>> grid = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -208,22 +189,6 @@ void game_scene::updateCamera(float dt) {
     camera_pos.y = std::clamp(camera_pos.y, hh, current_room().get_size().y - hh);
     game_view.setCenter(std::round(camera_pos.x), std::round(camera_pos.y));
 }
-
-// void game_scene::drawHUD(sf::RenderTarget& window) {
-//     float frac = (float)player_data.getHp() / 100.f;
-//     hpBar.setSize({200.f * frac, 12.f});
-//     hpBar.setFillColor(
-//         frac > 0.5f  ? sf::Color(195, 50, 50) :
-//         frac > 0.25f ? sf::Color(215, 135, 25) :
-//                        sf::Color(255, 45, 45));
-//
-//     hpLabel.setString("HP  " + std::to_string(player_data.getHp())
-//                       + " / 100");
-//
-//     window.draw(hpBarBg);
-//     window.draw(hpBar);
-//     window.draw(hpLabel);
-// }
 
 player &game_scene::get_player() {
     return player_data;
