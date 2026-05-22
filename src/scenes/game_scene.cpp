@@ -22,8 +22,8 @@ game_scene::game_scene(game &g)
       , inventory_ui_(player_data, ResourceManager::Instance().getFont("FiraSans-Regular.ttf")) {
     auto &tileset = ResourceManager::Instance().getTexture("tileset.png");
 
-    rooms.push_back(buildPizzeriaMain(tileset));
-    rooms.push_back(buildKitchen(tileset));
+    rooms.push_back(room::from_tmj("assets/maps/room_1.tmj", tileset));
+    rooms.push_back(room::from_tmj("assets/maps/room_2.tmj", tileset));
 
     player_render_.set_position(current_room().spawn_point);
     camera_pos = current_room().spawn_point;
@@ -77,47 +77,6 @@ void game_scene::transition_to(std::unique_ptr<game_state> new_state) {
 
 room &game_scene::current_room() {
     return rooms[room_idx];
-}
-
-room game_scene::buildPizzeriaMain(sf::Texture &tex) {
-    std::vector<std::vector<int> > grid = {
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
-            {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1},
-    };
-
-    room r(grid, tex, 64);
-    r.spawn_point = {3 * 64.f + 32.f, 4 * 64.f + 32.f};
-
-    r.add_door(7, 8, 1, {7 * 64.f + 32.f, 1 * 64.f + 32.f});
-
-    return r;
-}
-
-room game_scene::buildKitchen(sf::Texture &tex) {
-    std::vector<std::vector<int> > grid = {
-            {1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-            {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    };
-
-    room r(grid, tex, 64);
-    r.spawn_point = {7 * 64.f + 32.f, 2 * 64.f + 32.f};
-
-    r.add_door(7, 0, 0, {7 * 64.f + 32.f, 7 * 64.f + 32.f});
-
-    return r;
 }
 
 void game_scene::door_transition() {

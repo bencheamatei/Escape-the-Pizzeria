@@ -66,9 +66,6 @@ private:
 
     room& current_room();
 
-    static room buildPizzeriaMain(sf::Texture& tex);
-    static room buildKitchen(sf::Texture& tex);
-
     std::vector<EnemyEntity> enemies;
 
     // float hit_flash_timer=0.0f;

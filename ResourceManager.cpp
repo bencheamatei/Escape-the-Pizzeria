@@ -21,13 +21,10 @@ ResourceManager::ResourceManager() {
     loadTexture("images", "backpack.png");
     loadTexture("images", "soda.png");
     loadTexture("images", "freddy.png");
+    loadTexture("images", "tileset.png");
 
     loadFont("fonts", "FiraSans-Regular.ttf");
     m_textures["podea-fin.png"].setRepeated(true);
-
-    sf::Texture tileset;
-    tileset.loadFromImage(generate_tileset(64));
-    m_textures["tileset.png"] = tileset;
 }
 
 void ResourceManager::loadTexture(const std::string &path, const std::string &texture_name) {
