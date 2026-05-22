@@ -124,7 +124,7 @@ bool room::is_solid(int x, int y) const {
     return map_grid[y][x] == WALL;
 }
 
-room room::from_tmj(const std::string &filepath, sf::Texture &tileset, int wall_local_id) {
+room room::from_tmj(const std::string &filepath, sf::Texture &tileset) {
     std::ifstream fin(filepath);
     if (!fin.is_open()) {
         throw game_exception("nu a mers sa dau fetch la harta");

@@ -54,5 +54,5 @@ public:
     [[nodiscard]] sf::Vector2i get_grid_size() const;
     [[nodiscard]] bool is_solid(int x,int y) const;
 
-    static room from_tmj(const std::string& filepath,sf::Texture& tileset,int wall_local_id = 1);
+    static room from_tmj(const std::string& filepath,sf::Texture& tileset);
 };
