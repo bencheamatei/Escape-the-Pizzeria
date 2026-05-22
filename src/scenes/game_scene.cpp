@@ -23,8 +23,10 @@ game_scene::game_scene(game &g)
       , inventory_ui_(player_data, ResourceManager::Instance().getFont("FiraSans-Regular.ttf")) {
     auto &tileset = ResourceManager::Instance().getTexture("tileset.png");
 
-    rooms.push_back(room::from_tmj("assets/maps/room_1.tmj", tileset));
-    rooms.push_back(room::from_tmj("assets/maps/room_2.tmj", tileset));
+    rooms.push_back(room::from_tmj("assets/maps/room1.tmj", tileset));
+    rooms.push_back(room::from_tmj("assets/maps/room2.tmj", tileset));
+    rooms.push_back(room::from_tmj("assets/maps/room3.tmj", tileset));
+    rooms.push_back(room::from_tmj("assets/maps/room4.tmj", tileset));
 
     player_render_.set_position(current_room().spawn_point);
     camera_pos = current_room().spawn_point;

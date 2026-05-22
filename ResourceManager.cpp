@@ -69,50 +69,50 @@ sf::Font &ResourceManager::getFont(const std::string &font_name) {
     return m_fonts[font_name];
 }
 
-sf::Image ResourceManager::generate_tileset(int ts) {
-    sf::Image img;
-    img.create(4 * ts, ts, sf::Color::Transparent);
-
-    // peretii
-    for (int x = 0; x < ts; x++)
-        for (int y = 0; y < ts; y++)
-            img.setPixel(x, y, sf::Color(90, 60, 40));
-
-    bool offset = false;
-    for (int y = 0; y < ts; y += ts / 4) {
-        int bx = offset ? ts / 3 : 0;
-        for (int x = ts; x < 2 * ts; x++)
-            img.setPixel(x, y, sf::Color(60, 38, 22));
-        for (int x = ts + bx; x < 2 * ts; x += ts / 3)
-            for (int yy = y; yy < std::min(y + ts / 4, ts); yy++)
-                img.setPixel(x, yy, sf::Color(60, 38, 22));
-        offset = !offset;
-    }
-
-    // usile - trebuie pe pozitia 2
-    for (int x = 1 * ts; x < 2 * ts; x++)
-        for (int y = 0; y < ts; y++)
-            img.setPixel(x, y, sf::Color(180, 140, 60));
-
-    for (int i = 0; i < ts; i++) {
-        img.setPixel(3 * ts + i, 0, sf::Color(220, 180, 80));
-        img.setPixel(3 * ts + i, ts - 1, sf::Color(220, 180, 80));
-        img.setPixel(3 * ts, i, sf::Color(220, 180, 80));
-        img.setPixel(3 * ts + ts - 1, i, sf::Color(220, 180, 80));
-    }
-
-    // free
-    for (int x = 3*ts; x < 4*ts; x++)
-        for (int y = 0; y < ts; y++)
-            img.setPixel(x, y, sf::Color(55, 50, 70));
-
-    for (int i = 0; i < ts; i++) {
-        img.setPixel(i, 0, sf::Color(45, 40, 58));
-        img.setPixel(0, i, sf::Color(45, 40, 58));
-        img.setPixel(i, ts - 1, sf::Color(45, 40, 58));
-        img.setPixel(ts - 1, i, sf::Color(45, 40, 58));
-    }
-
-
-    return img;
-}
+// sf::Image ResourceManager::generate_tileset(int ts) {
+//     sf::Image img;
+//     img.create(4 * ts, ts, sf::Color::Transparent);
+//
+//     // peretii
+//     for (int x = 0; x < ts; x++)
+//         for (int y = 0; y < ts; y++)
+//             img.setPixel(x, y, sf::Color(90, 60, 40));
+//
+//     bool offset = false;
+//     for (int y = 0; y < ts; y += ts / 4) {
+//         int bx = offset ? ts / 3 : 0;
+//         for (int x = ts; x < 2 * ts; x++)
+//             img.setPixel(x, y, sf::Color(60, 38, 22));
+//         for (int x = ts + bx; x < 2 * ts; x += ts / 3)
+//             for (int yy = y; yy < std::min(y + ts / 4, ts); yy++)
+//                 img.setPixel(x, yy, sf::Color(60, 38, 22));
+//         offset = !offset;
+//     }
+//
+//     // usile - trebuie pe pozitia 2
+//     for (int x = 1 * ts; x < 2 * ts; x++)
+//         for (int y = 0; y < ts; y++)
+//             img.setPixel(x, y, sf::Color(180, 140, 60));
+//
+//     for (int i = 0; i < ts; i++) {
+//         img.setPixel(3 * ts + i, 0, sf::Color(220, 180, 80));
+//         img.setPixel(3 * ts + i, ts - 1, sf::Color(220, 180, 80));
+//         img.setPixel(3 * ts, i, sf::Color(220, 180, 80));
+//         img.setPixel(3 * ts + ts - 1, i, sf::Color(220, 180, 80));
+//     }
+//
+//     // free
+//     for (int x = 3*ts; x < 4*ts; x++)
+//         for (int y = 0; y < ts; y++)
+//             img.setPixel(x, y, sf::Color(55, 50, 70));
+//
+//     for (int i = 0; i < ts; i++) {
+//         img.setPixel(i, 0, sf::Color(45, 40, 58));
+//         img.setPixel(0, i, sf::Color(45, 40, 58));
+//         img.setPixel(i, ts - 1, sf::Color(45, 40, 58));
+//         img.setPixel(ts - 1, i, sf::Color(45, 40, 58));
+//     }
+//
+//
+//     return img;
+// }

@@ -1,0 +1,169 @@
+{ "compressionlevel":-1,
+ "height":30,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1,
+            1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1,
+            1, 4, 1, 4, 1, 4, 4, 4, 4, 4, 1, 1, 4, 4, 1,
+            1, 4, 1, 4, 1, 4, 4, 4, 4, 4, 1, 1, 4, 4, 1,
+            1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 4, 4, 1,
+            1, 4, 1, 4, 1, 4, 4, 4, 4, 4, 1, 1, 4, 4, 1,
+            1, 4, 1, 4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1,
+            1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 4, 4, 1,
+            1, 4, 1, 4, 1, 4, 4, 4, 4, 4, 1, 1, 4, 4, 1,
+            1, 4, 1, 4, 1, 4, 4, 4, 4, 4, 1, 1, 4, 4, 1,
+            1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 4, 4, 1,
+            1, 4, 1, 4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1,
+            1, 4, 1, 4, 1, 4, 4, 4, 4, 4, 1, 1, 4, 4, 1,
+            1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1,
+            1, 4, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1,
+            2, 4, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1,
+            1, 4, 1, 1, 1, 4, 4, 4, 4, 4, 1, 1, 4, 4, 1,
+            1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 4, 4, 1,
+            1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1,
+            1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1,
+            1, 4, 4, 4, 4, 1, 1, 4, 1, 1, 4, 4, 4, 4, 1,
+            1, 4, 4, 1, 1, 1, 4, 4, 4, 1, 1, 1, 4, 4, 1,
+            1, 4, 1, 1, 4, 4, 4, 4, 4, 4, 4, 1, 1, 4, 1,
+            1, 4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 4, 1,
+            1, 4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 4, 1,
+            1, 4, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 4, 1,
+            1, 4, 1, 1, 4, 4, 4, 4, 4, 4, 4, 1, 1, 4, 1,
+            1, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 2,
+            1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         "height":30,
+         "id":1,
+         "name":"Tiles",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":15,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":2,
+         "name":"Object Layer 1",
+         "objects":[
+                {
+                 "height":0,
+                 "id":1,
+                 "name":"spawn",
+                 "opacity":1,
+                 "point":true,
+                 "rotation":0,
+                 "type":"spawn",
+                 "visible":true,
+                 "width":0,
+                 "x":479,
+                 "y":113
+                }, 
+                {
+                 "height":62.7272727272727,
+                 "id":2,
+                 "name":"door1",
+                 "opacity":1,
+                 "properties":[
+                        {
+                         "name":"target_room_id ",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"target_x",
+                         "type":"float",
+                         "value":480
+                        }, 
+                        {
+                         "name":"target_y",
+                         "type":"float",
+                         "value":552.5
+                        }],
+                 "rotation":0,
+                 "type":"door",
+                 "visible":true,
+                 "width":63.2727272727273,
+                 "x":448.545454545455,
+                 "y":0.363636363636364
+                }, 
+                {
+                 "height":63.75,
+                 "id":3,
+                 "name":"door2",
+                 "opacity":1,
+                 "properties":[
+                        {
+                         "name":"target_room_id",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"target_x",
+                         "type":"float",
+                         "value":1184
+                        }, 
+                        {
+                         "name":"target_y",
+                         "type":"float",
+                         "value":640
+                        }],
+                 "rotation":0,
+                 "type":"door",
+                 "visible":true,
+                 "width":63.125,
+                 "x":0.5,
+                 "y":960
+                }, 
+                {
+                 "height":64.1818181818182,
+                 "id":4,
+                 "name":"door3",
+                 "opacity":1,
+                 "properties":[
+                        {
+                         "name":"target_room_id",
+                         "type":"int",
+                         "value":3
+                        }, 
+                        {
+                         "name":"target_x",
+                         "type":"float",
+                         "value":96
+                        }, 
+                        {
+                         "name":"target_y",
+                         "type":"float",
+                         "value":768
+                        }],
+                 "rotation":0,
+                 "type":"door",
+                 "visible":true,
+                 "width":63.2727272727273,
+                 "x":896.363636363636,
+                 "y":1727.81818181818
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":3,
+ "nextobjectid":5,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.12.1",
+ "tileheight":64,
+ "tilesets":[
+        {
+         "firstgid":1,
+         "source":"tileset.tsx"
+        }],
+ "tilewidth":64,
+ "type":"map",
+ "version":"1.10",
+ "width":15
+}
