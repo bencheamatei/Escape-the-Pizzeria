@@ -148,18 +148,22 @@ void game_scene::on_update(float dt) {
 }
 
 void game_scene::on_render(sf::RenderTarget &window) {
-    float wr = (float) window.getSize().x / (float) window.getSize().y;
-    float vr = (float) game::BASE_W / game::BASE_H;
-    float sx = 1.f, sy = 1.f, px = 0.f, py = 0.f;
-    if (wr >= vr) {
-        sx = vr / wr;
-        px = (1.f - sx) / 2.f;
+    float windowRatio = (float) window.getSize().x / (float) window.getSize().y;
+    float viewRatio = (float) game::BASE_W / (float) game::BASE_H;
+    float sizeX = 1.0f, sizeY = 1.0f, posX = 0.0f, posY = 0.0f;
+
+    if (windowRatio >= viewRatio) {
+        sizeX = viewRatio / windowRatio;
+        posX = (1.0f - sizeX) / 2.0f;
     } else {
-        sy = wr / vr;
-        py = (1.f - sy) / 2.f;
+        sizeY = windowRatio / viewRatio;
+        posY = (1.0f - sizeY) / 2.0f;
     }
-    game_view.setViewport({px, py, sx, sy});
-    hud_view.setViewport({px, py, sx, sy});
+
+    sf::FloatRect viewport(posX, posY, sizeX, sizeY);
+    game_view.setViewport(viewport);
+    hud_view.setViewport(viewport);
+
     if (curr_state) {
         curr_state->on_render(*this, window);
     }
@@ -188,7 +192,7 @@ void game_scene::updateCamera(float dt) {
     float hh = game_view.getSize().y / 2.f;
     camera_pos.x = std::clamp(camera_pos.x, hw, current_room().get_size().x - hw);
     camera_pos.y = std::clamp(camera_pos.y, hh, current_room().get_size().y - hh);
-    game_view.setCenter(std::round(camera_pos.x), std::round(camera_pos.y));
+    game_view.setCenter(camera_pos);
 }
 
 player &game_scene::get_player() {

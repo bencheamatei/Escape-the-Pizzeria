@@ -3,6 +3,37 @@
 
 room::room(const std::vector<std::vector<int> > &grid, sf::Texture &tex, int t_size)
     : map_grid(grid), tileset(&tex), tile_size(t_size) {
+
+    build_geometry();
+}
+
+void room::build_geometry() {
+    if (map_grid.empty() || map_grid[0].empty()) return;
+
+    vertices_.setPrimitiveType(sf::Quads);
+
+    int width = (int)map_grid[0].size();
+    int height = (int)map_grid.size();
+
+    vertices_.resize(width * height * 4);
+
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            int tile_id = map_grid[y][x];
+
+            sf::Vertex* quad = &vertices_[(x + y * width) * 4];
+
+            quad[0].position = sf::Vector2f((float)(x * tile_size),       (float)(y * tile_size));
+            quad[1].position = sf::Vector2f((float)((x + 1) * tile_size), (float)(y * tile_size));
+            quad[2].position = sf::Vector2f((float)((x + 1) * tile_size), (float)((y + 1) * tile_size));
+            quad[3].position = sf::Vector2f((float)(x * tile_size),       (float)((y + 1) * tile_size));
+
+            quad[0].texCoords = sf::Vector2f((float)(tile_id * tile_size),       0.f);
+            quad[1].texCoords = sf::Vector2f((float)((tile_id + 1) * tile_size), 0.f);
+            quad[2].texCoords = sf::Vector2f((float)((tile_id + 1) * tile_size), (float)tile_size);
+            quad[3].texCoords = sf::Vector2f((float)(tile_id * tile_size),       (float)tile_size);
+        }
+    }
 }
 
 sf::Vector2f room::get_size() const {
@@ -13,20 +44,8 @@ sf::Vector2f room::get_size() const {
 void room::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     if (!tileset)
         return;
-
-    sf::Sprite tile_sprite(*tileset);
-
-    for (size_t y = 0; y < map_grid.size(); ++y) {
-        for (size_t x = 0; x < map_grid[y].size(); ++x) {
-            int tile_id = map_grid[y][x];
-
-            tile_sprite.setPosition((float) (x * tile_size), (float) (y * tile_size));
-
-            tile_sprite.setTextureRect(sf::IntRect(tile_id * tile_size, 0, tile_size, tile_size));
-
-            target.draw(tile_sprite, states);
-        }
-    }
+    states.texture = tileset;
+    target.draw(vertices_, states);
 }
 
 bool room::collide(sf::FloatRect bounds) const {

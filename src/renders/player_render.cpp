@@ -11,12 +11,12 @@ player_render::player_render(player &p, sf::Texture &texture, sf::Vector2f init_
     sprite.setTexture(texture);
     sprite.setOrigin(FRAME_W / 2.0f, FRAME_H / 2.0f);
     update_sprite_rect();
-    sprite.setPosition(std::round(position.x), std::round(position.y));
+    sprite.setPosition(position);
 }
 
 void player_render::set_position(sf::Vector2f pos) {
     position = pos;
-    sprite.setPosition(std::round(position.x), std::round(position.y));
+    sprite.setPosition(position);
 }
 
 void player_render::handle_input() {
@@ -120,7 +120,7 @@ void player_render::update(float dt, const room &room) {
     }
 
     // update_animation(dt);
-    sprite.setPosition(std::round(position.x), std::round(position.y));
+    sprite.setPosition(position);
 }
 
 // bool player_render::is_moving() const {
@@ -134,3 +134,18 @@ sf::Vector2f player_render::get_position() const {
 sf::FloatRect player_render::get_bound() const {
     return sf::FloatRect(position.x - BOX_W / 2.0f, position.y - BOX_H / 2.0f, BOX_W, BOX_H);
 }
+
+
+// pe cand ma apuc de aruncat pizza
+// sf::Vector2f player_render::get_dir() const {
+//     if (facing==Dir::Up) {
+//         return {0.0f, -1.0f};
+//     }
+//     if (facing==Dir::Down) {
+//         return {0.0f, -1.0f};
+//     }
+//     if (facing==Dir::Left) {
+//         return {-1.0f, 0.0f};
+//     }
+//     return {1.0f,0.0f};
+// }

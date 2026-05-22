@@ -5,6 +5,7 @@
 #include "../include/game.h"
 #include "../ResourceManager.hpp"
 #include "../include/scenes/menu_scene.h"
+#include <cmath>
 
 game::game() {
     rebuild_window(false);
@@ -68,10 +69,8 @@ void game::update(float dt) {
 }
 
 void game::render() {
-    // Curățăm ecranul cu negru (acestea vor deveni marginile negre la fullscreen)
     window.clear(sf::Color::Black);
 
-    // Desenăm direct pe fereastră ce ne zice scena curentă
     if (!d.empty()) {
         d.top()->render(window);
     }
