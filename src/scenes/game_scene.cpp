@@ -14,6 +14,7 @@
 #include <cmath>
 #include "../../include/animatronic/freddy.h"
 #include "game_states/playing_state.h"
+#include "../../include/animatronic/foxy.h"
 
 game_scene::game_scene(game &g)
     : scene(g)
@@ -60,7 +61,16 @@ game_scene::game_scene(game &g)
         ResourceManager::Instance().getTexture("freddy.png"),
         sf::Vector2f(400.f, 200.f)
     );
+
+    auto foxy_ = std::make_unique<foxy>();
+    auto foxy_render_ = std::make_unique<animatronic_render>(
+        *foxy_,
+        ResourceManager::Instance().getTexture("foxy.png"),
+        sf::Vector2f(490.f, 300.f)
+    );
+
     enemies.push_back({std::move(freddy_), std::move(freddy_render_), 0});
+    enemies.push_back({std::move(foxy_), std::move(foxy_render_), 1});
 
     curr_state = std::make_unique<playing_state>();
     curr_state->on_enter(*this);

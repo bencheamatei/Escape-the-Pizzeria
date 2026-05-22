@@ -103,6 +103,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/game_states/death_state.h
         src/game_states/respawn_state.cpp
         include/game_states/respawn_state.h
+        src/animatronics/foxy.cpp
+        include/animatronic/foxy.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})
