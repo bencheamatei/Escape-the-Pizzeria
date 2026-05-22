@@ -5,7 +5,8 @@
 #include "../../include/items/soda.h"
 #include "player.h"
 
-soda::soda() : item("soda") {}
+soda::soda() : item("soda") {
+}
 
 item *soda::get_clone() const {
     return new soda(*this);

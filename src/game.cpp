@@ -15,10 +15,9 @@ void game::rebuild_window(bool fullscreen) {
     is_fullscreen = fullscreen;
     if (fullscreen) {
         window.create(sf::VideoMode::getDesktopMode(), "Escape the Pizzeria", sf::Style::Fullscreen);
-    }
-    else {
+    } else {
         window.create(sf::VideoMode(BASE_W, BASE_H), "Escape the Pizzeria",
-            sf::Style::Close | sf::Style::Titlebar);
+                      sf::Style::Close | sf::Style::Titlebar);
     }
     window.setFramerateLimit(60);
 }
@@ -100,7 +99,7 @@ void game::apply_lazy() {
     }
 }
 
-sf::RenderWindow& game::get_window() {
+sf::RenderWindow &game::get_window() {
     return window;
 }
 

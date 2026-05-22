@@ -9,13 +9,13 @@
 #include "scenes/game_scene.h"
 
 void playing_state::on_update(game_scene &ctx, float dt) {
-    auto& p=ctx.get_player();
-    auto& player_render_=ctx.get_player_render();
+    auto &p = ctx.get_player();
+    auto &player_render_ = ctx.get_player_render();
 
     player_render_.handle_input();
-    player_render_.update(dt,ctx.get_current_room());
+    player_render_.update(dt, ctx.get_current_room());
 
-    if (update_enemies(ctx,dt)) {
+    if (update_enemies(ctx, dt)) {
         hit_flash_timer = hir_duration;
     }
     if (hit_flash_timer > 0.f) {
@@ -28,21 +28,21 @@ void playing_state::on_update(game_scene &ctx, float dt) {
 }
 
 bool playing_state::update_enemies(game_scene &ctx, float dt) {
-    auto& p=ctx.get_player();
-    auto& player_render_=ctx.get_player_render();
+    auto &p = ctx.get_player();
+    auto &player_render_ = ctx.get_player_render();
 
-    bool recieved_dmg=false;
+    bool recieved_dmg = false;
 
-    for (const auto& it:ctx.get_enemies()) {
-        if (it.room_id!=ctx.get_room_idx())
+    for (const auto &it: ctx.get_enemies()) {
+        if (it.room_id != ctx.get_room_idx())
             continue;
-        it.render->update(dt,ctx.get_current_room(),player_render_.get_position());
+        it.render->update(dt, ctx.get_current_room(), player_render_.get_position());
         it.data->tick_timer(dt);
         if (it.render->get_bounds().intersects(player_render_.get_bound())) {
             if (it.data->can_attack()) {
                 it.data->on_attack(p);
                 it.data->reset_cooldown();
-                recieved_dmg=true;
+                recieved_dmg = true;
             }
         }
     }
@@ -50,17 +50,16 @@ bool playing_state::update_enemies(game_scene &ctx, float dt) {
 }
 
 void playing_state::on_render(game_scene &ctx, sf::RenderTarget &window) {
-
     window.setView(ctx.get_game_view());
     window.draw(ctx.get_current_room());
     ctx.get_player_render().draw(window);
-    for (const auto& e : ctx.get_enemies())
+    for (const auto &e: ctx.get_enemies())
         if (e.room_id == ctx.get_room_idx()) e.render->draw(window);
 
     if (hit_flash_timer > 0.f) {
         float a = (hit_flash_timer / hir_duration) * 140.f;
         sf::RectangleShape flash(ctx.get_game_view().getSize());
-        flash.setFillColor(sf::Color(220, 30, 30, (sf::Uint8)a));
+        flash.setFillColor(sf::Color(220, 30, 30, (sf::Uint8) a));
         flash.setPosition(ctx.get_game_view().getCenter()
                           - ctx.get_game_view().getSize() / 2.f);
         window.draw(flash);
@@ -72,18 +71,16 @@ void playing_state::on_render(game_scene &ctx, sf::RenderTarget &window) {
 }
 
 void playing_state::draw_hud(game_scene &ctx, sf::RenderTarget &window) {
-    auto& p=ctx.get_player();
-    auto& hpBar=ctx.get_hp_bar();
+    auto &p = ctx.get_player();
+    auto &hpBar = ctx.get_hp_bar();
 
-    float frac = (float)p.getHp() / 100.f;
+    float frac = (float) p.getHp() / 100.f;
     hpBar.setSize({200.f * frac, 12.f});
     hpBar.setFillColor(
-        frac > 0.5f  ? sf::Color(195, 50, 50) :
-        frac > 0.25f ? sf::Color(215, 135, 25) :
-                       sf::Color(255, 45, 45));
+        frac > 0.5f ? sf::Color(195, 50, 50) : frac > 0.25f ? sf::Color(215, 135, 25) : sf::Color(255, 45, 45));
 
     ctx.get_hp_label().setString("HP  " + std::to_string(p.getHp())
-                      + " / 100");
+                                 + " / 100");
 
     window.draw(ctx.get_hp_bar_bg());
     window.draw(hpBar);

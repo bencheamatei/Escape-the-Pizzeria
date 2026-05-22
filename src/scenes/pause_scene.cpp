@@ -14,12 +14,12 @@ pause_scene::pause_scene(game &game) : scene(game) {
 }
 
 void pause_scene::build_items() {
-    auto& font = ResourceManager::Instance().getFont("FiraSans-Regular.ttf");
-    const float startY=280.0f;
-    const float gap=60.0f;
-    const float width=280.f;
+    auto &font = ResourceManager::Instance().getFont("FiraSans-Regular.ttf");
+    const float startY = 280.0f;
+    const float gap = 60.0f;
+    const float width = 280.f;
     int i = 0;
-    for (const auto& label : {"Resume", "Main Menu", "Quit"}) {
+    for (const auto &label: {"Resume", "Main Menu", "Quit"}) {
         menu_item it;
         it.label.setFont(font);
         it.label.setString(label);
@@ -40,8 +40,8 @@ void pause_scene::build_items() {
 }
 
 void pause_scene::refresh() {
-    for (int i = 0; i < (int)v.size(); i++) {
-        bool sel=(i==curr_index);
+    for (int i = 0; i < (int) v.size(); i++) {
+        bool sel = (i == curr_index);
         v[i].label.setFillColor(
             sel ? sf::Color(255, 215, 70) : sf::Color(200, 190, 220));
         v[i].box.setFillColor(
@@ -54,12 +54,10 @@ void pause_scene::refresh() {
 void pause_scene::confirm() {
     if (curr_index == 0) {
         _game.rm_scene();
-    }
-    else if (curr_index == 1) {
+    } else if (curr_index == 1) {
         _game.rm_scene();
         _game.rm_scene();
-    }
-    else {
+    } else {
         _game.get_window().close();
     }
 }
@@ -73,9 +71,9 @@ void pause_scene::on_update(float dt) {
 }
 
 
-void pause_scene::on_render(sf::RenderTarget& target) {
-    float windowRatio = (float)target.getSize().x / (float)target.getSize().y;
-    float viewRatio = (float)game::BASE_W / (float)game::BASE_H;
+void pause_scene::on_render(sf::RenderTarget &target) {
+    float windowRatio = (float) target.getSize().x / (float) target.getSize().y;
+    float viewRatio = (float) game::BASE_W / (float) game::BASE_H;
 
     float sizeX = 1.0f, sizeY = 1.0f;
     float posX = 0.0f, posY = 0.0f;
@@ -94,7 +92,7 @@ void pause_scene::on_render(sf::RenderTarget& target) {
 
     target.draw(overlay);
 
-    auto& font = ResourceManager::Instance().getFont("FiraSans-Regular.ttf");
+    auto &font = ResourceManager::Instance().getFont("FiraSans-Regular.ttf");
     sf::Text title;
     title.setFont(font);
     title.setString("PAUSED");
@@ -106,7 +104,7 @@ void pause_scene::on_render(sf::RenderTarget& target) {
     title.setPosition(480.f, 190.f);
     target.draw(title);
 
-    for (auto& item : v) {
+    for (auto &item: v) {
         target.draw(item.box);
         target.draw(item.label);
     }
@@ -123,20 +121,23 @@ void pause_scene::on_render(sf::RenderTarget& target) {
     }
 }
 
-void pause_scene::on_event(const sf::Event& event) {
+void pause_scene::on_event(const sf::Event &event) {
     if (event.type != sf::Event::KeyPressed) return;
     switch (event.key.code) {
         case sf::Keyboard::W:
         case sf::Keyboard::Up:
-            curr_index = (curr_index - 1 + (int)v.size()) % (int)v.size();
-            refresh(); break;
+            curr_index = (curr_index - 1 + (int) v.size()) % (int) v.size();
+            refresh();
+            break;
         case sf::Keyboard::S:
         case sf::Keyboard::Down:
-            curr_index = (curr_index + 1) % (int)v.size();
-            refresh(); break;
+            curr_index = (curr_index + 1) % (int) v.size();
+            refresh();
+            break;
         case sf::Keyboard::Return:
         case sf::Keyboard::Space:
-            confirm(); break;
+            confirm();
+            break;
         case sf::Keyboard::Escape:
             _game.rm_scene();
             break;

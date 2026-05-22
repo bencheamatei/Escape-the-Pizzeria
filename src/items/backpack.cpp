@@ -6,7 +6,8 @@
 #include "../../include/player.h"
 #include "../../include/exceptions.h"
 
-backpack::backpack(int sz) : item("backpack"), sz_upgrade(sz) {}
+backpack::backpack(int sz) : item("backpack"), sz_upgrade(sz) {
+}
 
 void backpack::display(std::ostream &os) const {
     os << "Backpack: size=" << sz_upgrade;
@@ -17,7 +18,7 @@ item *backpack::get_clone() const {
 }
 
 void backpack::on_use(player &p) {
-    if (p.get_inventory().get_size()>=sz_upgrade) {
+    if (p.get_inventory().get_size() >= sz_upgrade) {
         throw player_exception("can't upgrade to a smaller backpack");
     }
 

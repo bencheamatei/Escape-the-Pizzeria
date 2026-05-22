@@ -15,13 +15,12 @@
 #include "../../include/animatronic/freddy.h"
 #include "game_states/playing_state.h"
 
-game_scene::game_scene(game& g)
+game_scene::game_scene(game &g)
     : scene(g)
-    , player_data(70, 100, 5)
-    , player_render_(player_data,ResourceManager::Instance().getTexture("billy.png"),{0.f,0.f})
-    , inventory_ui_(player_data,ResourceManager::Instance().getFont("FiraSans-Regular.ttf"))
-{
-    auto& tileset = ResourceManager::Instance().getTexture("tileset.png");
+      , player_data(70, 100, 5)
+      , player_render_(player_data, ResourceManager::Instance().getTexture("billy.png"), {0.f, 0.f})
+      , inventory_ui_(player_data, ResourceManager::Instance().getFont("FiraSans-Regular.ttf")) {
+    auto &tileset = ResourceManager::Instance().getTexture("tileset.png");
 
     rooms.push_back(buildPizzeriaMain(tileset));
     rooms.push_back(buildKitchen(tileset));
@@ -34,14 +33,15 @@ game_scene::game_scene(game& g)
         player_data.addItem(inventorySlot(topping("pepperoni", 5), 3));
         player_data.addItem(inventorySlot(topping("mushroom", 3), 2));
         player_data.addItem(inventorySlot(backpack(8), 1));
-        player_data.addItem(inventorySlot(soda(),1));
-    } catch (...) {}
+        player_data.addItem(inventorySlot(soda(), 1));
+    } catch (...) {
+    }
 
     game_view.setSize(480.f, 320.f);
     hud_view.setSize(960.f, 640.f);
     hud_view.setCenter(480.f, 320.f);
 
-    auto& font = ResourceManager::Instance().getFont("FiraSans-Regular.ttf");
+    auto &font = ResourceManager::Instance().getFont("FiraSans-Regular.ttf");
 
     hpBarBg.setSize({204.f, 16.f});
     hpBarBg.setFillColor(sf::Color(45, 12, 12));
@@ -62,7 +62,7 @@ game_scene::game_scene(game& g)
     );
     enemies.push_back({std::move(freddy_), std::move(freddy_render_), 0});
 
-    curr_state=std::make_unique<playing_state>();
+    curr_state = std::make_unique<playing_state>();
     curr_state->on_enter(*this);
 }
 
@@ -71,7 +71,7 @@ void game_scene::transition_to(std::unique_ptr<game_state> new_state) {
         curr_state->on_exit(*this);
     }
 
-    curr_state=std::move(new_state);
+    curr_state = std::move(new_state);
     curr_state->on_enter(*this);
 }
 
@@ -79,17 +79,17 @@ room &game_scene::current_room() {
     return rooms[room_idx];
 }
 
-room game_scene::buildPizzeriaMain(sf::Texture& tex) {
-    std::vector<std::vector<int>> grid = {
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
-        {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1},
+room game_scene::buildPizzeriaMain(sf::Texture &tex) {
+    std::vector<std::vector<int> > grid = {
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
+            {1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1},
     };
 
     room r(grid, tex, 64);
@@ -100,16 +100,16 @@ room game_scene::buildPizzeriaMain(sf::Texture& tex) {
     return r;
 }
 
-room game_scene::buildKitchen(sf::Texture& tex) {
-    std::vector<std::vector<int>> grid = {
-        {1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-        {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+room game_scene::buildKitchen(sf::Texture &tex) {
+    std::vector<std::vector<int> > grid = {
+            {1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
+            {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
     };
 
     room r(grid, tex, 64);
@@ -121,7 +121,7 @@ room game_scene::buildKitchen(sf::Texture& tex) {
 }
 
 void game_scene::door_transition() {
-    const door* usa = current_room().check_door(player_render_.get_position());
+    const door *usa = current_room().check_door(player_render_.get_position());
     if (!usa) {
         return;
     }
@@ -141,38 +141,39 @@ void game_scene::on_update(float dt) {
     }
     if (door_cooldown > 0.0f) {
         door_cooldown -= dt;
-    }
-    else {
+    } else {
         door_transition();
     }
     updateCamera(dt);
 }
 
 void game_scene::on_render(sf::RenderTarget &window) {
-    float wr = (float)window.getSize().x /(float) window.getSize().y;
-    float vr = (float)game::BASE_W / game::BASE_H;
+    float wr = (float) window.getSize().x / (float) window.getSize().y;
+    float vr = (float) game::BASE_W / game::BASE_H;
     float sx = 1.f, sy = 1.f, px = 0.f, py = 0.f;
     if (wr >= vr) {
-        sx = vr/wr; px = (1.f-sx)/2.f;
+        sx = vr / wr;
+        px = (1.f - sx) / 2.f;
     } else {
-        sy = wr/vr; py = (1.f-sy)/2.f;
+        sy = wr / vr;
+        py = (1.f - sy) / 2.f;
     }
     game_view.setViewport({px, py, sx, sy});
     hud_view.setViewport({px, py, sx, sy});
     if (curr_state) {
-        curr_state->on_render(*this,window);
+        curr_state->on_render(*this, window);
     }
 }
 
 
-void game_scene::on_event(const sf::Event& event) {
+void game_scene::on_event(const sf::Event &event) {
     inventory_ui_.event_handler(event, player_data);
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Escape) {
             _game.add_scene(std::make_unique<pause_scene>(_game));
         }
 
-        if (event.key.code==sf::Keyboard::F3) {
+        if (event.key.code == sf::Keyboard::F3) {
             game::toggle_debug_mode();
         }
     }
@@ -200,13 +201,13 @@ player_render &game_scene::get_player_render() {
 
 void game_scene::generate_death_background_drops() {
     blood_drops.clear();
-    srand((unsigned)std::time(nullptr));
+    srand((unsigned) std::time(nullptr));
     for (int i = 0; i < 20; i++) {
         sf::CircleShape drop;
         float r = 8.f + (rand() % 38);
         drop.setRadius(r);
         drop.setOrigin(r, r);
-        drop.setPosition((float)(rand() % 960), (float)(rand() % 640));
+        drop.setPosition((float) (rand() % 960), (float) (rand() % 640));
         drop.setFillColor(sf::Color(
             80 + rand() % 80, 0, 0,
             170 + rand() % 85));
