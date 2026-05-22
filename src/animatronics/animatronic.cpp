@@ -33,3 +33,12 @@ void animatronic::tick_timer(float dt) {
         attack_cooldown -= dt;
     }
 }
+
+bool animatronic::gets_hit() {
+    pizza_hits++;
+    if (pizza_hits>=max_pizza_hits) {
+        active=false;
+        return true;
+    }
+    return false;
+}

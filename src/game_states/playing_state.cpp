@@ -24,7 +24,10 @@ void playing_state::on_update(game_scene &ctx, float dt) {
 
     if (!p.isAlive()) {
         ctx.transition_to(std::make_unique<death_state>());
+        return;
     }
+
+    ctx.update_flying_pizzas(dt);
 }
 
 bool playing_state::update_enemies(game_scene &ctx, float dt) {
@@ -34,7 +37,7 @@ bool playing_state::update_enemies(game_scene &ctx, float dt) {
     bool recieved_dmg = false;
 
     for (const auto &it: ctx.get_enemies()) {
-        if (it.room_id != ctx.get_room_idx())
+        if (it.room_id != ctx.get_room_idx() || !it.data->is_active())
             continue;
         it.render->update(dt, ctx.get_current_room(), player_render_.get_position());
         it.data->tick_timer(dt);
@@ -65,6 +68,8 @@ void playing_state::on_render(game_scene &ctx, sf::RenderTarget &window) {
         window.draw(flash);
     }
 
+    ctx.draw_pizzas(window);
+
     window.setView(ctx.get_hud_view());
     draw_hud(ctx, window);
     ctx.get_inventory_ui().draw(window);
@@ -85,4 +90,8 @@ void playing_state::draw_hud(game_scene &ctx, sf::RenderTarget &window) {
     window.draw(ctx.get_hp_bar_bg());
     window.draw(hpBar);
     window.draw(ctx.get_hp_label());
+}
+
+bool playing_state::can_see_flying_pizzas() {
+    return true;
 }

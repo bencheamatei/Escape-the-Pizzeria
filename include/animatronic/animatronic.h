@@ -17,6 +17,10 @@ protected:
 
     float attack_cooldown;
     float attack_rate;
+
+    int max_pizza_hits=1;
+    int pizza_hits=0;
+
 public:
     animatronic(std::string,int,float,bool,float);
     virtual ~animatronic()=default;
@@ -26,8 +30,10 @@ public:
     [[nodiscard]] float get_speed() const;
 
     void tick_timer(float);
-    bool can_attack() const;
+    [[nodiscard]] bool can_attack() const;
     void reset_cooldown();
+
+    bool gets_hit();
 };
 
 

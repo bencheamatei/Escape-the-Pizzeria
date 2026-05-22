@@ -43,6 +43,8 @@ public:
     void decrease_at_pos(int,int);
     void merge_identic_slots();
     friend void swap(inventory&,inventory&) noexcept;
+
+    [[nodiscard]] int first_pizza_slot() const;
 };
 
 #endif //OOP_INVENTORY_H

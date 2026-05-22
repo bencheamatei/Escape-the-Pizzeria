@@ -19,6 +19,9 @@ public:
     virtual void on_update(game_scene& ctx, float dt)=0;
     virtual void on_render(game_scene& ctx, sf::RenderTarget& t)=0;
 
+    virtual bool can_see_flying_pizzas() {
+        return false;
+    }
 };
 
 

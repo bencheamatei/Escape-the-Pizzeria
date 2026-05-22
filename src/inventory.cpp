@@ -217,3 +217,14 @@ void swap(inventory &x, inventory &y) noexcept {
     std::swap(x.items, y.items);
     std::swap(x.max_capacity, y.max_capacity);
 }
+
+int inventory::first_pizza_slot() const {
+    int curr=0;
+    for (const auto &it:items) {
+        if (it!=nullptr && it->is_pizza()) {
+           return curr;
+        }
+        curr++;
+    }
+    return -1;
+}

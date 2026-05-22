@@ -18,6 +18,7 @@ private:
 public:
     void on_update(game_scene&, float) override;
     void on_render(game_scene&, sf::RenderTarget&) override;
+    bool can_see_flying_pizzas() override;
 };
 
 

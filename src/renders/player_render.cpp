@@ -137,15 +137,15 @@ sf::FloatRect player_render::get_bound() const {
 
 
 // pe cand ma apuc de aruncat pizza
-// sf::Vector2f player_render::get_dir() const {
-//     if (facing==Dir::Up) {
-//         return {0.0f, -1.0f};
-//     }
-//     if (facing==Dir::Down) {
-//         return {0.0f, -1.0f};
-//     }
-//     if (facing==Dir::Left) {
-//         return {-1.0f, 0.0f};
-//     }
-//     return {1.0f,0.0f};
-// }
+sf::Vector2f player_render::get_dir() const {
+    if (facing==Dir::Up) {
+        return {0.0f, -1.0f};
+    }
+    if (facing==Dir::Down) {
+        return {0.0f, 1.0f};
+    }
+    if (facing==Dir::Left) {
+        return {-1.0f, 0.0f};
+    }
+    return {1.0f,0.0f};
+}

@@ -180,6 +180,12 @@ void game_scene::on_event(const sf::Event &event) {
         if (event.key.code == sf::Keyboard::F3) {
             game::toggle_debug_mode();
         }
+
+        if (event.key.code==sf::Keyboard::Space) {
+            if (curr_state!=nullptr && curr_state->can_see_flying_pizzas()) {
+                throw_pizza();
+            }
+        }
     }
 }
 
@@ -257,4 +263,55 @@ sf::RectangleShape &game_scene::get_hp_bar_bg() {
 
 sf::Vector2f &game_scene::get_camera_pos() {
     return camera_pos;
+}
+
+void game_scene::throw_pizza() {
+    auto inv=player_data.get_inventory();
+    int u=inv.first_pizza_slot();
+
+    if (u!=-1) {
+        try {
+            player_data.drop_item(u);
+        }
+        catch (...) {
+            return;
+        }
+        flying_pizzas_.emplace_back(player_render_.get_position(),player_render_.get_dir());
+    }
+}
+
+void game_scene::update_flying_pizzas(float dt) {
+    for (auto &it:flying_pizzas_) {
+        if (!it.active)
+            continue;
+
+        it.pos+=it.dir*it.speed*dt;
+        it.shape.setPosition(it.pos);
+        sf::FloatRect proj_hitbox(it.pos.x-10.f,it.pos.y-10.f,20.f,20.f);
+
+        if (current_room().collide(proj_hitbox)) {
+            it.active=false;
+            continue;
+        }
+
+        for (auto &enemy:enemies) {
+            if (enemy.room_id!=room_idx || !enemy.data->is_active() || !enemy.render->get_bounds().intersects(proj_hitbox))
+                continue;
+            enemy.data->gets_hit();
+            it.active=false;
+            break;
+        }
+    }
+
+    flying_pizzas_.erase(std::remove_if(flying_pizzas_.begin(),flying_pizzas_.end(),
+                    [](const flying_pizza &x) {return !x.active;})
+                        ,flying_pizzas_.end());
+}
+
+void game_scene::draw_pizzas(sf::RenderTarget &window) const {
+    for (const auto& it:flying_pizzas_) {
+        if (!it.active)
+            continue;
+        window.draw(it.shape);
+    }
 }
