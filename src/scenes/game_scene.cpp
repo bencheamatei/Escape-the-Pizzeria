@@ -133,7 +133,6 @@ void game_scene::on_update(float dt) {
     } else {
         door_transition();
     }
-    updateCamera(dt);
 }
 
 void game_scene::on_render(sf::RenderTarget &window) {
@@ -199,14 +198,19 @@ void game_scene::updateCamera(float dt) {
         return ;
     }
 
+    game_view.setSize(480.f, 320.f);
+
     sf::Vector2f target = player_render_.get_position();
     camera_pos.x += (target.x - camera_pos.x) * CAM_LERP * dt;
     camera_pos.y += (target.y - camera_pos.y) * CAM_LERP * dt;
 
     float hw = game_view.getSize().x / 2.f;
     float hh = game_view.getSize().y / 2.f;
-    camera_pos.x = std::clamp(camera_pos.x, hw, current_room().get_size().x - hw);
-    camera_pos.y = std::clamp(camera_pos.y, hh, current_room().get_size().y - hh);
+    float max_x = std::max(hw, current_room().get_size().x - hw);
+    float max_y = std::max(hh, current_room().get_size().y - hh);
+
+    camera_pos.x = std::clamp(camera_pos.x, hw, max_x);
+    camera_pos.y = std::clamp(camera_pos.y, hh, max_y);
     game_view.setCenter(camera_pos);
 }
 
