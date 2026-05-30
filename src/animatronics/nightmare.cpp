@@ -14,5 +14,6 @@ void nightmare::on_attack(player &p) {
 
 bool nightmare::gets_hit() {
     apply_stun(3.0f);
+    speed+=8.f;
     return false;
 }

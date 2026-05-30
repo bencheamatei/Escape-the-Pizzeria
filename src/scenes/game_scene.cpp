@@ -34,11 +34,11 @@ game_scene::game_scene(game &g)
     camera_pos = current_room().spawn_point;
 
     try {
-        player_data.addItem(inventorySlot(dough(), 2));
-        player_data.addItem(inventorySlot(topping("pepperoni", 5), 3));
-        player_data.addItem(inventorySlot(topping("mushroom", 3), 2));
+        player_data.addItem(inventorySlot(dough(), 10));
+        player_data.addItem(inventorySlot(topping("pepperoni", 5), 10));
+        player_data.addItem(inventorySlot(topping("mushroom", 3), 10));
         player_data.addItem(inventorySlot(backpack(8), 1));
-        player_data.addItem(inventorySlot(soda(), 1));
+        player_data.addItem(inventorySlot(soda(), 10));
     } catch (...) {
     }
 
@@ -77,14 +77,14 @@ game_scene::game_scene(game &g)
     auto chica_render_ = std::make_unique<animatronic_render>(
         *chica_,
         ResourceManager::Instance().getTexture("chica.png"),
-        sf::Vector2f(1280.f, 1280.f)
+        sf::Vector2f(600.f, 600.f)
     );
 
     auto nightmare_ = std::make_unique<nightmare>();
     auto nightmare_render_ = std::make_unique<animatronic_render>(
         *nightmare_,
         ResourceManager::Instance().getTexture("nightmare.png"),
-        sf::Vector2f(1280.f, 1280.f)
+        sf::Vector2f(600.f, 600.f)
     );
 
     enemies.push_back({std::move(freddy_), std::move(freddy_render_), 0});
