@@ -14,7 +14,7 @@ private:
     static constexpr float hir_duration=0.3f;
 
     sf::RenderTexture intuneric;
-    bool este_intuneric;
+    bool este_intuneric=false;
     void draw_intuneric(game_scene& ctx, sf::RenderTarget &window);
 
     bool update_enemies(game_scene&, float);

@@ -77,6 +77,16 @@ void playing_state::on_render(game_scene &ctx, sf::RenderTarget &window) {
 
     window.setView(ctx.get_hud_view());
     draw_hud(ctx, window);
+
+    if (ctx.get_room_idx()==3) {
+        sf::View compact_inv_view = ctx.get_hud_view();
+        compact_inv_view.setViewport(sf::FloatRect(0.3f, 0.505f, 0.5f, 0.5f));
+        window.setView(compact_inv_view);
+        ctx.get_inventory_ui().draw(window);
+        window.setView(ctx.get_hud_view());
+        return ;
+    }
+
     ctx.get_inventory_ui().draw(window);
 }
 

@@ -161,6 +161,26 @@ void game_scene::on_event(const sf::Event &event) {
 }
 
 void game_scene::updateCamera(float dt) {
+    if (room_idx==3) {
+        sf::Vector2f r_size = current_room().get_size();
+
+        float base_ratio = (float)game::BASE_W / game::BASE_H;
+        float room_ratio = r_size.x / r_size.y;
+
+        float view_w = r_size.x;
+        float view_h = r_size.y;
+
+        if (room_ratio > base_ratio) {
+            view_h = r_size.x / base_ratio;
+        } else {
+            view_w = r_size.y * base_ratio;
+        }
+
+        game_view.setSize(view_w, view_h);
+        game_view.setCenter(r_size.x / 2.f, r_size.y / 2.f);
+        return ;
+    }
+
     sf::Vector2f target = player_render_.get_position();
     camera_pos.x += (target.x - camera_pos.x) * CAM_LERP * dt;
     camera_pos.y += (target.y - camera_pos.y) * CAM_LERP * dt;
