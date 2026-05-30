@@ -56,8 +56,13 @@ void playing_state::on_render(game_scene &ctx, sf::RenderTarget &window) {
     window.setView(ctx.get_game_view());
     window.draw(ctx.get_current_room());
     ctx.get_player_render().draw(window);
-    for (const auto &e: ctx.get_enemies())
+    for (const auto &e: ctx.get_enemies()) {
         if (e.room_id == ctx.get_room_idx()) e.render->draw(window);
+    }
+
+    if (ctx.get_room_idx()==2) {
+        draw_intuneric(ctx,window);
+    }
 
     if (hit_flash_timer > 0.f) {
         float a = (hit_flash_timer / hir_duration) * 140.f;
@@ -94,4 +99,40 @@ void playing_state::draw_hud(game_scene &ctx, sf::RenderTarget &window) {
 
 bool playing_state::can_see_flying_pizzas() {
     return true;
+}
+
+void playing_state::draw_intuneric(game_scene &ctx, sf::RenderTarget &window) {
+    if (!este_intuneric) {
+        intuneric.create(game::BASE_W, game::BASE_H);
+        intuneric.setSmooth(true);
+        este_intuneric = true;
+    }
+
+    intuneric.clear(sf::Color(8, 8, 14, 252));
+
+    intuneric.setView(ctx.get_game_view());
+
+    sf::Vector2f ppos = ctx.get_player_render().get_position();
+    float max_radius = 70.f;
+
+    for (float r = max_radius; r > 0; r -= 4.f) {
+        sf::CircleShape circle(r);
+        circle.setOrigin(r, r);
+        circle.setPosition(ppos);
+
+        float ratio = r / max_radius;
+        sf::Uint8 alpha = static_cast<sf::Uint8>(ratio * 252.f);
+
+        circle.setFillColor(sf::Color(0, 0, 0, alpha));
+
+        intuneric.draw(circle, sf::BlendNone);
+    }
+    intuneric.display();
+
+    sf::Sprite light_sprite(intuneric.getTexture());
+
+    window.setView(ctx.get_hud_view());
+    window.draw(light_sprite);
+
+    window.setView(ctx.get_game_view());
 }
