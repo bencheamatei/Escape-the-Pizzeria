@@ -33,6 +33,7 @@ void animatronic_render::resolve_collision(sf::Vector2f delta, const room &room)
 
 void animatronic_render::update(float dt, const room &room, sf::Vector2f target_pos) {
     if (!data.is_active()) return;
+    if (data.is_stunned()) return;
 
     path_timer -= dt;
     if (path_timer <= 0.f) {

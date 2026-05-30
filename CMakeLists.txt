@@ -105,6 +105,12 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/game_states/respawn_state.h
         src/animatronics/foxy.cpp
         include/animatronic/foxy.h
+        src/animatronic_factory.cpp
+        include/animatronic_factory.h
+        src/animatronics/chica.cpp
+        include/animatronic/chica.h
+        src/animatronics/nightmare.cpp
+        include/animatronic/nightmare.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})

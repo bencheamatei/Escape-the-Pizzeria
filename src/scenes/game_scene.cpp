@@ -15,6 +15,8 @@
 #include "../../include/animatronic/freddy.h"
 #include "game_states/playing_state.h"
 #include "../../include/animatronic/foxy.h"
+#include "animatronic/chica.h"
+#include "animatronic/nightmare.h"
 
 game_scene::game_scene(game &g)
     : scene(g)
@@ -71,8 +73,24 @@ game_scene::game_scene(game &g)
         sf::Vector2f(490.f, 300.f)
     );
 
+    auto chica_ = std::make_unique<chica>();
+    auto chica_render_ = std::make_unique<animatronic_render>(
+        *chica_,
+        ResourceManager::Instance().getTexture("chica.png"),
+        sf::Vector2f(1280.f, 1280.f)
+    );
+
+    auto nightmare_ = std::make_unique<nightmare>();
+    auto nightmare_render_ = std::make_unique<animatronic_render>(
+        *nightmare_,
+        ResourceManager::Instance().getTexture("nightmare.png"),
+        sf::Vector2f(1280.f, 1280.f)
+    );
+
     enemies.push_back({std::move(freddy_), std::move(freddy_render_), 0});
     enemies.push_back({std::move(foxy_), std::move(foxy_render_), 1});
+    enemies.push_back({std::move(chica_), std::move(chica_render_), 2});
+    enemies.push_back({std::move(nightmare_), std::move(nightmare_render_), 3});
 
     curr_state = std::make_unique<playing_state>();
     curr_state->on_enter(*this);

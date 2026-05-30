@@ -32,6 +32,10 @@ void animatronic::tick_timer(float dt) {
     if (attack_cooldown > 0) {
         attack_cooldown -= dt;
     }
+
+    if (stun_timer>0) {
+        stun_timer-=dt;
+    }
 }
 
 bool animatronic::gets_hit() {
@@ -41,4 +45,12 @@ bool animatronic::gets_hit() {
         return true;
     }
     return false;
+}
+
+bool animatronic::is_stunned() const {
+    return stun_timer>0.f;
+}
+
+void animatronic::apply_stun(float dt) {
+    stun_timer=dt;
 }

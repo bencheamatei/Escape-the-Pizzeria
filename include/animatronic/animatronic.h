@@ -21,6 +21,8 @@ protected:
     int max_pizza_hits=1;
     int pizza_hits=0;
 
+    float stun_timer=0.f;
+
 public:
     animatronic(std::string,int,float,bool,float);
     virtual ~animatronic()=default;
@@ -29,11 +31,13 @@ public:
     [[nodiscard]] bool is_active() const;
     [[nodiscard]] float get_speed() const;
 
-    void tick_timer(float);
+    virtual void tick_timer(float);
     [[nodiscard]] bool can_attack() const;
     void reset_cooldown();
 
-    bool gets_hit();
+    virtual bool gets_hit();
+    void apply_stun(float dt);
+    [[nodiscard]] bool is_stunned() const;
 };
 
 

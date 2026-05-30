@@ -28,6 +28,7 @@ void playing_state::on_update(game_scene &ctx, float dt) {
     }
 
     ctx.update_flying_pizzas(dt);
+    ctx.updateCamera(dt);
 }
 
 bool playing_state::update_enemies(game_scene &ctx, float dt) {
