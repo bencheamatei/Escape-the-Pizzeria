@@ -8,10 +8,11 @@
 #include <cmath>
 #include "../../include/animatronic/animatronic_ai.h"
 
-animatronic_render::animatronic_render(animatronic &a, sf::Texture &texture, sf::Vector2f init_pos)
-    : data(a), pos(init_pos) {
+animatronic_render::animatronic_render(animatronic &a, sf::Texture &texture, sf::Vector2f init_pos, float scale)
+    : data(a), pos(init_pos), BOX_W(24.f*scale), BOX_H(18.f*scale) {
     sprite.setTexture(texture);
     sprite.setOrigin(32.0f, 32.0f);
+    sprite.setScale(scale,scale);
     sprite.setPosition(pos);
 }
 

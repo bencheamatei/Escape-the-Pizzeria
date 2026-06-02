@@ -84,7 +84,7 @@ game_scene::game_scene(game &g)
     auto nightmare_render_ = std::make_unique<animatronic_render>(
         *nightmare_,
         ResourceManager::Instance().getTexture("nightmare.png"),
-        sf::Vector2f(600.f, 600.f)
+        sf::Vector2f(600.f, 600.f), 3
     );
 
     enemies.push_back({std::move(freddy_), std::move(freddy_render_), 0});
