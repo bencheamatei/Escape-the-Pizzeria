@@ -4,8 +4,7 @@
 
 int main() {
     try {
-        game game;
-        game.run();
+        game::get_instance().run();
     } catch (const game_exception &e) {
         std::cerr << "[game error] " << e.what() << "\n";
         return 1;

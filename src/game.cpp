@@ -111,3 +111,8 @@ bool game::is_debug_mode() {
 void game::toggle_debug_mode() {
     debug_mode = !debug_mode;
 }
+
+game &game::get_instance() {
+    static game g;
+    return g;
+}

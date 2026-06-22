@@ -29,8 +29,13 @@ private:
     sf::RenderTexture render_texture_;
     sf::Sprite render_sprite_;
 
-public:
     game();
+public:
+
+    static game& get_instance();
+    game(const game&)=delete;
+    game operator=(const game&)=delete;
+
     void run();
     void add_scene(std::unique_ptr<scene>);
     void rm_scene();
