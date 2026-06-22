@@ -18,9 +18,9 @@
 #include "animatronic/chica.h"
 #include "animatronic/nightmare.h"
 
-game_scene::game_scene(game &g)
-    : scene(g)
-      , player_data(70, 100, 5)
+game_scene::game_scene()
+    :
+      player_data(70, 100, 5)
       , player_render_(player_data, ResourceManager::Instance().getTexture("billy.png"), {0.f, 0.f})
       , inventory_ui_(player_data, ResourceManager::Instance().getFont("FiraSans-Regular.ttf")) {
     auto &tileset = ResourceManager::Instance().getTexture("tileset.png");
@@ -162,11 +162,11 @@ void game_scene::on_event(const sf::Event &event) {
     inventory_ui_.event_handler(event, player_data);
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Escape) {
-            _game.add_scene(std::make_unique<pause_scene>(_game));
+            game::get_instance().get_scene_manager().add_scene(std::make_unique<pause_scene>());
         }
 
         if (event.key.code == sf::Keyboard::F3) {
-            game::toggle_debug_mode();
+            game::get_instance().toggle_debug_mode();
         }
 
         if (event.key.code==sf::Keyboard::Space) {

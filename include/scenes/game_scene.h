@@ -74,7 +74,7 @@ private:
     std::vector<flying_pizza> flying_pizzas_;
 
 public:
-    explicit game_scene(game&);
+    explicit game_scene();
 
     player& get_player();
     player_render& get_player_render();

@@ -7,7 +7,7 @@
 #include "../../ResourceManager.hpp"
 #include "../../include/scenes/game_scene.h"
 
-menu_scene::menu_scene(game &game) : scene(game) {
+menu_scene::menu_scene() {
     auto &res_man = ResourceManager::Instance();
     auto &texture = res_man.getTexture("podea-fin.png");
     auto &font = res_man.getFont("FiraSans-Regular.ttf");
@@ -81,9 +81,9 @@ void menu_scene::refresh() {
 
 void menu_scene::confirm() {
     if (curr_index == 0)
-        _game.add_scene(std::make_unique<game_scene>(_game));
+        game::get_instance().get_scene_manager().add_scene(std::make_unique<game_scene>());
     else
-        _game.get_window().close();
+        game::get_instance().get_window().close();
 }
 
 void menu_scene::on_update(float dt) {
@@ -153,7 +153,7 @@ void menu_scene::on_event(const sf::Event &event) {
             confirm();
             break;
         case sf::Keyboard::Escape:
-            _game.get_window().close();
+            game::get_instance().get_window().close();
             break;
         default: break;
     }

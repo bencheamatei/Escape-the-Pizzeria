@@ -28,18 +28,22 @@ void game::toggle_fullscreen() {
 }
 
 void game::run() {
-    add_scene(std::make_unique<menu_scene>(*this));
+    sm.add_scene(std::make_unique<menu_scene>());
     while (window.isOpen()) {
         float dt = clock.restart().asSeconds();
         if (dt > 0.05f) {
             dt = 0.05f;
         }
 
-        apply_lazy();
+        sm.apply_lazy();
         process_event();
-        apply_lazy();
-        update(dt);
-        render();
+        sm.apply_lazy();
+
+        sm.update(dt);
+
+        window.clear(sf::Color::Black);
+        sm.render(window);
+        window.display();
     }
 }
 
@@ -56,45 +60,7 @@ void game::process_event() {
             }
         }
 
-        if (!d.empty()) {
-            d.top()->event_handler(event);
-        }
-    }
-}
-
-void game::update(float dt) {
-    if (!d.empty()) {
-        d.top()->update(dt);
-    }
-}
-
-void game::render() {
-    window.clear(sf::Color::Black);
-
-    if (!d.empty()) {
-        d.top()->render(window);
-    }
-
-    window.display();
-}
-
-void game::add_scene(std::unique_ptr<scene> scene) {
-    to_push = std::move(scene);
-}
-
-void game::rm_scene() {
-    to_pop++;
-}
-
-void game::apply_lazy() {
-    while (to_pop > 0 && !d.empty()) {
-        d.pop();
-        to_pop--;
-    }
-
-    if (to_push) {
-        d.push(std::move(to_push));
-        to_push = nullptr;
+        sm.process_event(event);
     }
 }
 
@@ -115,4 +81,8 @@ void game::toggle_debug_mode() {
 game &game::get_instance() {
     static game g;
     return g;
+}
+
+scene_manager &game::get_scene_manager() {
+    return sm;
 }

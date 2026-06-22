@@ -36,7 +36,7 @@ private:
     void refresh();
 
 public:
-    explicit menu_scene(game&);
+    explicit menu_scene();
 };
 
 

@@ -6,7 +6,7 @@
 #include "../../ResourceManager.hpp"
 #include "game.h"
 
-pause_scene::pause_scene(game &game) : scene(game) {
+pause_scene::pause_scene() {
     overlay.setSize({960.f, 640.f});
     overlay.setFillColor(sf::Color(8, 6, 18, 200));
     build_items();
@@ -52,13 +52,14 @@ void pause_scene::refresh() {
 }
 
 void pause_scene::confirm() {
+    auto& sm=game::get_instance().get_scene_manager();
     if (curr_index == 0) {
-        _game.rm_scene();
+        sm.rm_scene();
     } else if (curr_index == 1) {
-        _game.rm_scene();
-        _game.rm_scene();
+        sm.rm_scene();
+        sm.rm_scene();
     } else {
-        _game.get_window().close();
+        game::get_instance().get_window().close();
     }
 }
 
@@ -139,7 +140,7 @@ void pause_scene::on_event(const sf::Event &event) {
             confirm();
             break;
         case sf::Keyboard::Escape:
-            _game.rm_scene();
+            game::get_instance().get_scene_manager().rm_scene();
             break;
         default: break;
     }
