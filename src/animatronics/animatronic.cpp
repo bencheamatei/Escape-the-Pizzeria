@@ -54,3 +54,15 @@ bool animatronic::is_stunned() const {
 void animatronic::apply_stun(float dt) {
     stun_timer=dt;
 }
+
+void animatronic::set_position(sf::Vector2f new_pos) {
+    pos=new_pos;
+}
+
+sf::Vector2f animatronic::get_position() const {
+    return pos;
+}
+
+sf::FloatRect animatronic::get_bounds() const {
+    return {pos.x - box_w / 2.f, pos.y - box_h / 2.f, box_w, box_h};
+}

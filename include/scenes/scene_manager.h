@@ -26,7 +26,7 @@ public:
     void render(sf::RenderWindow& window);
     void process_event(const sf::Event& event);
 
-    [[nodiscard]] bool is_empty() const;
+    // [[nodiscard]] bool is_empty() const;
 };
 
 

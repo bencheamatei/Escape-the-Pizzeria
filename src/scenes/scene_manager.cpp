@@ -42,6 +42,6 @@ void scene_manager::process_event(const sf::Event& event) {
     }
 }
 
-bool scene_manager::is_empty() const {
-    return d.empty();
-}
+// bool scene_manager::is_empty() const {
+//     return d.empty();
+// }

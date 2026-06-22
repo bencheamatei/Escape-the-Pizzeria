@@ -13,9 +13,6 @@ class animatronic_render {
 private:
     animatronic& data;
     sf::Sprite sprite;
-    sf::Vector2f pos;
-    float BOX_W = 18.f;
-    float BOX_H = 24.f;
 
     void resolve_collision(sf::Vector2f delta, const room& room);
     bool overlap_solid(sf::FloatRect rect, const room& room) const;
@@ -31,9 +28,6 @@ public:
 
     void update(float dt, const room& room, sf::Vector2f target_pos);
     void draw(sf::RenderTarget& window) const;
-
-    sf::FloatRect get_bounds() const;
-    sf::Vector2f get_position() const;
 };
 
 

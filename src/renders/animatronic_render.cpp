@@ -9,11 +9,12 @@
 #include "../../include/animatronic/animatronic_ai.h"
 
 animatronic_render::animatronic_render(animatronic &a, sf::Texture &texture, sf::Vector2f init_pos, float scale)
-    : data(a), pos(init_pos), BOX_W(24.f*scale), BOX_H(18.f*scale) {
+    : data(a) {
     sprite.setTexture(texture);
     sprite.setOrigin(32.0f, 32.0f);
     sprite.setScale(scale,scale);
-    sprite.setPosition(pos);
+    data.set_position(init_pos);
+    sprite.setPosition(init_pos);
 }
 
 bool animatronic_render::overlap_solid(sf::FloatRect rect, const room &room) const {
@@ -21,6 +22,11 @@ bool animatronic_render::overlap_solid(sf::FloatRect rect, const room &room) con
 }
 
 void animatronic_render::resolve_collision(sf::Vector2f delta, const room &room) {
+    sf::Vector2f pos=data.get_position();
+
+    float BOX_W=data.get_bounds().width;
+    float BOX_H=data.get_bounds().height;
+
     sf::FloatRect pe_x(pos.x - BOX_W / 2.0f + delta.x, pos.y - BOX_H / 2.0f, BOX_W, BOX_H);
     if (!overlap_solid(pe_x, room)) {
         pos.x += delta.x;
@@ -30,6 +36,8 @@ void animatronic_render::resolve_collision(sf::Vector2f delta, const room &room)
     if (!overlap_solid(pe_y, room)) {
         pos.y += delta.y;
     }
+
+    data.set_position(pos);
 }
 
 void animatronic_render::update(float dt, const room &room, sf::Vector2f target_pos) {
@@ -43,7 +51,7 @@ void animatronic_render::update(float dt, const room &room, sf::Vector2f target_
     }
 
     if (!follow_path(dt, room)) {
-        sf::Vector2f dir = target_pos - pos;
+        sf::Vector2f dir = target_pos - data.get_position();
         float dist = std::sqrt(dir.x * dir.x + dir.y * dir.y);
 
         if (dist > 0.5f) {
@@ -52,7 +60,7 @@ void animatronic_render::update(float dt, const room &room, sf::Vector2f target_
             resolve_collision(dir * data.get_speed() * dt, room);
         }
     }
-    sprite.setPosition(pos);
+    sprite.setPosition(data.get_position());
 }
 
 void animatronic_render::draw(sf::RenderTarget &window) const {
@@ -61,9 +69,11 @@ void animatronic_render::draw(sf::RenderTarget &window) const {
     window.draw(sprite);
 
     if (game::get_instance().is_debug_mode()) {
+        float BOX_W=data.get_bounds().width;
+        float BOX_H=data.get_bounds().height;
         sf::RectangleShape hitbox({BOX_W, BOX_H});
         hitbox.setOrigin(BOX_W / 2.0f, BOX_H / 2.0f);
-        hitbox.setPosition(pos);
+        hitbox.setPosition(data.get_position());
         hitbox.setFillColor(sf::Color::Transparent);
         hitbox.setOutlineColor(sf::Color::Magenta);
         hitbox.setOutlineThickness(1.0f);
@@ -80,14 +90,6 @@ void animatronic_render::draw(sf::RenderTarget &window) const {
     }
 }
 
-sf::FloatRect animatronic_render::get_bounds() const {
-    return sf::FloatRect(pos.x - BOX_W / 2.f, pos.y - BOX_H / 2.f, BOX_W, BOX_H);
-}
-
-sf::Vector2f animatronic_render::get_position() const {
-    return pos;
-}
-
 bool animatronic_render::follow_path(float dt, const room &r) {
     if (path.empty()) return false;
 
@@ -96,7 +98,7 @@ bool animatronic_render::follow_path(float dt, const room &r) {
             path.front().y * 64.f + 64.f / 2.f
     };
 
-    sf::Vector2f dir = waypoint - pos;
+    sf::Vector2f dir = waypoint - data.get_position();
     float dist = std::sqrt(dir.x * dir.x + dir.y * dir.y);
 
     if (dist < 4.f) {
@@ -112,7 +114,7 @@ bool animatronic_render::follow_path(float dt, const room &r) {
 }
 
 void animatronic_render::recalc_path(const room &r, sf::Vector2f target_world) {
-    sf::Vector2i start{(int) (pos.x / 64.f), (int) (pos.y / 64.f)};
+    sf::Vector2i start{(int) (data.get_position().x / 64.f), (int) (data.get_position().y / 64.f)};
     sf::Vector2i goal{
             (int) (target_world.x / 64.f),
             (int) (target_world.y / 64.f)

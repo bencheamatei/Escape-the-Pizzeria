@@ -42,7 +42,7 @@ bool playing_state::update_enemies(game_scene &ctx, float dt) {
             continue;
         it.render->update(dt, ctx.get_current_room(), player_render_.get_position());
         it.data->tick_timer(dt);
-        if (it.render->get_bounds().intersects(player_render_.get_bound())) {
+        if (it.data->get_bounds().intersects(player_render_.get_bound())) {
             if (it.data->can_attack()) {
                 it.data->on_attack(p);
                 it.data->reset_cooldown();

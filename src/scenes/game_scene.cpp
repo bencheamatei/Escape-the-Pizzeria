@@ -308,7 +308,7 @@ void game_scene::update_flying_pizzas(float dt) {
         }
 
         for (auto &enemy:enemies) {
-            if (enemy.room_id!=room_idx || !enemy.data->is_active() || !enemy.render->get_bounds().intersects(proj_hitbox))
+            if (enemy.room_id!=room_idx || !enemy.data->is_active() || !enemy.data->get_bounds().intersects(proj_hitbox))
                 continue;
             enemy.data->gets_hit();
             it.active=false;

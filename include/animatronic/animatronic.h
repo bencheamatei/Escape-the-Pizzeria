@@ -7,6 +7,7 @@
 
 #include <string>
 #include "../player.h"
+#include <SFML/Graphics.hpp>
 
 class animatronic {
 protected:
@@ -23,6 +24,10 @@ protected:
 
     float stun_timer=0.f;
 
+    sf::Vector2f pos;
+    float box_w = 18.f;
+    float box_h = 24.f;
+
 public:
     animatronic(std::string,int,float,bool,float);
     virtual ~animatronic()=default;
@@ -38,6 +43,10 @@ public:
     virtual bool gets_hit();
     void apply_stun(float dt);
     [[nodiscard]] bool is_stunned() const;
+
+    void set_position(sf::Vector2f new_pos);
+    [[nodiscard]] sf::Vector2f get_position() const;
+    [[nodiscard]] sf::FloatRect get_bounds() const;
 };
 
 
