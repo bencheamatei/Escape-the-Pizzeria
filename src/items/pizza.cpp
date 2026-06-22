@@ -7,23 +7,23 @@
 
 void pizza::calculate_total_dmg() {
     this->total_dmg = 0;
-    for (const auto& it:toppings) {
-        this->total_dmg+=it.get_damage();
+    for (const auto &it: toppings) {
+        this->total_dmg += it.get_damage();
     }
 }
 
 pizza::pizza() : item("pizza"), total_dmg(0) {
-    this->toppings={};
+    this->toppings = {};
 }
 
 pizza::pizza(const std::vector<topping> &toppings) : item("pizza") {
-    this->toppings=toppings;
+    this->toppings = toppings;
     calculate_total_dmg();
 }
 
 pizza::pizza(const std::initializer_list<topping> v) : item("pizza") {
-    this->toppings={};
-    for (const auto& it:v) {
+    this->toppings = {};
+    for (const auto &it: v) {
         this->toppings.push_back(it);
     }
     calculate_total_dmg();
@@ -43,7 +43,7 @@ item *pizza::get_clone() const {
 
 void pizza::display(std::ostream &os) const {
     os << "Pizza: {";
-    for (const auto& it:toppings) {
+    for (const auto &it: toppings) {
         os << it;
     }
     os << "}";

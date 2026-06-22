@@ -28,6 +28,13 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(SFML)
 
+FetchContent_Declare(
+        nlohmann_json
+        URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
+)
+
+FetchContent_MakeAvailable(nlohmann_json)
+
 find_package(Threads REQUIRED)
 if(APPLE)
 elseif(UNIX)
@@ -96,6 +103,14 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/game_states/death_state.h
         src/game_states/respawn_state.cpp
         include/game_states/respawn_state.h
+        src/animatronics/foxy.cpp
+        include/animatronic/foxy.h
+        src/animatronic_factory.cpp
+        include/animatronic_factory.h
+        src/animatronics/chica.cpp
+        include/animatronic/chica.h
+        src/animatronics/nightmare.cpp
+        include/animatronic/nightmare.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})
@@ -107,7 +122,7 @@ target_include_directories(${MAIN_EXECUTABLE_NAME} PUBLIC
 target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE generated/include)
 target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ${SFML_SOURCE_DIR}/include)
 target_link_directories(${MAIN_EXECUTABLE_NAME} PRIVATE ${SFML_BINARY_DIR}/lib)
-target_link_libraries(${MAIN_EXECUTABLE_NAME} PRIVATE sfml-graphics sfml-window sfml-system Threads::Threads)
+target_link_libraries(${MAIN_EXECUTABLE_NAME} PRIVATE sfml-graphics sfml-window sfml-system Threads::Threads nlohmann_json::nlohmann_json)
 
 if(APPLE)
 elseif(UNIX)

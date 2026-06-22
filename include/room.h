@@ -17,7 +17,7 @@ And get yourself to shore
  */
 
 struct door {
-    int lin,col;
+    sf::FloatRect bounds;
     int room_id;
     sf::Vector2f spawn;
 };
@@ -29,7 +29,14 @@ private:
     int tile_size=32;
     std::vector<door> doors;
 
+    sf::VertexArray vertices_;
+    void build_geometry();
+
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    static constexpr int WALL=0;
+    static constexpr int FREE=3;
+    static constexpr int DOOR=1;
 
 public:
     sf::Vector2f spawn_point;
@@ -44,6 +51,8 @@ public:
     void add_door(int x,int y,int care_camera, sf::Vector2f target_spawn);
     [[nodiscard]] const door* check_door(sf::Vector2f pos) const;
 
-    sf::Vector2i get_grid_size() const;
-    bool is_solid(int x,int y) const;
+    [[nodiscard]] sf::Vector2i get_grid_size() const;
+    [[nodiscard]] bool is_solid(int x,int y) const;
+
+    static room from_tmj(const std::string& filepath,sf::Texture& tileset);
 };

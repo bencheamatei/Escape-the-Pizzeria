@@ -6,59 +6,54 @@
 #include "../../include/game.h"
 #include <cmath>
 
-player_render::player_render(player &p, sf::Texture &texture, sf::Vector2f init_pos) :
-                    player_data(p), position(init_pos) {
-
+player_render::player_render(player &p, sf::Texture &texture, sf::Vector2f init_pos) : player_data(p),
+    position(init_pos) {
     sprite.setTexture(texture);
-    sprite.setOrigin(FRAME_W/2.0f, FRAME_H/2.0f);
+    sprite.setOrigin(FRAME_W / 2.0f, FRAME_H / 2.0f);
     update_sprite_rect();
-    sprite.setPosition(std::round(position.x), std::round(position.y));
+    sprite.setPosition(position);
 }
 
 void player_render::set_position(sf::Vector2f pos) {
-    position=pos;
-    sprite.setPosition(std::round(position.x), std::round(position.y));
+    position = pos;
+    sprite.setPosition(position);
 }
 
 void player_render::handle_input() {
-    velocity={0.0f,0.0f};
+    velocity = {0.0f, 0.0f};
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        velocity.y-=0.1f;
+        velocity.y -= 0.1f;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        velocity.y+=0.1f;
+        velocity.y += 0.1f;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        velocity.x-=0.1f;
+        velocity.x -= 0.1f;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        velocity.x+=0.1f;
+        velocity.x += 0.1f;
     }
 
     // normalizez si pe diagonala fmm de supersonic
-    if (velocity.x!=0.f && velocity.y!=0.f) {
-        velocity.x*=0.7071f;
-        velocity.y*=0.7071f;
+    if (velocity.x != 0.f && velocity.y != 0.f) {
+        velocity.x *= 0.7071f;
+        velocity.y *= 0.7071f;
     }
 
-    if (velocity.y<0.0f) {
-        facing=Dir::Up;
-    }
-    else if (velocity.y>0.0f) {
-        facing=Dir::Down;
-    }
-    else if (velocity.x<0.0f) {
-        facing=Dir::Left;
-    }
-    else if (velocity.x>0.0f) {
-        facing=Dir::Right;
+    if (velocity.y < 0.0f) {
+        facing = Dir::Up;
+    } else if (velocity.y > 0.0f) {
+        facing = Dir::Down;
+    } else if (velocity.x < 0.0f) {
+        facing = Dir::Left;
+    } else if (velocity.x > 0.0f) {
+        facing = Dir::Right;
     }
 
-    if (velocity.x!=0.0f || velocity.y!=0.0f) {
-        moving=true;
-    }
-    else {
-        moving=false;
+    if (velocity.x != 0.0f || velocity.y != 0.0f) {
+        moving = true;
+    } else {
+        moving = false;
     }
 }
 
@@ -67,18 +62,18 @@ bool player_render::overlap_solid(sf::FloatRect rect, const room &room) const {
 }
 
 void player_render::resolve_collision(sf::Vector2f delta, const room &room) {
-    sf::FloatRect pe_x(position.x-BOX_W/2.0f+delta.x,position.y-BOX_H/2.0f,
-                        BOX_W,BOX_H);
+    sf::FloatRect pe_x(position.x - BOX_W / 2.0f + delta.x, position.y - BOX_H / 2.0f,
+                       BOX_W, BOX_H);
 
-    if (!overlap_solid(pe_x,room)) {
-        position.x+=delta.x;
+    if (!overlap_solid(pe_x, room)) {
+        position.x += delta.x;
     }
 
-    sf::FloatRect pe_y(position.x-BOX_W/2.0f,position.y-BOX_H/2.0f+delta.y,
-                        BOX_W,BOX_H);
+    sf::FloatRect pe_y(position.x - BOX_W / 2.0f, position.y - BOX_H / 2.0f + delta.y,
+                       BOX_W, BOX_H);
 
-    if (!overlap_solid(pe_y,room)) {
-        position.y+=delta.y;
+    if (!overlap_solid(pe_y, room)) {
+        position.y += delta.y;
     }
 }
 
@@ -100,9 +95,9 @@ void player_render::resolve_collision(sf::Vector2f delta, const room &room) {
 // }
 
 void player_render::update_sprite_rect() {
-    sprite.setTextureRect(sf::IntRect(frame*FRAME_W,
-        (int)facing*FRAME_H,
-        FRAME_W,FRAME_H
+    sprite.setTextureRect(sf::IntRect(frame * FRAME_W,
+                                      (int) facing * FRAME_H,
+                                      FRAME_W, FRAME_H
     ));
 }
 
@@ -121,11 +116,11 @@ void player_render::draw(sf::RenderTarget &window) const {
 
 void player_render::update(float dt, const room &room) {
     if (player_data.isAlive()) {
-        resolve_collision(velocity*SPEED*dt,room);
+        resolve_collision(velocity * SPEED * dt, room);
     }
 
     // update_animation(dt);
-    sprite.setPosition(std::round(position.x), std::round(position.y));
+    sprite.setPosition(position);
 }
 
 // bool player_render::is_moving() const {
@@ -138,4 +133,19 @@ sf::Vector2f player_render::get_position() const {
 
 sf::FloatRect player_render::get_bound() const {
     return sf::FloatRect(position.x - BOX_W / 2.0f, position.y - BOX_H / 2.0f, BOX_W, BOX_H);
+}
+
+
+// pe cand ma apuc de aruncat pizza
+sf::Vector2f player_render::get_dir() const {
+    if (facing==Dir::Up) {
+        return {0.0f, -1.0f};
+    }
+    if (facing==Dir::Down) {
+        return {0.0f, 1.0f};
+    }
+    if (facing==Dir::Left) {
+        return {-1.0f, 0.0f};
+    }
+    return {1.0f,0.0f};
 }

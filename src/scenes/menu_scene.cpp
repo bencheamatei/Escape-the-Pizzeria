@@ -8,9 +8,9 @@
 #include "../../include/scenes/game_scene.h"
 
 menu_scene::menu_scene(game &game) : scene(game) {
-    auto& res_man=ResourceManager::Instance();
-    auto& texture=res_man.getTexture("podea-fin.png");
-    auto& font=res_man.getFont("FiraSans-Regular.ttf");
+    auto &res_man = ResourceManager::Instance();
+    auto &texture = res_man.getTexture("podea-fin.png");
+    auto &font = res_man.getFont("FiraSans-Regular.ttf");
 
     background.setTexture(texture);
     sf::Vector2u ts = texture.getSize();
@@ -41,12 +41,13 @@ menu_scene::menu_scene(game &game) : scene(game) {
 }
 
 void menu_scene::build_items() {
-    auto& font = ResourceManager::Instance().getFont("FiraSans-Regular.ttf");
+    auto &font = ResourceManager::Instance().getFont("FiraSans-Regular.ttf");
     const float startY = 350.f;
-    const float gap    = 62.f;
+    const float gap = 62.f;
+    const float width = 280.f;
 
-    int i=0;
-    for (const auto &label:{"Start", "Quit"}) {
+    int i = 0;
+    for (const auto &label: {"Start", "Quit"}) {
         menu_item item;
         item.label.setFont(font);
         item.label.setString(label);
@@ -56,7 +57,7 @@ void menu_scene::build_items() {
         item.label.setOrigin(b.width / 2.f, b.height / 2.f);
         item.label.setPosition(480.f, startY + i * gap);
 
-        item.box.setSize({b.width + 48.f, 46.f});
+        item.box.setSize({width, 46.f});
         item.box.setOrigin(item.box.getSize() / 2.f);
         item.box.setPosition(480.f, startY + i * gap + 4.f);
         item.box.setOutlineThickness(1.f);
@@ -67,7 +68,7 @@ void menu_scene::build_items() {
 }
 
 void menu_scene::refresh() {
-    for (int i = 0; i < (int)v.size(); i++) {
+    for (int i = 0; i < (int) v.size(); i++) {
         bool sel = (i == curr_index);
         v[i].label.setFillColor(
             sel ? sf::Color(255, 215, 70) : sf::Color(200, 190, 220));
@@ -86,17 +87,16 @@ void menu_scene::confirm() {
 }
 
 void menu_scene::on_update(float dt) {
-    blink_timer+=dt;
-    if (blink_timer>=0.45f) {
-        blink_timer=0.0f;
-        show_cursor=!show_cursor;
+    blink_timer += dt;
+    if (blink_timer >= 0.45f) {
+        blink_timer = 0.0f;
+        show_cursor = !show_cursor;
     }
 }
 
-void menu_scene::on_render(sf::RenderTarget& window) {
-
-    float windowRatio = (float)window.getSize().x / (float)window.getSize().y;
-    float viewRatio = (float)game::BASE_W / (float)game::BASE_H;
+void menu_scene::on_render(sf::RenderTarget &window) {
+    float windowRatio = (float) window.getSize().x / (float) window.getSize().y;
+    float viewRatio = (float) game::BASE_W / (float) game::BASE_H;
 
     float sizeX = 1.0f, sizeY = 1.0f;
     float posX = 0.0f, posY = 0.0f;
@@ -118,35 +118,34 @@ void menu_scene::on_render(sf::RenderTarget& window) {
     window.draw(title);
     window.draw(subtitle);
 
-    for (auto& item : v) {
+    for (auto &item: v) {
         window.draw(item.box);
         window.draw(item.label);
     }
 
-    // blinking arrow cursor
     if (show_cursor && !v.empty()) {
         sf::ConvexShape arrow(3);
         float y = v[curr_index].label.getPosition().y;
-        arrow.setPoint(0, {388.f, y - 10.f});
-        arrow.setPoint(1, {388.f, y + 10.f});
-        arrow.setPoint(2, {404.f, y});
+        arrow.setPoint(0, {316.f, y - 10.f});
+        arrow.setPoint(1, {316.f, y + 10.f});
+        arrow.setPoint(2, {332.f, y});
         arrow.setFillColor(sf::Color(255, 210, 60));
         window.draw(arrow);
     }
 }
 
-void menu_scene::on_event(const sf::Event& event) {
+void menu_scene::on_event(const sf::Event &event) {
     if (event.type != sf::Event::KeyPressed) return;
     switch (event.key.code) {
         case sf::Keyboard::W:
         case sf::Keyboard::Up:
             curr_index =
-                (curr_index - 1 + (int)v.size()) % (int)v.size();
+                    (curr_index - 1 + (int) v.size()) % (int) v.size();
             refresh();
             break;
         case sf::Keyboard::S:
         case sf::Keyboard::Down:
-            curr_index = (curr_index + 1) % (int)v.size();
+            curr_index = (curr_index + 1) % (int) v.size();
             refresh();
             break;
         case sf::Keyboard::Return:
@@ -159,7 +158,3 @@ void menu_scene::on_event(const sf::Event& event) {
         default: break;
     }
 }
-
-
-
-

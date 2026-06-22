@@ -13,11 +13,16 @@ private:
     float hit_flash_timer = 0.f;
     static constexpr float hir_duration=0.3f;
 
+    sf::RenderTexture intuneric;
+    bool este_intuneric=false;
+    void draw_intuneric(game_scene& ctx, sf::RenderTarget &window);
+
     bool update_enemies(game_scene&, float);
     void draw_hud(game_scene&, sf::RenderTarget&);
 public:
     void on_update(game_scene&, float) override;
     void on_render(game_scene&, sf::RenderTarget&) override;
+    bool can_see_flying_pizzas() override;
 };
 
 

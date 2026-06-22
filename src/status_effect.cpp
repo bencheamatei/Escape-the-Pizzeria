@@ -6,7 +6,8 @@
 
 status_effect::~status_effect() = default;
 
-status_effect::status_effect(const std::string &nume) : name(nume) {}
+status_effect::status_effect(const std::string &nume) : name(nume) {
+}
 
 void status_effect::trigger(player &p) {
     on_trigger(p);

@@ -14,30 +14,30 @@
 #include "../include/items/dough.h"
 
 player::player() : rucsac(5) {
-    this->hp=100;
-    this->maxHp=100;
+    this->hp = 100;
+    this->maxHp = 100;
 }
 
 player::player(const int hp, const int maxHp, const int maxInventoryCapacity) : rucsac(maxInventoryCapacity) {
-    if (hp<=0) {
+    if (hp <= 0) {
         throw player_exception("initial health must be > 0");
     }
-    this->hp=hp;
+    this->hp = hp;
 
-    if (maxHp<=0) {
+    if (maxHp <= 0) {
         throw player_exception("max health must be > 0");
     }
-    this->maxHp=maxHp;
+    this->maxHp = maxHp;
 }
 
 player &player::operator=(const player &other) {
-    if (this==&other)
+    if (this == &other)
         return *this;
-    this->hp=other.hp;
-    this->maxHp=other.maxHp;
-    this->rucsac=other.rucsac;
+    this->hp = other.hp;
+    this->maxHp = other.maxHp;
+    this->rucsac = other.rucsac;
     this->effects.clear();
-    for (const auto& effect : other.effects) {
+    for (const auto &effect: other.effects) {
         if (effect != nullptr) {
             this->effects.push_back(std::unique_ptr<status_effect>(effect->get_clone()));
         }
@@ -46,11 +46,11 @@ player &player::operator=(const player &other) {
 }
 
 player::player(const player &other) {
-    this->hp=other.hp;
-    this->maxHp=other.maxHp;
-    this->rucsac=other.rucsac;
+    this->hp = other.hp;
+    this->maxHp = other.maxHp;
+    this->rucsac = other.rucsac;
     this->effects.clear();
-    for (const auto& effect : other.effects) {
+    for (const auto &effect: other.effects) {
         if (effect != nullptr) {
             this->effects.push_back(std::unique_ptr<status_effect>(effect->get_clone()));
         }
@@ -59,7 +59,7 @@ player::player(const player &other) {
 
 player::~player() = default;
 
-const inventory& player::get_inventory() const {
+const inventory &player::get_inventory() const {
     return this->rucsac;
 }
 
@@ -81,7 +81,7 @@ void player::addItem(const inventorySlot &other) {
 }
 
 bool player::isAlive() const {
-    return this->hp>0;
+    return this->hp > 0;
 }
 
 int player::getHp() const {
@@ -89,29 +89,29 @@ int player::getHp() const {
 }
 
 void player::normalizeHp() {
-    if (this->hp>this->maxHp) {
-        this->hp=this->maxHp;
+    if (this->hp > this->maxHp) {
+        this->hp = this->maxHp;
     }
-    if (this->hp<0) {
-        this->hp=0;
+    if (this->hp < 0) {
+        this->hp = 0;
     }
 }
 
 // pentru cand adaug animatronicii
 
 void player::receiveDmg(const int x) {
-    if (x<=0) {
+    if (x <= 0) {
         throw combat_exception("recieved damage must be > 0");
     }
-    hp-=x;
+    hp -= x;
     normalizeHp();
 }
 
 void player::heal(const int x) {
-    if (x<=0) {
+    if (x <= 0) {
         return;
     }
-    hp+=x;
+    hp += x;
     normalizeHp();
 }
 
@@ -120,30 +120,30 @@ void player::craftPizza() {
         throw craft_exception("must have an empty slot in order to craft");
     }
 
-    int dough_idx=-1;
-    for (int i=0; i<this->rucsac.get_capacity(); i++) {
+    int dough_idx = -1;
+    for (int i = 0; i < this->rucsac.get_capacity(); i++) {
         if (this->rucsac.get_item_at_index(i).isEmpty()) {
             continue;
         }
 
         if (this->rucsac.get_item_at_index(i).is_dough()) {
-        // if (dynamic_cast<const dough*>(this->rucsac.get_item_at_index(i).getItem())!=nullptr) {
-            dough_idx=i;
+            // if (dynamic_cast<const dough*>(this->rucsac.get_item_at_index(i).getItem())!=nullptr) {
+            dough_idx = i;
             break;
         }
     }
 
-    if (dough_idx==-1) {
+    if (dough_idx == -1) {
         throw craft_exception("must have at least one piece of dough to craft pizza");
     }
 
     std::vector<topping> available_toppings;
-    for (int i=0; i<this->rucsac.get_capacity(); i++) {
-        if (available_toppings.size()==3) {
+    for (int i = 0; i < this->rucsac.get_capacity(); i++) {
+        if (available_toppings.size() == 3) {
             break;
         }
 
-        if (i==dough_idx) {
+        if (i == dough_idx) {
             continue;
         }
 
@@ -152,19 +152,19 @@ void player::craftPizza() {
         }
 
         if (this->rucsac.get_item_at_index(i).is_topping()) {
-            const auto *u=dynamic_cast<const topping*>(this->rucsac.get_at(i).getItem());
+            const auto *u = dynamic_cast<const topping *>(this->rucsac.get_at(i).getItem());
             available_toppings.push_back(*u);
-            this->rucsac.decrease_at_pos(i,1);
+            this->rucsac.decrease_at_pos(i, 1);
         }
     }
-    this->rucsac.decrease_at_pos(dough_idx,1);
+    this->rucsac.decrease_at_pos(dough_idx, 1);
     pizza x(available_toppings);
-    rucsac.addItem({x,1});
+    rucsac.addItem({x, 1});
     this->rucsac.rearrangeItems();
 }
 
 void player::drop_item(const int pos) {
-    if (pos<0 || pos>=this->rucsac.get_capacity()) {
+    if (pos < 0 || pos >= this->rucsac.get_capacity()) {
         throw inventory_exception("slot out of range");
     }
     this->rucsac.pop_from_pos(pos);
@@ -179,7 +179,7 @@ void player::enlarge_inventory(int sz) {
 }
 
 void player::eat_item(int pos) {
-    if (pos<0 || pos>=this->rucsac.get_capacity()) {
+    if (pos < 0 || pos >= this->rucsac.get_capacity()) {
         throw inventory_exception("slot out of range");
     }
 
@@ -187,10 +187,10 @@ void player::eat_item(int pos) {
         throw player_exception("can't consume nothing");
     }
 
-    item *curr=const_cast<item*>(this->rucsac.get_at(pos).getItem());
-    if (curr!=nullptr) {
+    item *curr = const_cast<item *>(this->rucsac.get_at(pos).getItem());
+    if (curr != nullptr) {
         curr->use(*this);
-        this->rucsac.decrease_at_pos(pos,1);
+        this->rucsac.decrease_at_pos(pos, 1);
     }
     this->process_effects();
 }
@@ -200,7 +200,7 @@ void player::add_effect(std::unique_ptr<status_effect> effect) {
 }
 
 void player::process_effects() {
-    for (auto& effect:effects) {
+    for (auto &effect: effects) {
         effect->trigger(*this);
     }
     effects.clear();

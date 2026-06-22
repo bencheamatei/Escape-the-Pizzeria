@@ -21,6 +21,25 @@ struct EnemyEntity {
     int room_id=0;
 };
 
+// shoutout domnului albert pentru ca a crezut in viziune
+
+struct flying_pizza {
+    sf::Vector2f pos;
+    sf::Vector2f dir;
+    float speed=550.f;
+    bool active=true;
+    sf::CircleShape shape;
+
+    flying_pizza(sf::Vector2f pos, sf::Vector2f dir) : pos(pos), dir(dir) {
+        shape.setRadius(10.f);
+        shape.setOrigin(10.f, 10.f);
+        shape.setFillColor(sf::Color(220, 170, 60));
+        shape.setOutlineColor(sf::Color(160, 100, 20));
+        shape.setOutlineThickness(2.f);
+        shape.setPosition(pos);
+    }
+};
+
 class game_scene : public scene {
 private:
     player player_data;
@@ -36,13 +55,8 @@ private:
     sf::Text hpLabel;
 
     static constexpr float CAM_LERP = 5.0f;
-
-    void on_update(float dt) override;
     void on_render(sf::RenderTarget& window) override;
     void on_event(const sf::Event& event) override;
-
-    void updateCamera(float dt);
-    // void drawHUD(sf::RenderTarget& window);
     void door_transition();
 
     std::vector<room> rooms;
@@ -52,13 +66,13 @@ private:
 
     room& current_room();
 
-    static room buildPizzeriaMain(sf::Texture& tex);
-    static room buildKitchen(sf::Texture& tex);
-
     std::vector<EnemyEntity> enemies;
 
     // float hit_flash_timer=0.0f;
     static constexpr float hit_duration=0.25f;
+
+    std::vector<flying_pizza> flying_pizzas_;
+
 public:
     explicit game_scene(game&);
 
@@ -80,6 +94,13 @@ public:
 
     std::vector<sf::CircleShape> blood_drops;
     void generate_death_background_drops();
+
+    void updateCamera(float dt);
+    void on_update(float dt) override;
+
+    void throw_pizza();
+    void update_flying_pizzas(float dt);
+    void draw_pizzas(sf::RenderTarget &window) const;
 };
 
 

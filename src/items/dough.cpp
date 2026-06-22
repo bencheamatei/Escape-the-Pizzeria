@@ -8,7 +8,8 @@
 
 #include "food_poisoning.h"
 
-dough::dough() : item("dough") {}
+dough::dough() : item("dough") {
+}
 
 void dough::display(std::ostream &os) const {
     os << "Dough";

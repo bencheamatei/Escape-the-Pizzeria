@@ -8,10 +8,11 @@
 #include <ostream>
 #include <string>
 
-topping::topping() : item("topping"), damage(0) {}
+topping::topping() : item("topping"), damage(0) {
+}
 
 topping::topping(const std::string &nume, int damage) : item(nume), damage(damage) {
-    if (damage<0) {
+    if (damage < 0) {
         throw craft_exception("topping damage must be positive");
     }
 }
@@ -38,4 +39,3 @@ std::istream &operator>>(std::istream &is, topping &it) {
     is >> it.nume >> it.damage;
     return is;
 }
-

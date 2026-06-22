@@ -9,12 +9,15 @@
 #include "player.h"
 
 item::item() {
-    this->nume="item";
+    this->nume = "item";
 }
+
 item::item(const std::string &nume) {
-    this->nume=nume;
+    this->nume = nume;
 }
+
 item::~item() = default;
+
 std::string item::get_nume() const {
     return nume;
 }

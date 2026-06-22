@@ -26,6 +26,9 @@ private:
     static bool debug_mode;
     bool is_fullscreen = false;
 
+    sf::RenderTexture render_texture_;
+    sf::Sprite render_sprite_;
+
 public:
     game();
     void run();

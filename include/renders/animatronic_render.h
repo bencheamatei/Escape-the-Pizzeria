@@ -14,8 +14,8 @@ private:
     animatronic& data;
     sf::Sprite sprite;
     sf::Vector2f pos;
-    static constexpr float BOX_W = 18.f;
-    static constexpr float BOX_H = 24.f;
+    float BOX_W = 18.f;
+    float BOX_H = 24.f;
 
     void resolve_collision(sf::Vector2f delta, const room& room);
     bool overlap_solid(sf::FloatRect rect, const room& room) const;
@@ -27,7 +27,7 @@ private:
     bool follow_path(float dt, const room& r);
 
 public:
-    animatronic_render(animatronic& a, sf::Texture& texture, sf::Vector2f init_pos);
+    animatronic_render(animatronic& a, sf::Texture& texture, sf::Vector2f init_pos, float scale=1.f);
 
     void update(float dt, const room& room, sf::Vector2f target_pos);
     void draw(sf::RenderTarget& window) const;

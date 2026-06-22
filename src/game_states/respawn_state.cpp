@@ -7,14 +7,15 @@
 #include "scenes/game_scene.h"
 
 void respawn_state::on_enter(game_scene &ctx) {
-    timer=duration;
-    visible=true;
-    blink_timer=blink_duration;
+    timer = duration;
+    visible = true;
+    blink_timer = blink_duration;
 
-    for (int i = ctx.get_player().get_inventory().get_capacity()-1; i >= 0; i--) {
+    for (int i = ctx.get_player().get_inventory().get_capacity() - 1; i >= 0; i--) {
         try {
             ctx.get_player().drop_item(i);
-        } catch (...) {}
+        } catch (...) {
+        }
     }
 
     ctx.get_player().heal(999);
@@ -25,7 +26,9 @@ void respawn_state::on_enter(game_scene &ctx) {
 }
 
 void respawn_state::on_update(game_scene &ctx, float dt) {
-    timer -= dt;
+    ctx.get_player_render().handle_input();
+    ctx.get_player_render().update(dt, ctx.get_current_room());
+    ctx.updateCamera(dt);
 
     blink_timer -= dt;
     if (blink_timer <= 0.f) {
@@ -33,13 +36,14 @@ void respawn_state::on_update(game_scene &ctx, float dt) {
         visible = !visible;
     }
 
-    for (auto& e : ctx.get_enemies()) {
+    for (auto &e: ctx.get_enemies()) {
         if (e.room_id != ctx.get_room_idx())
             continue;
-        e.render->update(dt, ctx.get_current_room(),ctx.get_player_render().get_position());
+        e.render->update(dt, ctx.get_current_room(), ctx.get_player_render().get_position());
         e.data->tick_timer(dt);
     }
 
+    timer -= dt;
     if (timer <= 0.f) {
         ctx.transition_to(std::make_unique<playing_state>());
     }
@@ -49,7 +53,7 @@ void respawn_state::on_render(game_scene &ctx, sf::RenderTarget &window) {
     window.setView(ctx.get_game_view());
     window.draw(ctx.get_current_room());
     if (visible) ctx.get_player_render().draw(window);
-    for (const auto& e : ctx.get_enemies())
+    for (const auto &e: ctx.get_enemies())
         if (e.room_id == ctx.get_room_idx()) e.render->draw(window);
 
     window.setView(ctx.get_hud_view());

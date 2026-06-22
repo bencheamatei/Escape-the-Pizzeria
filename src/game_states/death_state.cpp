@@ -9,13 +9,13 @@
 #include "../ResourceManager.hpp"
 
 void death_state::on_enter(game_scene &ctx) {
-    timer=duration;
+    timer = duration;
     ctx.generate_death_background_drops();
 }
 
 void death_state::on_update(game_scene &ctx, float dt) {
-    timer-=dt;
-    if (timer<=0.f) {
+    timer -= dt;
+    if (timer <= 0.f) {
         ctx.transition_to(std::make_unique<respawn_state>());
     }
 }
@@ -24,7 +24,7 @@ void death_state::on_render(game_scene &ctx, sf::RenderTarget &t) {
     t.setView(ctx.get_game_view());
     t.draw(ctx.get_current_room());
     ctx.get_player_render().draw(t);
-    for (const auto& e : ctx.get_enemies())
+    for (const auto &e: ctx.get_enemies())
         if (e.room_id == ctx.get_room_idx()) e.render->draw(t);
 
     t.setView(ctx.get_hud_view());
@@ -36,7 +36,7 @@ void death_state::on_render(game_scene &ctx, sf::RenderTarget &t) {
     bg.setFillColor(sf::Color(0, 0, 0, bg_a));
     t.draw(bg);
 
-    for (auto drop : ctx.blood_drops) {
+    for (auto drop: ctx.blood_drops) {
         sf::Color c = drop.getFillColor();
         c.a = static_cast<sf::Uint8>((c.a * std::min(1.f, progress * 2.5f)));
         drop.setFillColor(c);
@@ -44,7 +44,7 @@ void death_state::on_render(game_scene &ctx, sf::RenderTarget &t) {
     }
 
     if (progress > 0.45f) {
-        auto& font = ResourceManager::Instance().getFont("FiraSans-Regular.ttf");
+        auto &font = ResourceManager::Instance().getFont("FiraSans-Regular.ttf");
         float ta = std::min(255.f, (progress - 0.45f) / 0.3f * 255.f);
 
         sf::Text died;
@@ -54,9 +54,8 @@ void death_state::on_render(game_scene &ctx, sf::RenderTarget &t) {
         died.setStyle(sf::Text::Bold);
         died.setFillColor(sf::Color(200, 20, 20, static_cast<sf::Uint8>(ta)));
         sf::FloatRect b = died.getLocalBounds();
-        died.setOrigin(b.width/2.f, b.height/2.f);
+        died.setOrigin(b.width / 2.f, b.height / 2.f);
         died.setPosition(480.f, 280.f);
         t.draw(died);
     }
 }
-
