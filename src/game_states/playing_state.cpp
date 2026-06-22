@@ -40,7 +40,7 @@ bool playing_state::update_enemies(game_scene &ctx, float dt) {
     for (const auto &it: ctx.get_enemies()) {
         if (it.room_id != ctx.get_room_idx() || !it.data->is_active())
             continue;
-        it.render->update(dt, ctx.get_current_room(), player_render_.get_position());
+        it.data->update(dt, ctx.get_current_room(), player_render_.get_position());
         it.data->tick_timer(dt);
         if (it.data->get_bounds().intersects(player_render_.get_bound())) {
             if (it.data->can_attack()) {
