@@ -35,7 +35,7 @@ protected:
     static constexpr float path_refresh=0.3f;
 
     void resolve_collision(sf::Vector2f delta, const room& room);
-    bool overlap_solid(sf::FloatRect rect, const room& room) const;
+    [[nodiscard]] bool overlap_solid(sf::FloatRect rect, const room& room) const;
 
     void recalc_path(const room& r, sf::Vector2f target_world);
     bool follow_path(float dt, const room& r);

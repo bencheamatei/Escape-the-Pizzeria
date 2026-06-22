@@ -17,31 +17,23 @@
 #include "../../include/animatronic/foxy.h"
 #include "animatronic/chica.h"
 #include "animatronic/nightmare.h"
+#include "scenes/everything_builder.h"
 
 game_scene::game_scene()
-    :
-      player_data(70, 100, 5)
-      , player_render_(player_data, ResourceManager::Instance().getTexture("billy.png"), {0.f, 0.f})
-      , inventory_ui_(player_data, ResourceManager::Instance().getFont("FiraSans-Regular.ttf")) {
-    auto &tileset = ResourceManager::Instance().getTexture("tileset.png");
+    : player_data(70, 100, 5)
+    , player_render_(player_data, ResourceManager::Instance().getTexture("billy.png"), {0.f, 0.f})
+    , inventory_ui_(player_data, ResourceManager::Instance().getFont("FiraSans-Regular.ttf"))
+{
+    // 1. Build the Level Data
+    rooms = everything_builder::build_rooms();
+    everything_builder::setup_starting_inventory(player_data);
+    everything_builder::build_enemies(enemies);
 
-    rooms.push_back(room::from_tmj("assets/maps/room1.tmj", tileset));
-    rooms.push_back(room::from_tmj("assets/maps/room2.tmj", tileset));
-    rooms.push_back(room::from_tmj("assets/maps/room3.tmj", tileset));
-    rooms.push_back(room::from_tmj("assets/maps/room4.tmj", tileset));
-
+    // 2. Set Player Spawn Location
     player_render_.set_position(current_room().spawn_point);
     camera_pos = current_room().spawn_point;
 
-    try {
-        player_data.addItem(inventorySlot(dough(), 10));
-        player_data.addItem(inventorySlot(topping("pepperoni", 5), 10));
-        player_data.addItem(inventorySlot(topping("mushroom", 3), 10));
-        player_data.addItem(inventorySlot(backpack(8), 1));
-        player_data.addItem(inventorySlot(soda(), 10));
-    } catch (...) {
-    }
-
+    // 3. Setup UI & Camera Views
     game_view.setSize(480.f, 320.f);
     hud_view.setSize(960.f, 640.f);
     hud_view.setCenter(480.f, 320.f);
@@ -59,39 +51,7 @@ game_scene::game_scene()
     hpLabel.setFillColor(sf::Color(220, 210, 230));
     hpLabel.setPosition(20.f, 38.f);
 
-    auto freddy_ = std::make_unique<freddy>();
-    auto freddy_render_ = std::make_unique<animatronic_render>(
-        *freddy_,
-        ResourceManager::Instance().getTexture("freddy.png"),
-        sf::Vector2f(400.f, 200.f)
-    );
-
-    auto foxy_ = std::make_unique<foxy>();
-    auto foxy_render_ = std::make_unique<animatronic_render>(
-        *foxy_,
-        ResourceManager::Instance().getTexture("foxy.png"),
-        sf::Vector2f(490.f, 300.f)
-    );
-
-    auto chica_ = std::make_unique<chica>();
-    auto chica_render_ = std::make_unique<animatronic_render>(
-        *chica_,
-        ResourceManager::Instance().getTexture("chica.png"),
-        sf::Vector2f(600.f, 600.f)
-    );
-
-    auto nightmare_ = std::make_unique<nightmare>();
-    auto nightmare_render_ = std::make_unique<animatronic_render>(
-        *nightmare_,
-        ResourceManager::Instance().getTexture("nightmare.png"),
-        sf::Vector2f(600.f, 600.f), 3
-    );
-
-    enemies.push_back({std::move(freddy_), std::move(freddy_render_), 0});
-    enemies.push_back({std::move(foxy_), std::move(foxy_render_), 1});
-    enemies.push_back({std::move(chica_), std::move(chica_render_), 2});
-    enemies.push_back({std::move(nightmare_), std::move(nightmare_render_), 3});
-
+    // 4. Boot the initial Game State
     curr_state = std::make_unique<playing_state>();
     curr_state->on_enter(*this);
 }
@@ -242,7 +202,7 @@ room &game_scene::get_current_room() {
     return rooms[room_idx];
 }
 
-std::vector<EnemyEntity> &game_scene::get_enemies() {
+std::vector<enemy> &game_scene::get_enemies() {
     return enemies;
 }
 
@@ -297,23 +257,7 @@ void game_scene::update_flying_pizzas(float dt) {
     for (auto &it:flying_pizzas_) {
         if (!it.active)
             continue;
-
-        it.pos+=it.dir*it.speed*dt;
-        it.shape.setPosition(it.pos);
-        sf::FloatRect proj_hitbox(it.pos.x-10.f,it.pos.y-10.f,20.f,20.f);
-
-        if (current_room().collide(proj_hitbox)) {
-            it.active=false;
-            continue;
-        }
-
-        for (auto &enemy:enemies) {
-            if (enemy.room_id!=room_idx || !enemy.data->is_active() || !enemy.data->get_bounds().intersects(proj_hitbox))
-                continue;
-            enemy.data->gets_hit();
-            it.active=false;
-            break;
-        }
+        it.active=it.update(dt,current_room(),enemies,room_idx);
     }
 
     flying_pizzas_.erase(std::remove_if(flying_pizzas_.begin(),flying_pizzas_.end(),
