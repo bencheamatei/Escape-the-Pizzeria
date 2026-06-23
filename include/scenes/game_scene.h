@@ -12,7 +12,6 @@
 #include "../player.h"
 #include "scene.h"
 #include "../animatronic/animatronic.h"
-#include "../renders/animatronic_render.h"
 #include "game_states/game_state.h"
 #include "../enemy.h"
 
@@ -34,7 +33,7 @@ struct flying_pizza {
         shape.setPosition(pos);
     }
 
-    bool update(float dt, const room& current_room, std::vector<enemy>& enemies, int room_idx) {
+    bool update(float dt, const room& current_room, const std::vector<enemy>& enemies, int room_idx) {
         pos += dir * speed * dt;
         shape.setPosition(pos);
 
@@ -44,7 +43,7 @@ struct flying_pizza {
             return false;
         }
 
-        for (auto &enemy : enemies) {
+        for (const auto &enemy : enemies) {
             if (enemy.get_room_id() != room_idx || !enemy.get_data()->is_active() || !enemy.get_data()->get_bounds().intersects(proj_hitbox))
                 continue;
             enemy.get_data()->gets_hit();
