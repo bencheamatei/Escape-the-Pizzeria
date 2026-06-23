@@ -31,7 +31,7 @@ void everything_builder::setup_starting_inventory(player& p) {
         p.addItem(inventorySlot(topping("mushroom", 3), 10));
         p.addItem(inventorySlot(backpack(8), 1));
         p.addItem(inventorySlot(soda(), 10));
-    } catch (const std::exception &e) {
+    } catch (const std::exception &) {
         throw;
     }
 }
