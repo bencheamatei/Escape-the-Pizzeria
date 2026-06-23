@@ -8,7 +8,7 @@
 #include "items/dough.h"
 #include "items/soda.h"
 #include "items/topping.h"
-#include <../ResourceManager.hpp>
+#include "../ResourceManager.hpp"
 #include <animatronic/freddy.h>
 #include <animatronic/chica.h>
 #include <animatronic/foxy.h>
@@ -17,12 +17,10 @@
 std::vector<room> everything_builder::build_rooms() {
     std::vector<room> rooms;
     auto &tileset = ResourceManager::Instance().getTexture("tileset.png");
-
     rooms.push_back(room::from_tmj("assets/maps/room1.tmj", tileset));
     rooms.push_back(room::from_tmj("assets/maps/room2.tmj", tileset));
     rooms.push_back(room::from_tmj("assets/maps/room3.tmj", tileset));
     rooms.push_back(room::from_tmj("assets/maps/room4.tmj", tileset));
-
     return rooms;
 }
 
@@ -33,7 +31,9 @@ void everything_builder::setup_starting_inventory(player& p) {
         p.addItem(inventorySlot(topping("mushroom", 3), 10));
         p.addItem(inventorySlot(backpack(8), 1));
         p.addItem(inventorySlot(soda(), 10));
-    } catch (...) {}
+    } catch (const std::exception &e) {
+        throw;
+    }
 }
 
 void everything_builder::build_enemies(std::vector<enemy>& enemies) {

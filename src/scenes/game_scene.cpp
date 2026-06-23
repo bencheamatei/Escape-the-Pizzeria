@@ -22,18 +22,15 @@
 game_scene::game_scene()
     : player_data(70, 100, 5)
     , player_render_(player_data, ResourceManager::Instance().getTexture("billy.png"), {0.f, 0.f})
-    , inventory_ui_(player_data, ResourceManager::Instance().getFont("FiraSans-Regular.ttf"))
+    , inventory_ui_(player_data, ResourceManager::Instance().getFont("FiraSans-Regular.ttf")),
+    rooms(everything_builder::build_rooms())
 {
-    // 1. Build the Level Data
-    rooms = everything_builder::build_rooms();
     everything_builder::setup_starting_inventory(player_data);
     everything_builder::build_enemies(enemies);
 
-    // 2. Set Player Spawn Location
     player_render_.set_position(current_room().spawn_point);
     camera_pos = current_room().spawn_point;
 
-    // 3. Setup UI & Camera Views
     game_view.setSize(480.f, 320.f);
     hud_view.setSize(960.f, 640.f);
     hud_view.setCenter(480.f, 320.f);
@@ -51,7 +48,6 @@ game_scene::game_scene()
     hpLabel.setFillColor(sf::Color(220, 210, 230));
     hpLabel.setPosition(20.f, 38.f);
 
-    // 4. Boot the initial Game State
     curr_state = std::make_unique<playing_state>();
     curr_state->on_enter(*this);
 }
