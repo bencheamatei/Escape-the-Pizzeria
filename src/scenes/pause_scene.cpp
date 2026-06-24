@@ -5,6 +5,7 @@
 #include "../../include/scenes/pause_scene.h"
 #include "../../ResourceManager.hpp"
 #include "game.h"
+#include "scenes/menu_scene.h"
 
 pause_scene::pause_scene() {
     overlay.setSize({960.f, 640.f});
@@ -57,7 +58,7 @@ void pause_scene::confirm() {
         sm.rm_scene();
     } else if (curr_index == 1) {
         sm.rm_scene();
-        sm.rm_scene();
+        sm.add_scene(std::make_unique<menu_scene>(true));
     } else {
         game::get_instance().get_window().close();
     }

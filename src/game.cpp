@@ -28,7 +28,7 @@ void game::toggle_fullscreen() {
 }
 
 void game::run() {
-    sm.add_scene(std::make_unique<menu_scene>());
+    sm.add_scene(std::make_unique<menu_scene>(false));
     while (window.isOpen()) {
         float dt = clock.restart().asSeconds();
         if (dt > 0.05f) {
