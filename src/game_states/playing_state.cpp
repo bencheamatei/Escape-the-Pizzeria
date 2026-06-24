@@ -15,6 +15,8 @@ void playing_state::on_update(game_scene &ctx, float dt) {
     player_render_.handle_input();
     player_render_.update(dt, ctx.get_current_room());
 
+    ctx.get_current_room().try_pickup_items(p, player_render_.get_bound());
+
     if (update_enemies(ctx, dt)) {
         hit_flash_timer = hir_duration;
     }

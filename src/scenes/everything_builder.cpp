@@ -13,6 +13,7 @@
 #include <animatronic/chica.h>
 #include <animatronic/foxy.h>
 #include <animatronic/nightmare.h>
+#include "items/key.h"
 
 std::vector<room> everything_builder::build_rooms() {
     std::vector<room> rooms;
@@ -21,6 +22,12 @@ std::vector<room> everything_builder::build_rooms() {
     rooms.push_back(room::from_tmj("assets/maps/room2.tmj", tileset));
     rooms.push_back(room::from_tmj("assets/maps/room3.tmj", tileset));
     rooms.push_back(room::from_tmj("assets/maps/room4.tmj", tileset));
+
+    auto& key_tex = ResourceManager::Instance().getTexture("key.png");
+
+    rooms[0].add_ground_item(std::make_unique<key>(), sf::Vector2f(200.f, 200.f), key_tex);
+    rooms[2].add_ground_item(std::make_unique<key>(), sf::Vector2f(400.f, 350.f), key_tex);
+
     return rooms;
 }
 

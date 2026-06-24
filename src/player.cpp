@@ -77,6 +77,18 @@ std::ostream &operator<<(std::ostream &os, const player &p) {
 }
 
 void player::addItem(const inventorySlot &other) {
+    for (int i = 0; i < this->rucsac.get_capacity(); i++) {
+        if (this->rucsac.get_item_at_index(i).isEmpty()) {
+            continue;
+        }
+        if (this->rucsac.get_item_at_index(i).getItem()->get_nume() == other.getItem()->get_nume()) {
+            inventorySlot temp = this->rucsac.pop_from_pos(i);
+            temp.changeCntItem(other.getCntItem());
+            this->rucsac.addItem(temp);
+            arrange();
+            return;
+        }
+    }
     if (this->rucsac.isFull()) {
         return;
     }

@@ -3,6 +3,9 @@
 #include <fstream>
 #include "exceptions.h"
 #include <nlohmann/json.hpp>
+
+#include "inventorySlot.h"
+#include "player.h"
 using json = nlohmann::json;
 
 room::room(const std::vector<std::vector<int> > &grid, sf::Texture &tex, int t_size)
@@ -61,6 +64,11 @@ void room::draw(sf::RenderTarget &target, sf::RenderStates states) const {
         return;
     states.texture = tileset;
     target.draw(vertices_, states);
+
+    states.texture = nullptr;
+    for (const auto& gi : ground_items) {
+        target.draw(gi.sprite, states);
+    }
 }
 
 bool room::collide(sf::FloatRect bounds) const {
@@ -200,4 +208,52 @@ room room::from_tmj(const std::string &filepath, sf::Texture &tileset) {
     }
 
     return r;
+}
+
+void room::add_ground_item(std::unique_ptr<item> new_item, sf::Vector2f pos, const sf::Texture& texture) {
+    ground_item gi;
+    gi.ce = std::move(new_item);
+    gi.sprite.setTexture(texture);
+    gi.sprite.setPosition(pos);
+    gi.hitbox = sf::FloatRect(pos.x, pos.y, (float)texture.getSize().x, (float)texture.getSize().y);
+    ground_items.push_back(std::move(gi));
+}
+
+std::vector<std::unique_ptr<item> > room::pickup_items(sf::FloatRect player_bounds) {
+    std::vector<std::unique_ptr<item>> picked_up;
+    for (auto it = ground_items.begin(); it != ground_items.end();) {
+        if (it->hitbox.intersects(player_bounds)) {
+            picked_up.push_back(std::move(it->ce));
+            it = ground_items.erase(it);
+        } else {
+            ++it;
+        }
+    }
+    return picked_up;
+}
+
+void room::try_pickup_items(player& p, sf::FloatRect player_bounds) {
+    for (auto it = ground_items.begin(); it != ground_items.end(); ) {
+        if (it->hitbox.intersects(player_bounds)) {
+            bool can_pickup = false;
+            for(int i = 0; i < p.get_inventory().get_capacity(); i++) {
+                if(!p.get_inventory().get_item_at_index(i).isEmpty() &&
+                   p.get_inventory().get_item_at_index(i).getItem()->get_nume() == it->ce->get_nume()) {
+                    can_pickup = true;
+                    break;
+                   }
+            }
+
+            if(!can_pickup && !p.get_inventory().isFull()) {
+                can_pickup = true;
+            }
+
+            if (can_pickup) {
+                p.addItem(inventorySlot(*it->ce, 1));
+                it = ground_items.erase(it);
+                continue;
+            }
+        }
+        ++it;
+    }
 }
