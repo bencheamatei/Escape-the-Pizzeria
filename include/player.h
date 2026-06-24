@@ -42,6 +42,7 @@ public:
     void add_effect(std::unique_ptr<status_effect> effect);
     void process_effects();
     void add_key();
+    [[nodiscard]] int get_nr_keys() const;
 };
 
 #endif //OOP_PLAYER_H

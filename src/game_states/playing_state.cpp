@@ -7,6 +7,7 @@
 #include "game.h"
 #include "../../include/game_states/death_state.h"
 #include "scenes/game_scene.h"
+#include "game_states/win_state.h"
 
 void playing_state::on_update(game_scene &ctx, float dt) {
     auto &p = ctx.get_player();
@@ -31,6 +32,10 @@ void playing_state::on_update(game_scene &ctx, float dt) {
 
     ctx.update_flying_pizzas(dt);
     ctx.updateCamera(dt);
+
+    if (p.get_nr_keys()==3 && ctx.get_room_idx()==0) {
+        ctx.transition_to(std::make_unique<win_state>());
+    }
 }
 
 bool playing_state::update_enemies(game_scene &ctx, float dt) {

@@ -119,6 +119,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/scenes/everything_builder.h
         src/items/key.cpp
         include/items/key.h
+        src/game_states/win_state.cpp
+        include/game_states/win_state.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})

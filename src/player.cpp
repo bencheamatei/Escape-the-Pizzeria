@@ -225,3 +225,14 @@ void player::process_effects() {
     }
     effects.clear();
 }
+
+int player::get_nr_keys() const {
+    int count = 0;
+    for (int i = 0; i < this->rucsac.get_capacity(); i++) {
+        const auto& slot = this->rucsac.get_item_at_index(i);
+        if (!slot.isEmpty() && slot.is_key()) {
+            count += slot.getCntItem();
+        }
+    }
+    return count;
+}
