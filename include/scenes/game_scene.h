@@ -108,12 +108,17 @@ public:
     std::vector<sf::CircleShape> blood_drops;
     void generate_death_background_drops();
 
+    std::vector<sf::CircleShape> ballons;
+    void generate_background_ballons();
+
     void updateCamera(float dt);
     void on_update(float dt) override;
 
     void throw_pizza();
     void update_flying_pizzas(float dt);
     void draw_pizzas(sf::RenderTarget &window) const;
+
+    void reset_rooms();
 };
 
 

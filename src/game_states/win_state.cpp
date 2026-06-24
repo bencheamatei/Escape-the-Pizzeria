@@ -11,7 +11,7 @@
 
 void win_state::on_enter(game_scene &ctx) {
     timer = duration;
-    ctx.generate_death_background_drops();
+    ctx.generate_background_ballons();
 }
 
 void win_state::on_update(game_scene &, float dt) {
@@ -37,7 +37,7 @@ void win_state::on_render(game_scene &ctx, sf::RenderTarget &t) {
     bg.setFillColor(sf::Color(0, 0, 0, bg_a));
     t.draw(bg);
 
-    for (auto drop: ctx.blood_drops) {
+    for (auto drop: ctx.ballons) {
         sf::Color c = drop.getFillColor();
         c.a = static_cast<sf::Uint8>((c.a * std::min(1.f, progress * 2.5f)));
         drop.setFillColor(c);

@@ -194,6 +194,22 @@ void game_scene::generate_death_background_drops() {
     }
 }
 
+void game_scene::generate_background_ballons() {
+    ballons.clear();
+    srand((unsigned) std::time(nullptr));
+    for (int i = 0; i < 20; i++) {
+        sf::CircleShape drop;
+        float r = 8.f + (rand() % 38);
+        drop.setRadius(r);
+        drop.setOrigin(r, r);
+        drop.setPosition((float) (rand() % 960), (float) (rand() % 640));
+        drop.setFillColor(sf::Color(
+            20, 180+rand()%50, 20,
+            170 + rand() % 85));
+        ballons.push_back(std::move(drop));
+    }
+}
+
 room &game_scene::get_current_room() {
     return rooms[room_idx];
 }
@@ -267,4 +283,9 @@ void game_scene::draw_pizzas(sf::RenderTarget &window) const {
             continue;
         window.draw(it.shape);
     }
+}
+
+void game_scene::reset_rooms() {
+    rooms.clear();
+    rooms=everything_builder::build_rooms();
 }
