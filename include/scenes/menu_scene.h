@@ -35,8 +35,10 @@ private:
     void confirm();
     void refresh();
 
+    bool in_progress;
+
 public:
-    explicit menu_scene(game&);
+    explicit menu_scene(bool);
 };
 
 

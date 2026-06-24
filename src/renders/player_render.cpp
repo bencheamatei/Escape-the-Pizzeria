@@ -103,7 +103,7 @@ void player_render::update_sprite_rect() {
 
 void player_render::draw(sf::RenderTarget &window) const {
     window.draw(sprite);
-    if (game::is_debug_mode()) {
+    if (game::get_instance().is_debug_mode()) {
         sf::RectangleShape hitbox({BOX_W, BOX_H});
         hitbox.setOrigin(BOX_W / 2.0f, BOX_H / 2.0f);
         hitbox.setPosition(position);

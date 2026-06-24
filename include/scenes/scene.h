@@ -6,16 +6,14 @@
 #define OOP_SCENE_H
 
 #include <SFML/Graphics.hpp>
-class game;
 
 class scene {
 protected:
-    game& _game;
     virtual void on_update(float)=0;
     virtual void on_render(sf::RenderTarget&)=0;
     virtual void on_event(const sf::Event&)=0;
 public:
-    explicit scene(game&);
+    explicit scene();
     virtual ~scene();
     void update(float);
     void render(sf::RenderTarget&);

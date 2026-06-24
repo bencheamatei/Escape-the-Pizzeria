@@ -7,6 +7,9 @@
 
 #include <string>
 #include "../player.h"
+#include <SFML/Graphics.hpp>
+
+class room;
 
 class animatronic {
 protected:
@@ -23,6 +26,20 @@ protected:
 
     float stun_timer=0.f;
 
+    sf::Vector2f pos;
+    float box_w = 18.f;
+    float box_h = 24.f;
+
+    std::vector<sf::Vector2i> path;
+    float path_timer=0.f;
+    static constexpr float path_refresh=0.3f;
+
+    void resolve_collision(sf::Vector2f delta, const room& room);
+    [[nodiscard]] bool overlap_solid(sf::FloatRect rect, const room& room) const;
+
+    void recalc_path(const room& r, sf::Vector2f target_world);
+    bool follow_path(float dt, const room& r);
+
 public:
     animatronic(std::string,int,float,bool,float);
     virtual ~animatronic()=default;
@@ -38,6 +55,13 @@ public:
     virtual bool gets_hit();
     void apply_stun(float dt);
     [[nodiscard]] bool is_stunned() const;
+
+    void set_position(sf::Vector2f new_pos);
+    [[nodiscard]] sf::Vector2f get_position() const;
+    [[nodiscard]] sf::FloatRect get_bounds() const;
+
+    void update(float dt, const room& room, sf::Vector2f target_pos);
+    [[nodiscard]] const std::vector<sf::Vector2i>& get_path() const;
 };
 
 

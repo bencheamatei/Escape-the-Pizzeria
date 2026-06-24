@@ -39,7 +39,7 @@ void respawn_state::on_update(game_scene &ctx, float dt) {
     for (auto &e: ctx.get_enemies()) {
         if (e.room_id != ctx.get_room_idx())
             continue;
-        e.render->update(dt, ctx.get_current_room(), ctx.get_player_render().get_position());
+        e.data->update(dt, ctx.get_current_room(), ctx.get_player_render().get_position());
         e.data->tick_timer(dt);
     }
 

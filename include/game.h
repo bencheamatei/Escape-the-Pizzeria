@@ -9,22 +9,18 @@
 #include <memory>
 #include <stack>
 #include "scenes/scene.h"
+#include <scenes/scene_manager.h>
 
 class game {
 private:
     sf::RenderWindow window;
     sf::Clock clock;
-    std::stack<std::unique_ptr<scene>> d;
-    int to_pop = 0;
-    std::unique_ptr<scene> to_push = nullptr;
 
-    void update(float);
-    void render();
-    void apply_lazy();
     void process_event();
 
     static bool debug_mode;
     bool is_fullscreen = false;
+    scene_manager sm;
 
     sf::RenderTexture render_texture_;
     sf::Sprite render_sprite_;
@@ -37,11 +33,11 @@ public:
     game operator=(const game&)=delete;
 
     void run();
-    void add_scene(std::unique_ptr<scene>);
-    void rm_scene();
+    [[nodiscard]] scene_manager& get_scene_manager();
+
     sf::RenderWindow& get_window();
-    static void toggle_debug_mode();
-    static bool is_debug_mode();
+    void toggle_debug_mode();
+    bool is_debug_mode();
 
     void rebuild_window(bool fullscreen);
     void toggle_fullscreen();

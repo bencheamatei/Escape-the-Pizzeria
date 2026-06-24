@@ -111,6 +111,12 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/animatronic/chica.h
         src/animatronics/nightmare.cpp
         include/animatronic/nightmare.h
+        src/scenes/scene_manager.cpp
+        include/scenes/scene_manager.h
+        src/enemy.cpp
+        include/enemy.h
+        src/scenes/everything_builder.cpp
+        include/scenes/everything_builder.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})

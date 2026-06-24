@@ -12,14 +12,8 @@
 #include "../player.h"
 #include "scene.h"
 #include "../animatronic/animatronic.h"
-#include "../renders/animatronic_render.h"
 #include "game_states/game_state.h"
-
-struct EnemyEntity {
-    std::unique_ptr<animatronic> data;
-    std::unique_ptr<animatronic_render> render;
-    int room_id=0;
-};
+#include "../enemy.h"
 
 // shoutout domnului albert pentru ca a crezut in viziune
 
@@ -37,6 +31,25 @@ struct flying_pizza {
         shape.setOutlineColor(sf::Color(160, 100, 20));
         shape.setOutlineThickness(2.f);
         shape.setPosition(pos);
+    }
+
+    bool update(float dt, const room& current_room, const std::vector<enemy>& enemies, int room_idx) {
+        pos += dir * speed * dt;
+        shape.setPosition(pos);
+
+        sf::FloatRect proj_hitbox(pos.x - 10.f, pos.y - 10.f, 20.f, 20.f);
+
+        if (current_room.collide(proj_hitbox)) {
+            return false;
+        }
+
+        for (const auto &enemy : enemies) {
+            if (enemy.get_room_id() != room_idx || !enemy.get_data()->is_active() || !enemy.get_data()->get_bounds().intersects(proj_hitbox))
+                continue;
+            enemy.get_data()->gets_hit();
+            return false;
+        }
+        return true;
     }
 };
 
@@ -66,7 +79,7 @@ private:
 
     room& current_room();
 
-    std::vector<EnemyEntity> enemies;
+    std::vector<enemy> enemies;
 
     // float hit_flash_timer=0.0f;
     static constexpr float hit_duration=0.25f;
@@ -74,12 +87,12 @@ private:
     std::vector<flying_pizza> flying_pizzas_;
 
 public:
-    explicit game_scene(game&);
+    explicit game_scene();
 
     player& get_player();
     player_render& get_player_render();
     room& get_current_room();
-    std::vector<EnemyEntity>& get_enemies();
+    std::vector<enemy>& get_enemies();
     int& get_room_idx();
     sf::View& get_game_view();
     sf::View& get_hud_view();

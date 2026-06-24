@@ -7,7 +7,7 @@
 #include "../../ResourceManager.hpp"
 #include "../../include/scenes/game_scene.h"
 
-menu_scene::menu_scene(game &game) : scene(game) {
+menu_scene::menu_scene(const bool in_progress) : in_progress(in_progress) {
     auto &res_man = ResourceManager::Instance();
     auto &texture = res_man.getTexture("podea-fin.png");
     auto &font = res_man.getFont("FiraSans-Regular.ttf");
@@ -47,7 +47,7 @@ void menu_scene::build_items() {
     const float width = 280.f;
 
     int i = 0;
-    for (const auto &label: {"Start", "Quit"}) {
+    for (const auto &label: {in_progress ? "Continue" : "Start", "Quit"}) {
         menu_item item;
         item.label.setFont(font);
         item.label.setString(label);
@@ -80,10 +80,18 @@ void menu_scene::refresh() {
 }
 
 void menu_scene::confirm() {
-    if (curr_index == 0)
-        _game.add_scene(std::make_unique<game_scene>(_game));
-    else
-        _game.get_window().close();
+    auto &sm=game::get_instance().get_scene_manager();
+    if (curr_index==0) {
+        if (in_progress) {
+            sm.rm_scene();
+        }
+        else {
+            sm.add_scene(std::make_unique<game_scene>());
+        }
+    }
+    else {
+        game::get_instance().get_window().close();
+    }
 }
 
 void menu_scene::on_update(float dt) {
@@ -153,7 +161,7 @@ void menu_scene::on_event(const sf::Event &event) {
             confirm();
             break;
         case sf::Keyboard::Escape:
-            _game.get_window().close();
+            game::get_instance().get_window().close();
             break;
         default: break;
     }

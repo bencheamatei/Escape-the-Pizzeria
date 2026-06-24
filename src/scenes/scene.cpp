@@ -7,8 +7,7 @@
 
 class game;
 
-scene::scene(game &_game) : _game(_game) {
-}
+scene::scene()=default;
 
 scene::~scene() = default;
 

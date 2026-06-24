@@ -32,7 +32,7 @@ private:
     void on_render(sf::RenderTarget& target) override;
     void on_event(const sf::Event& event) override;
 public:
-    explicit pause_scene(game&);
+    explicit pause_scene();
 };
 
 
