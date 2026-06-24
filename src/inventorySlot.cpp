@@ -7,6 +7,7 @@
 #include "../include/items/topping.h"
 #include "../include/items/dough.h"
 #include "../include/items/soda.h"
+#include "../include/items/key.h"
 #include <iostream>
 
 #include "../include/items/backpack.h"
@@ -108,4 +109,8 @@ void inventorySlot::clear() {
 
 bool inventorySlot::is_soda() const {
     return dynamic_cast<soda *>(Item) != nullptr;
+}
+
+bool inventorySlot::is_key() const {
+    return dynamic_cast<key *>(Item) != nullptr;
 }

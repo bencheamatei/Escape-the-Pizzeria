@@ -11,14 +11,17 @@
 #include "../include/items/pizza.h"
 #include "../include/items/topping.h"
 #include "../include/items/item.h"
-#include "../include/items/dough.h"
 
-player::player() : rucsac(5) {
+player::player() : rucsac(5), nr_keys(0) {
     this->hp = 100;
     this->maxHp = 100;
 }
 
-player::player(const int hp, const int maxHp, const int maxInventoryCapacity) : rucsac(maxInventoryCapacity) {
+void player::add_key() {
+    nr_keys++;
+}
+
+player::player(const int hp, const int maxHp, const int maxInventoryCapacity) : rucsac(maxInventoryCapacity), nr_keys(0) {
     if (hp <= 0) {
         throw player_exception("initial health must be > 0");
     }
@@ -50,6 +53,7 @@ player::player(const player &other) {
     this->maxHp = other.maxHp;
     this->rucsac = other.rucsac;
     this->effects.clear();
+    this->nr_keys=0;
     for (const auto &effect: other.effects) {
         if (effect != nullptr) {
             this->effects.push_back(std::unique_ptr<status_effect>(effect->get_clone()));

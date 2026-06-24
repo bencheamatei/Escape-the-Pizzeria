@@ -18,6 +18,9 @@ private:
     inventory rucsac;
     std::vector<std::unique_ptr<status_effect> > effects;
     void normalizeHp();
+
+    int nr_keys;
+
 public:
     player();
     player(int , int , int );
@@ -38,6 +41,7 @@ public:
     void eat_item(int);
     void add_effect(std::unique_ptr<status_effect> effect);
     void process_effects();
+    void add_key();
 };
 
 #endif //OOP_PLAYER_H

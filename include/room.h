@@ -1,6 +1,8 @@
 #pragma once
+#include <memory>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "items/item.h"
 
 /*
 *Run at the door
@@ -16,10 +18,17 @@ Use me like an oar
 And get yourself to shore
  */
 
+
 struct door {
     sf::FloatRect bounds;
     int room_id;
     sf::Vector2f spawn;
+};
+
+struct ground_item {
+    std::unique_ptr<item> ce;
+    sf::FloatRect hitbox;
+    sf::Sprite sprite;
 };
 
 class room : public sf::Drawable {
@@ -37,6 +46,8 @@ private:
     static constexpr int WALL=0;
     static constexpr int FREE=3;
     static constexpr int DOOR=1;
+
+    std::vector<ground_item> ground_items;
 
 public:
     sf::Vector2f spawn_point;
