@@ -210,12 +210,19 @@ room room::from_tmj(const std::string &filepath, sf::Texture &tileset) {
     return r;
 }
 
-void room::add_ground_item(std::unique_ptr<item> new_item, sf::Vector2f pos, const sf::Texture& texture) {
+void room::add_ground_item(std::unique_ptr<item> new_item, sf::Vector2f pos, const sf::Texture& texture,sf::Vector2f scale) {
     ground_item gi;
     gi.ce = std::move(new_item);
+
     gi.sprite.setTexture(texture);
     gi.sprite.setPosition(pos);
-    gi.hitbox = sf::FloatRect(pos.x, pos.y, (float)texture.getSize().x, (float)texture.getSize().y);
+
+    gi.sprite.setScale(scale);
+
+    gi.hitbox = sf::FloatRect(pos.x, pos.y,
+                              (float)texture.getSize().x * scale.x,
+                              (float)texture.getSize().y * scale.y);
+
     ground_items.push_back(std::move(gi));
 }
 

@@ -203,6 +203,10 @@ void player::eat_item(int pos) {
         throw player_exception("can't consume nothing");
     }
 
+    if (this->rucsac.get_item_at_index(pos).is_key()) {
+        return ;
+    }
+
     item *curr = const_cast<item *>(this->rucsac.get_at(pos).getItem());
     if (curr != nullptr) {
         curr->use(*this);

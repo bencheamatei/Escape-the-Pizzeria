@@ -67,7 +67,7 @@ public:
 
     static room from_tmj(const std::string& filepath,sf::Texture& tileset);
 
-    void add_ground_item(std::unique_ptr<item> new_item, sf::Vector2f pos, const sf::Texture& texture);
+    void add_ground_item(std::unique_ptr<item> new_item, sf::Vector2f pos, const sf::Texture& texture,sf::Vector2f scale = sf::Vector2f(1.f, 1.f));
     std::vector<std::unique_ptr<item>> pickup_items(sf::FloatRect player_bounds);
 
     void try_pickup_items(player& p, sf::FloatRect player_bounds);

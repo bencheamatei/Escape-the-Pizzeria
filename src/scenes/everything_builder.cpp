@@ -23,11 +23,11 @@ std::vector<room> everything_builder::build_rooms() {
     rooms.push_back(room::from_tmj("assets/maps/room3.tmj", tileset));
     rooms.push_back(room::from_tmj("assets/maps/room4.tmj", tileset));
 
-    auto& key_tex = ResourceManager::Instance().getTexture("key.png");
+    const auto& key_tex = ResourceManager::Instance().getTexture("key.png");
 
-    rooms[0].add_ground_item(std::make_unique<key>(), sf::Vector2f(200.f, 200.f), key_tex);
-    rooms[2].add_ground_item(std::make_unique<key>(), sf::Vector2f(400.f, 350.f), key_tex);
-
+    rooms[1].add_ground_item(std::make_unique<key>(), sf::Vector2f(450.f, 1500.f), key_tex, sf::Vector2f(0.5,0.5));
+    rooms[2].add_ground_item(std::make_unique<key>(), sf::Vector2f(450.f, 400.f), key_tex,sf::Vector2f(0.5,0.5));
+    rooms[3].add_ground_item(std::make_unique<key>(), sf::Vector2f(600.f, 600.f), key_tex,sf::Vector2f(1.f,1.f));
     return rooms;
 }
 
