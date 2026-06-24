@@ -256,7 +256,7 @@ void game_scene::throw_pizza() {
 
     if (u!=-1) {
         try {
-            player_data.drop_item(u);
+            player_data.decpos(u);
         }
         catch (...) {
             return;

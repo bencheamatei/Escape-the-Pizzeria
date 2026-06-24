@@ -43,6 +43,8 @@ public:
     void process_effects();
     void add_key();
     [[nodiscard]] int get_nr_keys() const;
+
+    void decpos(int pos);
 };
 
 #endif //OOP_PLAYER_H

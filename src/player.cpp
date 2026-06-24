@@ -176,7 +176,15 @@ void player::craftPizza() {
     this->rucsac.decrease_at_pos(dough_idx, 1);
     pizza x(available_toppings);
     rucsac.addItem({x, 1});
+    arrange();
     this->rucsac.rearrangeItems();
+}
+
+void player::decpos(int pos) {
+    if (pos < 0 || pos >= this->rucsac.get_capacity()) {
+        throw inventory_exception("slot out of range");
+    }
+    this->rucsac.decrease_at_pos(pos,1);
 }
 
 void player::drop_item(const int pos) {
