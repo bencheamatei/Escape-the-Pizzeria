@@ -14,6 +14,7 @@
 #include "../animatronic/animatronic.h"
 #include "game_states/game_state.h"
 #include "../enemy.h"
+#include "random_selector.h"
 
 // shoutout domnului albert pentru ca a crezut in viziune
 
@@ -85,6 +86,9 @@ private:
     static constexpr float hit_duration=0.25f;
 
     std::vector<flying_pizza> flying_pizzas_;
+
+    float pomana_timer;
+    static constexpr float POMANA_COOLDOWN = 5.f;
 
 public:
     explicit game_scene();

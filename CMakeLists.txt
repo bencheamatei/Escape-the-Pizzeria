@@ -121,6 +121,9 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/items/key.h
         src/game_states/win_state.cpp
         include/game_states/win_state.h
+        src/items/item_factory.cpp
+        include/items/item_factory.h
+        include/random_selector.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})

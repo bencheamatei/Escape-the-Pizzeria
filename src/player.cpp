@@ -40,6 +40,7 @@ player &player::operator=(const player &other) {
     this->maxHp = other.maxHp;
     this->rucsac = other.rucsac;
     this->effects.clear();
+    this->nr_keys=other.nr_keys;
     for (const auto &effect: other.effects) {
         if (effect != nullptr) {
             this->effects.push_back(std::unique_ptr<status_effect>(effect->get_clone()));
@@ -53,7 +54,7 @@ player::player(const player &other) {
     this->maxHp = other.maxHp;
     this->rucsac = other.rucsac;
     this->effects.clear();
-    this->nr_keys=0;
+    this->nr_keys=other.nr_keys;
     for (const auto &effect: other.effects) {
         if (effect != nullptr) {
             this->effects.push_back(std::unique_ptr<status_effect>(effect->get_clone()));

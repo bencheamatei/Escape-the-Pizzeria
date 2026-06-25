@@ -17,10 +17,12 @@
 #include "../../include/animatronic/foxy.h"
 #include "animatronic/chica.h"
 #include "animatronic/nightmare.h"
+#include "items/item_factory.h"
 #include "scenes/everything_builder.h"
+#include "items/item_factory.h"
 
 game_scene::game_scene()
-    : player_data(70, 100, 5)
+    : player_data(100, 100, 5)
     , player_render_(player_data, ResourceManager::Instance().getTexture("billy.png"), {0.f, 0.f})
     , inventory_ui_(player_data, ResourceManager::Instance().getFont("FiraSans-Regular.ttf")),
     rooms(everything_builder::build_rooms())
@@ -88,6 +90,12 @@ void game_scene::on_update(float dt) {
         door_cooldown -= dt;
     } else {
         door_transition();
+    }
+
+    pomana_timer += dt;
+    if (pomana_timer >= POMANA_COOLDOWN) {
+        pomana_timer = 0.0f;
+        player_data.addItem({*item_factory::create(rand()%4), 1});
     }
 }
 

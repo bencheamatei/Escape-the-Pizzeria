@@ -76,6 +76,7 @@ const std::vector<sf::Vector2i> &animatronic::get_path() const {
 
 void animatronic::update(float dt, const room &room, sf::Vector2f target_pos) {
     if (!is_active()) return;
+    tick_timer(dt);
     if (is_stunned()) return;
 
     path_timer -= dt;
