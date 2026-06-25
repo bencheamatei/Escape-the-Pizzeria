@@ -14,15 +14,19 @@ class random_selector {
 private:
     std::vector<T> v;
 public:
-    void add(T &&x) {
-        v.push_back(std::move(x));
+    void add(const T &x) {
+        v.push_back(x);
     }
 
-    T get_rnd() const {
+    T get_rnd() {
         if (v.empty()) {
-            throw std::runtime_error("Trebuie sa ai macar un element la alegere aleatorie");
+            throw std::runtime_error("you have to have at least one element in order to get_rnd");
         }
-        return v[std::rand() % v.size()];
+        int idx=std::rand()%v.size();
+        std::swap(v[(int)v.size()-1],v[idx]);
+        T aux=v.back();
+        v.pop_back();
+        return aux;
     }
 };
 

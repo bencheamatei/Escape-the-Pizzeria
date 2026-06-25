@@ -14,6 +14,7 @@
 #include <animatronic/foxy.h>
 #include <animatronic/nightmare.h>
 #include "items/key.h"
+#include "random_selector.h"
 
 std::vector<room> everything_builder::build_rooms() {
     std::vector<room> rooms;
@@ -42,19 +43,54 @@ void everything_builder::setup_starting_inventory(player& p) {
 }
 
 void everything_builder::build_enemies(std::vector<enemy>& enemies) {
+    random_selector<sf::Vector2f> rd_freddy;
+    rd_freddy.add({400.f,200.f});
+    rd_freddy.add({400.f,400.f});
+
     auto freddy_ = std::make_unique<freddy>();
     auto freddy_render_ = std::make_unique<animatronic_render>(
-        *freddy_, ResourceManager::Instance().getTexture("freddy.png"), sf::Vector2f(400.f, 200.f)
+        *freddy_, ResourceManager::Instance().getTexture("freddy.png"), rd_freddy.get_rnd()
     );
 
-    auto foxy_ = std::make_unique<foxy>();
-    auto foxy_render_ = std::make_unique<animatronic_render>(
-        *foxy_, ResourceManager::Instance().getTexture("foxy.png"), sf::Vector2f(490.f, 300.f)
+    random_selector<sf::Vector2f> rd_foxy;
+    rd_foxy.add({450.f,700.f});
+    rd_foxy.add({450.f,1500.f});
+    rd_foxy.add({450.f,1600.f});
+
+    auto foxy1_ = std::make_unique<foxy>();
+    auto foxy_render1_ = std::make_unique<animatronic_render>(
+        *foxy1_, ResourceManager::Instance().getTexture("foxy.png"), rd_foxy.get_rnd()
     );
 
-    auto chica_ = std::make_unique<chica>();
-    auto chica_render_ = std::make_unique<animatronic_render>(
-        *chica_, ResourceManager::Instance().getTexture("chica.png"), sf::Vector2f(600.f, 600.f)
+    auto foxy2_ = std::make_unique<foxy>();
+    auto foxy_render2_ = std::make_unique<animatronic_render>(
+        *foxy2_, ResourceManager::Instance().getTexture("foxy.png"), rd_foxy.get_rnd()
+    );
+
+    // 600 600
+    // 500 500
+    // 450 400
+    // 550 400
+
+    random_selector<sf::Vector2f> rd_chica;
+    rd_chica.add({600.f,600.f});
+    rd_chica.add({500.f,500.f});
+    rd_chica.add({450.f,400.f});
+    rd_chica.add({550.f,400.f});
+
+    auto chica1_ = std::make_unique<chica>();
+    auto chica_render1_ = std::make_unique<animatronic_render>(
+        *chica1_, ResourceManager::Instance().getTexture("chica.png"), rd_chica.get_rnd()
+    );
+
+    auto chica2_ = std::make_unique<chica>();
+    auto chica_render2_ = std::make_unique<animatronic_render>(
+        *chica2_, ResourceManager::Instance().getTexture("chica.png"), rd_chica.get_rnd()
+    );
+
+    auto chica3_ = std::make_unique<chica>();
+    auto chica_render3_ = std::make_unique<animatronic_render>(
+        *chica3_, ResourceManager::Instance().getTexture("chica.png"), rd_chica.get_rnd()
     );
 
     auto nightmare_ = std::make_unique<nightmare>();
@@ -63,7 +99,10 @@ void everything_builder::build_enemies(std::vector<enemy>& enemies) {
     );
 
     enemies.emplace_back(std::move(freddy_), std::move(freddy_render_), 0);
-    enemies.emplace_back(std::move(foxy_), std::move(foxy_render_), 1);
-    enemies.emplace_back(std::move(chica_), std::move(chica_render_), 2);
+    enemies.emplace_back(std::move(foxy1_), std::move(foxy_render1_), 1);
+    enemies.emplace_back(std::move(foxy2_), std::move(foxy_render2_), 1);
+    enemies.emplace_back(std::move(chica1_), std::move(chica_render1_), 2);
+    enemies.emplace_back(std::move(chica2_), std::move(chica_render2_), 2);
+    enemies.emplace_back(std::move(chica3_), std::move(chica_render3_), 2);
     enemies.emplace_back(std::move(nightmare_), std::move(nightmare_render_), 3);
 }
