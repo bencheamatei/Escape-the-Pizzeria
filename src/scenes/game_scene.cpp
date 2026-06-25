@@ -52,6 +52,8 @@ game_scene::game_scene()
 
     curr_state = std::make_unique<playing_state>();
     curr_state->on_enter(*this);
+
+    pomana_timer=0.f;
 }
 
 void game_scene::transition_to(std::unique_ptr<game_state> new_state) {

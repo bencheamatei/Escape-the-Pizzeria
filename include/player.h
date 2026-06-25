@@ -45,6 +45,20 @@ public:
     [[nodiscard]] int get_nr_keys() const;
 
     void decpos(int pos);
+
+    template <typename T>
+    [[nodiscard]] int count_specific_item() const {
+        int count = 0;
+        for (int i = 0; i < this->rucsac.get_capacity(); i++) {
+            const auto& slot = this->rucsac.get_item_at_index(i);
+            if (!slot.isEmpty()) {
+                if (dynamic_cast<const T*>(slot.getItem()) != nullptr) {
+                    count += slot.getCntItem();
+                }
+            }
+        }
+        return count;
+    }
 };
 
 #endif //OOP_PLAYER_H

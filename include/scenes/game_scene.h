@@ -88,7 +88,7 @@ private:
     std::vector<flying_pizza> flying_pizzas_;
 
     float pomana_timer;
-    static constexpr float POMANA_COOLDOWN = 5.f;
+    static constexpr float POMANA_COOLDOWN = 7.f;
 
 public:
     explicit game_scene();
