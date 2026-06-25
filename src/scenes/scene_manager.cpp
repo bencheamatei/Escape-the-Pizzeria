@@ -45,10 +45,6 @@ void scene_manager::process_event(const sf::Event& event) {
 }
 
 void scene_manager::clear() {
-    to_pop=0;
-    to_push=nullptr;
-    while (!d.empty()) {
-        d.pop();
-    }
+    to_pop = (int)d.size();
     add_scene(std::make_unique<menu_scene>(false));
 }

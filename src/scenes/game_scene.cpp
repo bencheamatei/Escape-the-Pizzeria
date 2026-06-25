@@ -57,12 +57,7 @@ game_scene::game_scene()
 }
 
 void game_scene::transition_to(std::unique_ptr<game_state> new_state) {
-    if (curr_state) {
-        curr_state->on_exit(*this);
-    }
-
-    curr_state = std::move(new_state);
-    curr_state->on_enter(*this);
+    pending_state = std::move(new_state);
 }
 
 room &game_scene::current_room() {
@@ -88,6 +83,15 @@ void game_scene::on_update(float dt) {
     if (curr_state) {
         curr_state->on_update(*this, dt);
     }
+
+    if (pending_state) {
+        if (curr_state) {
+            curr_state->on_exit(*this);
+        }
+        curr_state = std::move(pending_state);
+        curr_state->on_enter(*this);
+    }
+
     if (door_cooldown > 0.0f) {
         door_cooldown -= dt;
     } else {

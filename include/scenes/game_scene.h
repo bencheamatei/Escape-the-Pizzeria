@@ -108,6 +108,7 @@ public:
 
     void transition_to(std::unique_ptr<game_state> new_state);
     std::unique_ptr<game_state> curr_state;
+    std::unique_ptr<game_state> pending_state = nullptr;
 
     std::vector<sf::CircleShape> blood_drops;
     void generate_death_background_drops();
