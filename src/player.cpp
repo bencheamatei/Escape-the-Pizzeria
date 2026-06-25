@@ -8,6 +8,7 @@
 
 #include "exceptions.h"
 #include "inventory.h"
+#include "random_selector.h"
 #include "../include/items/pizza.h"
 #include "../include/items/topping.h"
 #include "../include/items/item.h"
@@ -136,6 +137,7 @@ void player::heal(const int x) {
 
 void player::craftPizza() {
     int dough_idx = -1;
+    random_selector<int> topping_selector;
 
     for (int i = 0; i < this->rucsac.get_capacity(); i++) {
         const auto& slot = this->rucsac.get_item_at_index(i);
@@ -145,64 +147,40 @@ void player::craftPizza() {
 
         if (dough_idx == -1 && slot.is_dough()) {
             dough_idx = i;
-        }
-    }
-
-    if (count_specific_item<dough>()==0 || count_specific_item<topping>()<2) {
-        throw craft_exception("you can't yet craft a pizza");
-    }
-
-    bool will_free_slot = false;
-    if (this->rucsac.get_item_at_index(dough_idx).getCntItem() == 1) {
-        will_free_slot = true;
-    } else {
-        int needed = 2;
-        for (int i = 0; i < this->rucsac.get_capacity(); i++) {
-            if (needed == 0) break;
-            const auto& slot = this->rucsac.get_item_at_index(i);
-            if (!slot.isEmpty() && slot.is_topping()) {
-                int take = std::min(slot.getCntItem(), needed);
-                if (take == slot.getCntItem()) {
-                    will_free_slot = true;
-                }
-                needed -= take;
+        } else if (slot.is_topping()) {
+            for (int j = 0; j < slot.getCntItem(); j++) {
+                topping_selector.add(i);
             }
         }
     }
 
-    if (this->rucsac.isFull() && !will_free_slot) {
-        throw craft_exception("must have an empty slot (or free one up) in order to craft");
+    if (dough_idx == -1) {
+        throw craft_exception("must have at least one piece of dough to craft pizza");
+    }
+    if (count_specific_item<topping>() < 2) {
+        throw craft_exception("must have at least 2 toppings to craft a pizza");
     }
 
-    std::vector<topping> available_toppings;
-    int toppings_needed = 2;
+    bool dough_will_free_slot = (this->rucsac.get_item_at_index(dough_idx).getCntItem() == 1);
+    if (this->rucsac.isFull() && !dough_will_free_slot) {
+        throw craft_exception("inventory full. random crafting might not free a slot, drop something first!");
+    }
 
-    for (int i = 0; i < this->rucsac.get_capacity(); i++) {
-        if (toppings_needed == 0) {
-            break;
-        }
+    std::vector<topping> selected_toppings;
+    for (int i = 0; i < 2; i++) {
+        int random_topping_idx = topping_selector.get_rnd();
 
-        const auto& slot = this->rucsac.get_item_at_index(i);
-        if (slot.isEmpty() || !slot.is_topping()) {
-            continue;
-        }
+        const auto *t = dynamic_cast<const topping *>(this->rucsac.get_item_at_index(random_topping_idx).getItem());
+        selected_toppings.push_back(*t);
 
-        int available_in_slot = slot.getCntItem();
-        int amount_to_take = std::min(available_in_slot, toppings_needed);
-        const auto *u = dynamic_cast<const topping *>(slot.getItem());
-
-        for (int j = 0; j < amount_to_take; j++) {
-            available_toppings.push_back(*u);
-        }
-
-        this->rucsac.decrease_at_pos(i, amount_to_take);
-        toppings_needed -= amount_to_take;
+        this->rucsac.decrease_at_pos(random_topping_idx, 1);
     }
 
     this->rucsac.decrease_at_pos(dough_idx, 1);
 
-    pizza x(available_toppings);
+    pizza x(selected_toppings);
     rucsac.addItem({x, 1});
+
     arrange();
     this->rucsac.rearrangeItems();
 }

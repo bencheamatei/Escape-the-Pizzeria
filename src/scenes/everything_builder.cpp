@@ -3,7 +3,6 @@
 //
 
 #include "../../include/scenes/everything_builder.h"
-
 #include "items/backpack.h"
 #include "items/dough.h"
 #include "items/soda.h"
@@ -66,11 +65,6 @@ void everything_builder::build_enemies(std::vector<enemy>& enemies) {
     auto foxy_render2_ = std::make_unique<animatronic_render>(
         *foxy2_, ResourceManager::Instance().getTexture("foxy.png"), rd_foxy.get_rnd()
     );
-
-    // 600 600
-    // 500 500
-    // 450 400
-    // 550 400
 
     random_selector<sf::Vector2f> rd_chica;
     rd_chica.add({600.f,600.f});

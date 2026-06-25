@@ -145,5 +145,9 @@ std::string inventory_ui::get_texture_name(const inventorySlot &slot) const {
         return "mushroom.png";
     }
 
+    if (aux_name=="ananas") {
+        return "ananas.png";
+    }
+
     return "generic.png";
 }

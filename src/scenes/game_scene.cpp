@@ -97,7 +97,7 @@ void game_scene::on_update(float dt) {
     pomana_timer += dt;
     if (pomana_timer >= POMANA_COOLDOWN) {
         pomana_timer = 0.0f;
-        player_data.addItem({*item_factory::create(rand()%4), 1});
+        player_data.addItem({*item_factory::create(rand()%5), 1});
     }
 }
 
