@@ -14,6 +14,7 @@
 #include "../animatronic/animatronic.h"
 #include "game_states/game_state.h"
 #include "../enemy.h"
+#include "random_selector.h"
 
 // shoutout domnului albert pentru ca a crezut in viziune
 
@@ -86,6 +87,9 @@ private:
 
     std::vector<flying_pizza> flying_pizzas_;
 
+    float pomana_timer;
+    static constexpr float POMANA_COOLDOWN = 7.f;
+
 public:
     explicit game_scene();
 
@@ -108,12 +112,17 @@ public:
     std::vector<sf::CircleShape> blood_drops;
     void generate_death_background_drops();
 
+    std::vector<sf::CircleShape> ballons;
+    void generate_background_ballons();
+
     void updateCamera(float dt);
     void on_update(float dt) override;
 
     void throw_pizza();
     void update_flying_pizzas(float dt);
     void draw_pizzas(sf::RenderTarget &window) const;
+
+    void reset_rooms();
 };
 
 

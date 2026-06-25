@@ -12,8 +12,6 @@
 class player;
 
 class item {
-private:
-    // static int total_items;
 protected:
     std::string nume;
     virtual void display(std::ostream &os) const;

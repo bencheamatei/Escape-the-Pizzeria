@@ -32,6 +32,7 @@ public:
     [[nodiscard]] bool is_dough() const;
     [[nodiscard]] bool is_backpack() const;
     [[nodiscard]] bool is_soda() const;
+    [[nodiscard]] bool is_key() const;
 
     friend void swap(inventorySlot &x, inventorySlot &y) noexcept;
 };

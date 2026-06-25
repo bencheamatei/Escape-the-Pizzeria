@@ -4,6 +4,8 @@
 
 #include "../../include/scenes/scene_manager.h"
 
+#include "scenes/menu_scene.h"
+
 void scene_manager::add_scene(std::unique_ptr<scene> scene) {
     to_push = std::move(scene);
 }
@@ -42,6 +44,11 @@ void scene_manager::process_event(const sf::Event& event) {
     }
 }
 
-// bool scene_manager::is_empty() const {
-//     return d.empty();
-// }
+void scene_manager::clear() {
+    to_pop=0;
+    to_push=nullptr;
+    while (!d.empty()) {
+        d.pop();
+    }
+    add_scene(std::make_unique<menu_scene>(false));
+}

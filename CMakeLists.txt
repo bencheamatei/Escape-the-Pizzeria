@@ -105,8 +105,6 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/game_states/respawn_state.h
         src/animatronics/foxy.cpp
         include/animatronic/foxy.h
-        src/animatronic_factory.cpp
-        include/animatronic_factory.h
         src/animatronics/chica.cpp
         include/animatronic/chica.h
         src/animatronics/nightmare.cpp
@@ -117,6 +115,13 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/enemy.h
         src/scenes/everything_builder.cpp
         include/scenes/everything_builder.h
+        src/items/key.cpp
+        include/items/key.h
+        src/game_states/win_state.cpp
+        include/game_states/win_state.h
+        src/items/item_factory.cpp
+        include/items/item_factory.h
+        include/random_selector.h
 )
 
 set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})

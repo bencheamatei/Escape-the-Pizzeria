@@ -15,10 +15,12 @@ void respawn_state::on_enter(game_scene &ctx) {
         try {
             ctx.get_player().drop_item(i);
         } catch (...) {
+
         }
     }
 
     ctx.get_player().heal(999);
+    ctx.reset_rooms();
 
     sf::Vector2f spawn = ctx.get_current_room().spawn_point;
     ctx.get_player_render().set_position(spawn);

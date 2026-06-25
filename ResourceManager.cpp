@@ -25,6 +25,8 @@ ResourceManager::ResourceManager() {
     loadTexture("images", "tileset.png");
     loadTexture("images", "chica.png");
     loadTexture("images", "nightmare.png");
+    loadTexture("images","key.png");
+    loadTexture("images","ananas.png");
 
     loadFont("fonts", "FiraSans-Regular.ttf");
     m_textures["podea-fin.png"].setRepeated(true);

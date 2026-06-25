@@ -17,10 +17,12 @@
 #include "../../include/animatronic/foxy.h"
 #include "animatronic/chica.h"
 #include "animatronic/nightmare.h"
+#include "items/item_factory.h"
 #include "scenes/everything_builder.h"
+#include "items/item_factory.h"
 
 game_scene::game_scene()
-    : player_data(70, 100, 5)
+    : player_data(100, 100, 5)
     , player_render_(player_data, ResourceManager::Instance().getTexture("billy.png"), {0.f, 0.f})
     , inventory_ui_(player_data, ResourceManager::Instance().getFont("FiraSans-Regular.ttf")),
     rooms(everything_builder::build_rooms())
@@ -50,6 +52,8 @@ game_scene::game_scene()
 
     curr_state = std::make_unique<playing_state>();
     curr_state->on_enter(*this);
+
+    pomana_timer=0.f;
 }
 
 void game_scene::transition_to(std::unique_ptr<game_state> new_state) {
@@ -88,6 +92,12 @@ void game_scene::on_update(float dt) {
         door_cooldown -= dt;
     } else {
         door_transition();
+    }
+
+    pomana_timer += dt;
+    if (pomana_timer >= POMANA_COOLDOWN) {
+        pomana_timer = 0.0f;
+        player_data.addItem({*item_factory::create(rand()%5), 1});
     }
 }
 
@@ -194,6 +204,22 @@ void game_scene::generate_death_background_drops() {
     }
 }
 
+void game_scene::generate_background_ballons() {
+    ballons.clear();
+    srand((unsigned) std::time(nullptr));
+    for (int i = 0; i < 20; i++) {
+        sf::CircleShape drop;
+        float r = 8.f + (rand() % 38);
+        drop.setRadius(r);
+        drop.setOrigin(r, r);
+        drop.setPosition((float) (rand() % 960), (float) (rand() % 640));
+        drop.setFillColor(sf::Color(
+            20, 180+rand()%50, 20,
+            170 + rand() % 85));
+        ballons.push_back(std::move(drop));
+    }
+}
+
 room &game_scene::get_current_room() {
     return rooms[room_idx];
 }
@@ -240,7 +266,7 @@ void game_scene::throw_pizza() {
 
     if (u!=-1) {
         try {
-            player_data.drop_item(u);
+            player_data.decpos(u);
         }
         catch (...) {
             return;
@@ -267,4 +293,9 @@ void game_scene::draw_pizzas(sf::RenderTarget &window) const {
             continue;
         window.draw(it.shape);
     }
+}
+
+void game_scene::reset_rooms() {
+    rooms.clear();
+    rooms=everything_builder::build_rooms();
 }

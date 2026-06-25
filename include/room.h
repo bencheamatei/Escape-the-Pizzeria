@@ -1,6 +1,8 @@
 #pragma once
+#include <memory>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "items/item.h"
 
 /*
 *Run at the door
@@ -16,10 +18,17 @@ Use me like an oar
 And get yourself to shore
  */
 
+
 struct door {
     sf::FloatRect bounds;
     int room_id;
     sf::Vector2f spawn;
+};
+
+struct ground_item {
+    std::unique_ptr<item> ce;
+    sf::FloatRect hitbox;
+    sf::Sprite sprite;
 };
 
 class room : public sf::Drawable {
@@ -38,6 +47,8 @@ private:
     static constexpr int FREE=3;
     static constexpr int DOOR=1;
 
+    std::vector<ground_item> ground_items;
+
 public:
     sf::Vector2f spawn_point;
 
@@ -55,4 +66,9 @@ public:
     [[nodiscard]] bool is_solid(int x,int y) const;
 
     static room from_tmj(const std::string& filepath,sf::Texture& tileset);
+
+    void add_ground_item(std::unique_ptr<item> new_item, sf::Vector2f pos, const sf::Texture& texture,sf::Vector2f scale = sf::Vector2f(1.f, 1.f));
+    std::vector<std::unique_ptr<item>> pickup_items(sf::FloatRect player_bounds);
+
+    void try_pickup_items(player& p, sf::FloatRect player_bounds);
 };
