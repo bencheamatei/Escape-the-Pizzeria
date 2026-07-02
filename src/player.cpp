@@ -170,7 +170,7 @@ void player::craftPizza() {
     for (int i = 0; i < 2; i++) {
         int random_topping_idx = topping_selector.get_rnd();
 
-        const auto *t = dynamic_cast<const topping *>(this->rucsac.get_item_at_index(random_topping_idx).getItem());
+        const auto *t = dynamic_cast<const topping *>(this->rucsac.get_at(random_topping_idx).getItem());
         selected_toppings.push_back(*t);
 
         this->rucsac.decrease_at_pos(random_topping_idx, 1);
