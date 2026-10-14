@@ -1,96 +1,86 @@
 # Escape the Pizzeria
 
-Escape the Pizzeria is a FNAF inspired 2D survival-explorer game in which you play as Billy, a curious kid that tries to discover the secrets of the abandoned Freddy Fazbear's Pizzeria. Unfortunately, he is not alone in this endeavour, the animatronics linger in the dark and will try to take him out. Your only defence is throwing some old slices of pizza at the animatronics or just running away - _"He who fights and runs away, gets to live another day"_.
+A 2D survival-explorer game inspired by *Five Nights at Freddy's*, written in **C++23** with **SFML**.
+You play as Billy, a curious kid exploring the abandoned Freddy Fazbear's Pizzeria, and the animatronics
+are awake. Your only defences are old slices of pizza and a good pair of legs.
+
+> *"He who fights and runs away, gets to live another day."*
 
 
 
-## Instrucțiuni de compilare
+## Features
 
-Proiectul este configurat cu CMake.
+- Top-down exploration of a multi-room pizzeria
+- **Four animatronics** (Freddy, Foxy, Chica, Nightmare), each with its own behaviour
+- **Combat by pizza**: craft pizza and throw it at animatronics to kill them or slow them down
+- **Inventory system** with a backpack, item slots, and a UI
+- **Items**: dough, toppings, pizza, soda, keys
+- **Status effects**, such as food poisoning from eating bad food
+- Menu, pause, death, respawn, and win flows
 
-Instrucțiuni pentru terminal:
+## Controls
 
-1. Pasul de configurare
-```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-# sau ./scripts/cmake.sh configure
-```
+| Key | Action |
+|---|---|
+| `W` `A` `S` `D` | Move |
+| `Space` | Throw pizza |
+| `E` | Eat/Use item |
+| `C` | Craft pizza |
+| `F11` | Fullscreen | 
+| `Esc` | Pause/Resume |
 
-Sau pe Windows cu GCC folosind Git Bash:
-```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -G Ninja
-# sau ./scripts/cmake.sh configure -g Ninja
-```
+## Getting started
 
-Pentru a configura cu ASan, avem opțiunea `-DUSE_ASAN=ON` (nu merge pe Windows cu GCC):
-```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DUSE_ASAN=ON
-# sau ./scripts/cmake.sh configure -e "-DUSE_ASAN=ON"
-```
+### Option 1: Download a build
+Grab the latest build from the [Releases page](https://github.com/bencheamatei/Escape-the-Pizzeria/releases), unzip it, and run `oop`.
 
+### Option 2: Build from source
 
-La acest pas putem cere să generăm fișiere de proiect pentru diverse medii de lucru.
+**Requirements:** a C++23 compiler (GCC, Clang, or MSVC), CMake 3.26+, and Git.
+SFML 2.6.2 and nlohmann/json are downloaded automatically by CMake, so the first configure takes a few minutes.
+On Linux you also need the usual SFML system dependencies (X11, OpenGL, etc.).
 
+```bash
+git clone https://github.com/bencheamatei/Escape-the-Pizzeria.git
+cd Escape-the-Pizzeria
 
-2. Pasul de compilare
-```sh
-cmake --build build --config Debug --parallel 6
-# sau ./scripts/cmake.sh build
-```
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --parallel
 
-Cu opțiunea `parallel` specificăm numărul de fișiere compilate în paralel.
-
-
-3. Pasul de instalare (opțional)
-```sh
-cmake --install build --config Debug --prefix install_dir
-# sau ./scripts/cmake.sh install
-```
-
-Vezi și [`scripts/cmake.sh`](scripts/cmake.sh).
-
-Observație: folderele `build/` și `install_dir/` sunt adăugate în fișierul `.gitignore` deoarece
-conțin fișiere generate și nu ne ajută să le versionăm.
-
-
-## Instrucțiuni pentru a rula executabilul
-
-Există mai multe variante:
-
-1. Din directorul de build (implicit `build`). Executabilul se află la locația `./build/oop` după ce a fost rulat pasul de compilare al proiectului (`./scripts/cmake.sh build` - pasul 2 de mai sus).
-
-```sh
 ./build/oop
 ```
 
-2. Din directorul `install_dir`. Executabilul se află la locația `./install_dir/bin/oop` după ce a fost rulat pasul de instalare (`./scripts/cmake.sh install` - pasul 3 de mai sus).
+On Windows with GCC (Git Bash), add `-G Ninja` to the configure step.
 
-```sh
+Extra build options (sanitizers, Valgrind, install)
+
+```bash
+# AddressSanitizer (Linux/macOS)
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DUSE_ASAN=ON
+
+# Install to a local folder
+cmake --install build --config Release --prefix install_dir
 ./install_dir/bin/oop
-```
 
-3. Rularea programului folosind Valgrind se poate face executând script-ul `./scripts/run_valgrind.sh` din rădăcina proiectului. Pe Windows acest script se poate rula folosind WSL (Windows Subsystem for Linux). Valgrind se poate rula în modul interactiv folosind: `RUN_INTERACTIVE=true ./scripts/run_valgrind.sh`
-
-Implicit, nu se rulează interactiv, iar datele pentru `std::cin` sunt preluate din fișierul `tastatura.txt`.
-
-```sh
-RUN_INTERACTIVE=true ./scripts/run_valgrind.sh
-# sau
+# Valgrind (Linux, or WSL on Windows)
 ./scripts/run_valgrind.sh
 ```
 
-4. Pentru a rula executabilul folosind ASan, este nevoie ca la pasul de configurare (vezi mai sus) să fie activat acest sanitizer. Ar trebui să meargă pe macOS și Linux. Pentru Windows, ar merge doar cu MSVC (nerecomandat).
+The helper script `scripts/cmake.sh` wraps the configure, build, and install steps.
 
-Comanda este aceeași ca la pasul 1 sau 2. Nu merge combinat cu Valgrind.
+## Project structure
 
-```sh
-./build/oop
-# sau
-./install_dir/bin/oop
+```
+include/, src/
+├── animatronic/    Animatronic base class, Freddy/Foxy/Chica/Nightmare, animatronic_ai
+├── items/          Item hierarchy (dough, topping, pizza, soda, key, backpack) + item_factory
+├── scenes/         Scene manager, menu / game / pause scenes, scene builder
+├── game_states/    Playing, death, respawn, and win states
+├── renders/        Rendering for the player and animatronics
+└── ...             player, inventory, room, status effects, exceptions
+assets/, images/, fonts/   Game resources
 ```
 
 ## License
 
-The project is licensed under [AGPLv3](LICENSE).
-
-The [template repository](https://github.com/mcmarius/oop-template) itself is licensed under [Unlicense](LICENSE.template).
+Licensed under [AGPL-3.0](LICENSE). Based on the [oop-template](https://github.com/mcmarius/oop-template), which is under the [Unlicense](LICENSE.template).
