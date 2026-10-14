@@ -6,7 +6,7 @@ are awake. Your only defences are old slices of pizza and a good pair of legs.
 
 > *"He who fights and runs away, gets to live another day."*
 
-
+| ![screenshot no. 1](assets/screenshots/ss1.png) | ![screenshot no. 2](assets/screenshots/ss2.png) | ![screenshot no. 3](assets/screenshots/ss3.png) |
 
 ## Features
 
